@@ -1,7 +1,8 @@
-# Este módulo define duas funções.
-# Uma função para a identificação dos elementos usados no script.
-# Uma função para a importação dos módulos associados a cada um desses elementos.
-# A função de importação retorna uma tabela que associa os nomes (tags) dos elementos com os objetos dos módulos importados.
+# This module defines two functions.
+# A function for identifying the elements used in the script.
+# A function for importing the modules associated with each of these elements.
+# The import function returns a table that associates the names (tags) of the elements with the objects of the imported modules.
+
 
 import sys
 import os
@@ -25,7 +26,7 @@ def identify_targets(xml_root, verbose_mode=False):
             tab_ids[element.get("id")] = [element.tag, element]
     if verbose_mode:
         print("")
-        table = Table(title="[b]Table: Element identifiers[/]")
+        table = Table(title="[b]Table: Element Identifiers (IDs)[/]")
         table.add_column("Identifier")
         table.add_column("Element type")
         for item in sorted(tab_ids):
@@ -37,9 +38,9 @@ def identify_targets(xml_root, verbose_mode=False):
 def identify_elements(xml_root, verbose_mode=False):
     """Percorre toda a seção de script identificando os elementos utilizados."""
     if verbose_mode:
-        # Rich tem um método para limpar a tela
+        # Rich has a method to clear the screen
         console.clear()
-        print("[bold underline green]Identificando os elementos do script.[/]")
+        print("[bold underline green]Identifying script elements.[/]")
     tab_modules = {}
     for element in xml_root.iter():
         if element.tag in tab_modules:
@@ -51,9 +52,9 @@ def identify_elements(xml_root, verbose_mode=False):
             elif element.getparent().tag == "evaml": # Its is an EvaML section.
                 tab_modules[element.tag].append("[b magenta]Section <" +  element.tag + ">[/]")
     if verbose_mode:
-        print("[white]O script utiliza [bold]" + str(sum(1 for _ in xml_root.iter()) - 1) + " elemento(s).")
+        print("[white]The script uses [bold]" + str(sum(1 for _ in xml_root.iter()) - 1) + " element(s).")
     
-    return tab_modules # Retorna uma tabela com os elmentos utilizados no script.
+    return tab_modules # Returns a table with the elements used in the script.
 
 
 def import_modules(xml_root, verbose_mode=False):
@@ -63,11 +64,11 @@ def import_modules(xml_root, verbose_mode=False):
     tab_modules = identify_elements(xml_root, verbose_mode)
     # From here, the tab_modules will have its structure modified. New information will be added to its value (list).
     for element_tag in tab_modules:
-        module_name = element_tag.lower() + "_module" # Nome padrão para pastas dos módulos
-        diretorio = os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/" + module_name #os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/" + module_name + "/"
-        sys.path.insert(0, diretorio) # Coloca o diretório do módulo no path.
+        module_name = element_tag.lower() + "_module" # Default name for module folders
+        diretorio = os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/" + module_name
+        sys.path.insert(0, diretorio) # Put the module directory in the path.
         try:
-            mod = importlib.import_module(module_name) # importa o módulo
+            mod = importlib.import_module(module_name) # import the module
             tab_modules[element_tag].append(module_name + ".py")
             tab_modules[element_tag].append(mod)
         except Exception as e:

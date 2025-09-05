@@ -26,19 +26,15 @@ Revision: 2025/04/16
 	<!-- Led type definition -->
 	<xs:simpleType name="ledAnimationType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="HAPPY"/> <!-- GREEN -->
-			<xs:enumeration value="SAD"/> <!-- BLUE -->
-			<xs:enumeration value="ANGRY"/> <!-- RED -->
-			<xs:enumeration value="STOP"/> <!-- BLACK (OFF) -->
-			<xs:enumeration value="SPEAK"/> <!-- BLUE -->
-			<xs:enumeration value="LISTEN"/> <!-- GREEN -->
-			<xs:enumeration value="SURPRISE"/> <!-- YELLOW -->
-			<xs:enumeration value="GREEN"/>
-			<xs:enumeration value="BLUE"/>
-			<xs:enumeration value="RED"/>
-			<xs:enumeration value="WHITE"/>
-            <xs:enumeration value="YELLOW"/>
-			<xs:enumeration value="PINK"/>
+			<xs:enumeration value="HAPPY"/>
+			<xs:enumeration value="SAD"/>
+			<xs:enumeration value="ANGRY"/>
+            <xs:enumeration value="ANGRY2"/>
+			<xs:enumeration value="STOP"/>
+			<xs:enumeration value="SPEAK"/>
+			<xs:enumeration value="LISTEN"/>
+			<xs:enumeration value="SURPRISE"/>
+            <xs:enumeration value="WHITE"/>
             <xs:enumeration value="RAINBOW"/>
 		</xs:restriction>
 	</xs:simpleType>

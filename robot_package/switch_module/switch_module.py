@@ -1,11 +1,10 @@
 from rich import print
 
 
-
-def get_var_value(value, memory, client_mqtt):
-    # Os valores em var (var_value) só podem ser números, $ (de todos os tipos) e variáveis sem # no início.
-    if value[0] == "$": # É do tipo $, $n ou $-n
-        if len(memory.var_dolar) == 0: # A memória para $ ainda não tem nenhum elemento e precisa ser reiniciada
+def get_var_value(value, memory):
+    # Values ​​in var (var_value) can only be numbers, $ (of all types) and variables without # at the beginning.
+    if value[0] == "$": # Is of type $, $n, or $-n
+        if len(memory.var_dolar) == 0: # The memory for $ does not yet have any elements and needs to be reset
             # memory.var_dolar.append(["", ""])
             print('[b white on red blink] FATAL ERROR [/]: The [b white]"' + value +'"[/] variable [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
             exit(1)
@@ -28,9 +27,9 @@ def get_var_value(value, memory, client_mqtt):
                     print("[b white on red blink] FATAL ERROR [/]: [b yellow reverse] Unable to access the variable [/][b white] " + value + "[/] with the [b yellow reverse] index [/] used. Please, check your code.✋⛔️")
                     exit(1)
             
-    else: # É uma var definida pelo usuário, mas sem o # no início ou um número.
+    else: # It's a user-defined var, but without the leading # or a number.
         # Checks if the operation is different from assignment and checks if var ... DOES NOT exist in memory
-        if (value not in memory.vars): # Impede que seja feita uma operação (que não a atribuição) com uma variável que não existe na memória.
+        if (value not in memory.vars): # Prevents an operation (other than assignment) from being performed on a variable that does not exist in memory.
             print("[b white on red blink] FATAL ERROR [/]: The variable [b white]" + value + "[/] [b yellow reverse] has not been declared [/]. Please, check your code.✋⛔️")
             exit(1)
         else:
@@ -38,10 +37,10 @@ def get_var_value(value, memory, client_mqtt):
 
 
 
-def node_processing(node, memory):
+def node_processing(node, memory, client_mqtt):
     """ Função de tratamento do nó """
-    # Por definição, o switch pode conter referências aos "$" e às variáveis.
-    # As variaveis são referenciadas pelo nome, sem o uso do "#" no início.
+    # By definition, the switch can contain references to "$" and variables.
+    # Variables are referenced by name, without the use of a "#" at the beginning.
 
     memory.op_switch = get_var_value(node.get("var"), memory)
     memory.flag_case = False

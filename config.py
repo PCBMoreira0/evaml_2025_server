@@ -1,9 +1,8 @@
 # MQTT Broker configuration
-# Note: All robots (EVA and FRED) will access the broker through the IP 192.168.99.100
 MQTT_BROKER_ADRESS      = '127.0.0.1' # Acer Laptop IP address # Ip adress (Fred router) 192.168.99.100
 MQTT_PORT               = 1883
 
-ROBOT_PACKAGE_FOLDER    = 'robot_package' # Diretório com os módulos do robô
+ROBOT_PACKAGE_FOLDER    = 'robot_package' # Directory with robot modules
 SIMULATOR_TOPIC_BASE    = 'SIMULATOR'
 TERMINAL_TOPIC_BASE    = 'TERMINAL'
 
@@ -15,8 +14,8 @@ WATSON_AUDIO_EXTENSION = ".mp3"
 ACCEPT_AUDIO_EXTENSION = "audio/mp3"
 
 # Default voice (language) for the IBM Watson service.
-# pt_BR-faber-medium, en_US-amy-medium, en_US-ryan-medium e en_US-kathleen-low - Utilizam o Piper
-VOICE_TYPE = "en_US-kathleen-low" # "pt-BR_IsabelaV3Voice" 
+# pt_BR-faber-medium, en_US-amy-medium, en_US-ryan-medium e en_US-kathleen-low - Use the Piper TTS
+VOICE_TYPE = "pt-BR_IsabelaV3Voice" # "pt-BR_IsabelaV3Voice" en-US_AllisonExpressive
 PITCH_SHIFT = "0"
 
 # Default language for Google translating

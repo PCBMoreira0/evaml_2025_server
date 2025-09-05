@@ -27,21 +27,14 @@ Revision: 2025/04/16
 	<!-- EvaEmotion type definitions -->
 	<xs:simpleType name="evaEmotionType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="GREETINGS"/>
 			<xs:enumeration value="NEUTRAL"/>
-			<xs:enumeration value="BROKEN"/>
-			<xs:enumeration value="PLEASED"/>
 			<xs:enumeration value="HAPPY"/>
 			<xs:enumeration value="SAD"/>
 			<xs:enumeration value="ANGRY"/>
-			<xs:enumeration value="ANGRY2"/>
-			<xs:enumeration value="AFRAID"/>
-			<xs:enumeration value="SURPRISED"/>
-			<xs:enumeration value="IN_LOVE"/>
-			<xs:enumeration value="SPEECH_ON_1"/>
-			<xs:enumeration value="SPEECH_OFF_1"/>
-			<xs:enumeration value="SPEECH_ON_2"/>
-			<xs:enumeration value="SPEECH_OFF_2"/>
+			<xs:enumeration value="FEAR"/>
+			<xs:enumeration value="SURPRISE"/>
+			<xs:enumeration value="DISGUST"/>
+			<xs:enumeration value="INLOVE"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

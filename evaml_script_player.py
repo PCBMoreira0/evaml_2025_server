@@ -1,7 +1,6 @@
 import sys
-
 import os
-
+import time
 
 from rich import print
 from rich.console import Console
@@ -18,8 +17,63 @@ sys.path.append(os.getcwd() + "/" + "robot_package/")
 
 import robot_profile
 
-
 console = Console()
+
+console.clear()
+
+
+# Lendo as flags da linha de comando.
+if len(sys.argv) == 2: # Sem flags ou com apenas a flag -h. 
+    if sys.argv[1].lower() == "-h" or sys.argv[1].lower() == "-help" or sys.argv[1].lower() == "help":
+        print("[b white]------------------------------------------------------------------------------------------[/]")
+        print("                                [b white]EvaML Script Player (Help)[/]")
+        print("[b white]------------------------------------------------------------------------------------------[/]")
+        print("[b]To run a script use:[/] [b white]python3[/] [b cyan]evaml_script_player[/] [b yellow]<script_name>[/] -r=[b red]running_mode[/]")
+        print("")
+        print("[b]Running modes:[/]\n")
+        print("[b red]terminal[/], runs using only the terminal as an input and output device.")
+        print("[b red]terminal-plus[/], runs using the terminal as input device and ibm-watson as TTS.")
+        print("[b red]simulator[/], runs using simulated virtual components (Light, EVA Robot Image, etc.).")
+        print("[b red]robot[/], runs using the terminal, however, the simulated virtual components.\n")
+        print("Example: [b white]python3[/] [b cyan]teste_evaml.xml[/] -r=[b red]terminal-plus[/]\n")
+        exit(1)
+    else:
+        # Executar em modo default=terminal.
+        print("[b reverse yellow] You didn't use any flag. Running in default (Terminal) mode.[/] ")
+        memory.running_mode = 'terminal'
+        time.sleep(2)
+
+elif len(sys.argv) == 1: # Sem arquivo e sem flags
+    print("[b blink reverse red] We have a problem... Please specify the script to be executed or use python3 evaml_script_player.py -h for help. [/]")
+    exit(1)
+
+else:
+    for flag_param in sys.argv[2:]:
+        flag = flag_param.split("=")[0]
+        param = flag_param.split("=")[1]
+    if flag.lower() == "-r": # A flag -r define a variável RUNNING_MODE podendo assumir os valores "simulator", "terminal" ou "robot".
+        if param.lower() == "simulator":
+            memory.running_mode = 'simulator'
+        elif param.lower() == "robot":
+            memory.running_mode = 'robot'
+        elif param.lower() == "terminal":
+            memory.running_mode = 'terminal'
+        elif param.lower() == "terminal-plus":
+            memory.running_mode = 'terminal-plus'
+        else:
+            print("[b blink reverse red] It was not possible to understand the -r option: [u]" + param + " [/]. Please, use python3 evaml_script_player.py -h for help. ")
+            exit(1)
+    else:
+        print("[b blink reverse red] Oh oh, you used the flag: [u]" + flag + " [/]. Please, use python3 evaml_script_player.py -h for help. ")
+        exit(1)
+
+if memory.running_mode == "simulator":
+    topic_base = config.SIMULATOR_TOPIC_BASE
+elif memory.running_mode == "robot":
+    topic_base = robot_profile.ROBOT_TOPIC_BASE
+else:
+    topic_base = config.TERMINAL_TOPIC_BASE
+
 
 broker = config.MQTT_BROKER_ADRESS # broker adress
 port = config.MQTT_PORT # broker port
@@ -27,9 +81,13 @@ port = config.MQTT_PORT # broker port
 
 file_name  = sys.argv[1]
 
-tree = ET.parse(sys.argv[1])  # XML code file
+try:
+    tree = ET.parse(sys.argv[1])  # XML code file
+except:
+    print("[b blink reverse red] We have a problem... I can't find the file: " + file_name + "[/]")
+    exit(1)
 root = tree.getroot() # script root node
-settins_node = root.find("settings")
+settings_node = root.find("settings")
 script_node = root.find("script")
 
 
@@ -129,32 +187,8 @@ def run_script(xml_root):
 
 
 
-console.clear()
 
-# Lendo as flags da linha de comando.
-if len(sys.argv) == 2: # Sem flags. Executar em modo default=sim.
-    print("You didn't use any flag. Running in default (Simulator) mode.")
-else:
-    for flag_param in sys.argv[2:]:
-        flag = flag_param.split("=")[0]
-        param = flag_param.split("=")[1]
-    if flag.lower() == "-r": # A flag -r define a variável RUNNING_MODE podendo assumir os valores "simulator", "terminal" ou "robot".
-        if param.lower() == "simulator":
-            memory.running_mode = 'simulator'
-        elif param.lower() == "robot":
-            memory.running_mode = 'robot'
-        elif param.lower() == "terminal":
-            memory.running_mode = 'terminal'
-        else:
-            print("[b blink reverse red] It was not possible to understand the -r option: [u]" + param + " [/]")
-            exit(1)
 
-if memory.running_mode == "simulator":
-    topic_base = config.SIMULATOR_TOPIC_BASE
-elif memory.running_mode == "robot":
-    topic_base = robot_profile.ROBOT_TOPIC_BASE
-else:
-    topic_base = config.TERMINAL_TOPIC_BASE
 
 # Esta parte é responsável por receber as respostas do robô físico através do tópico robot_response.
 # O tópico recebe uma mensagem vinda do robô que tem duas partes, um tipo e uma mensagem.
@@ -195,12 +229,14 @@ memory.tab_modules = import_modules(root, verbose_mode=True)
 memory.tab_ids = identify_targets(root, verbose_mode=True)
 
 
+
+
 # Running the script
 console.rule("🤖 [red reverse b]  Executing the script: " + file_name.split('/')[-1][:-4] + "  [/] 🤖")
 print()
 
 # Running the settings commands.
-run_script(settins_node)
+run_script(settings_node)
 
 # Running the script.
 run_script(script_node)
@@ -214,31 +250,3 @@ client_mqtt.loop_stop()
 client_mqtt.disconnect()
 
 
-
-
-
-# Validating the script. #########################################################################
-# console.clear()
-# console.rule("\n🤖 [yellow reverse b]  Parsing the script: " + "file_name" + "  [/] 🤖")
-# print()
-# script_file = sys.argv[1]
-# print("[b white reverse] STEP 1. Let's validate de script. [/]\n")
-# xml_file_ok = evaml_validator(script_file)
-
-# if not xml_file_ok:
-#   print("\n[b white on red blink] VALIDATION ERROR [/]: The script [b white]" + script_file + " [/]failed the validation process with the [b white]XMLSchema[/]. Please, [b white]check[/] the info above. [blink]👆[/]\n")
-#   exit(1)
-# else:
-#   print("   [b green reverse] The script was validated! [/]\n")
-
-
-# # Parsing (Loop processing)
-# print("[b white reverse] STEP 2. Parsing the file (Expanding <loop> elements). [/]\n")
-# id_loop_number = 0  # id usado na criação dos ids dos loops
-# root = xml_file_ok.getroot() # Evaml root node
-# script_node = root.find("script")
-# process_loop(script_node)
-
-# print("[b white reverse] STEP 3. Generating the EvaML parsed file. [/]\n")
-# # Gera o arquivo com as macros expandidas (caso existam) para a proxima etapa
-# xml_file_ok.write("_parsed_file.xml", "UTF-8")

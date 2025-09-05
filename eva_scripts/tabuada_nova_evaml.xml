@@ -1,6 +1,6 @@
 <evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Jogo_Tabuada" xsi:noNamespaceSchemaLocation="../robot_package/xml_schema/evaml_schema.xsd">
   <settings>
-    <voice type="pt_BR-faber-medium" pitchShift="5" />
+    <voice type="pt-BR_IsabelaV3Voice" />
     <lightEffects mode="ON" />
     <audioEffects mode="ON" />
   </settings>
@@ -983,7 +983,6 @@
       <light state="ON" color="YELLOW" />
       <talk>Olá, eu sou robô Eva. E você? Qual é o seu nome?</talk>
       <evaEmotion emotion="NEUTRAL" />
-      <led animation="LISTEN" />
       <listen />
       <light state="ON" color="GREEN" />
     </macro>

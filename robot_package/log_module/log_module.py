@@ -6,7 +6,7 @@ import sys
 
 import config  # Module with network device configurations.
 
-sys.path.insert(0, "../")
+# sys.path.insert(0, "../")
 
 import robot_profile  # Module with network device configurations.
 
@@ -15,7 +15,7 @@ robot_topic_base = robot_profile.ROBOT_TOPIC_BASE
 
 
 def node_processing(node, memory, client_mqtt):
-    """ Função de tratamento do nó """
+    """ Node handling function """
 
     if (len(node.get("name"))) == 0: # erro
         print('[b white on red blink] FATAL ERROR [/]: The [bold white]"log name" [/]attribute is [b reverse yellow] EMPTY [/].✋⛔️')
@@ -58,7 +58,7 @@ def node_processing(node, memory, client_mqtt):
                         except IndexError:
                             print('[b white on red blink] FATAL ERROR [/]: There was an [b yellow reverse] index error [/] for the variable [b white]"' + var_dollar + '"[/]. Please, check your code.✋⛔️')
                             exit(1) 
-                    else: # tipo $n
+                    else: # $n type
                         indice = int(var_dollar[1:]) # Var dollar is of type $n. then just take n and convert it to int
                         try:
                             texto = texto.replace(var_dollar, memory.var_dolar[(indice - 1)][0])
@@ -74,7 +74,7 @@ def node_processing(node, memory, client_mqtt):
 
     print('[b white ]State[/]:[b white] Sending [/]to the log ([b white]' + node.get("name") + '[/]), with sequence number ' + str(log_seq_number) + ', the text [b white]"' + texto.strip() + '"[/].')
 
-    # O strip é usado para remover os \n dos textos que podem vir do xml.
+    # Strip is used to remove \n from texts that may come from xml.
     client_mqtt.publish(robot_topic_base + "/log", node.get("name") + "_" + str(log_seq_number) + '_' + texto.strip())    
     
     return node # It returns the same node

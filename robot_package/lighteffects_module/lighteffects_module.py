@@ -6,7 +6,7 @@ from rich import print
 
 
 def node_processing(node, memory, client_mqtt):
-    """ Função de tratamento do nó """
+    """ Node handling function """
         
     print("[b white]State: Setting [/]the [b white] light effects=" + node.get("mode") + "[/].")
 

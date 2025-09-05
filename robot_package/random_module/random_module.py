@@ -3,9 +3,8 @@ import random as rnd
 from rich import print
 
 
-
 def node_processing(node, memory, client_mqtt):
-    """ Função de tratamento do nó """
+    """ Node handling function """
 
     min = node.get("min")
     max = node.get("max")

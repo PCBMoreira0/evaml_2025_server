@@ -2,7 +2,7 @@
 
 
 def node_processing(node, memory, client_mqtt):
-    """ Função de tratamento do nó """
+    """ Node handling function """
 
     # Retorna o próprio node.
     return node

@@ -1,33 +1,62 @@
 import time
-
 import sys
-
 import random as rnd
-
 import re
-
 from rich import print
 
-sys.path.insert(0, "../")
+from play_audio import playsound # Adapter module for the audio library.
+# Depending on the OS it matters and defines a function called "playsound".
+
+import config # Module with network device configurations.
+
+import hashlib
+import os
+
+# Watson imports
+from ibm_watson import TextToSpeechV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson import ApiException
 
 import robot_profile  # Module with network device configurations.
 
-import config
+
 robot_topic_base = robot_profile.ROBOT_TOPIC_BASE
-topic_base = config.SIMULATOR_TOPIC_BASE
+broker = config.MQTT_BROKER_ADRESS # Broker address.
+port = config.MQTT_PORT # Broker Port.
+voice_type = config.VOICE_TYPE
+
+
+
+# Watson API configuration key.
+with open("robot_package/talk_module/ibm_cred.txt", "r") as ibm_cred: 
+    ibm_config = ibm_cred.read().splitlines()
+apikey = ibm_config[0]
+url = ibm_config[1]
+
+# Setup Watson service.
+authenticator = IAMAuthenticator(apikey)
+
+# TTS service.
+tts = TextToSpeechV1(authenticator = authenticator)
+tts.set_service_url(url)
+
+auth_start_time = time.time() # Time of authentication.
+first_requisition = True; # Indicates that this is the first request for the Watson service.
 
 
 # Função de bloqueio que é usada para sincronia entre os módulos e o Script Player
 def block(state, memory, client_mqtt):
-    memory.robot_state = state # Altera o estado do robô.
-    client_mqtt.publish(topic_base + "/leds", "SPEAK")
-    while memory.robot_state != "free": # Aguarda que o robô fique livre para seguir para o próximo comando.
-        time.sleep(0.01)
-    client_mqtt.publish(topic_base + "/leds", "STOP")
+    pass
+    # memory.robot_state = state # Altera o estado do robô.
+    # client_mqtt.publish(topic_base + "/leds", "SPEAK")
+    # while memory.robot_state != "free": # Aguarda que o robô fique livre para seguir para o próximo comando.
+    #     time.sleep(0.01)
+    # client_mqtt.publish(topic_base + "/leds", "STOP")
+
 
 
 def node_processing(node, memory, client_mqtt):
-    """ Função de tratamento do nó """
+    """ Node handling function """
 
     if memory.running_mode == "simulator":
         topic_base = config.SIMULATOR_TOPIC_BASE
@@ -36,7 +65,7 @@ def node_processing(node, memory, client_mqtt):
     else:
         topic_base = config.TERMINAL_TOPIC_BASE
 
-
+    # Node processing
     if node.text == None: # There is no text to speech
         print("[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There is no text to speech [/] in the element [b white]<talk>[/]. Please, check your code.✋⛔️")
         exit(1)
@@ -95,21 +124,108 @@ def node_processing(node, memory, client_mqtt):
     ind_random = rnd.randint(0, len(texto)-1)
  
     if memory.running_mode == "terminal":
-        # Tanto no modo terminal quanto no modo simulador, as saídas do <talk> são pelo terminal.
+        # Rodando no modo terminal....
         print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"[/]', end="")
         for c in texto[ind_random]:
             print('[b white]' + c + '[/]', end="")
             time.sleep(0.08)
         print('[b white]"')
+
+
+    elif memory.running_mode == "terminal-plus":
+        global voice_type, auth_start_time, apikey, url, authenticator, tts, first_requisition
+        # Assumes the default UTF-8 (Generates the hashing of the audio file).
+        # Additionally, use the voice timbre attribute in the file hash.
+        if node.get("voiceType") == None:
+            voice_type = memory.default_voice
+        else:
+            voice_type = node.get('voiceType')
+
+
+        # print("Voice:", voice_type, "Text:", texto[ind_random])
+        hash_object = hashlib.md5(texto[ind_random].encode())
+        file_name = "_audio_"  + voice_type + hash_object.hexdigest()
+        audio_file_is_ok = False
+        while(not audio_file_is_ok):
+            # Checks if the speech audio already exists in the cache folder.
+            if not (os.path.isfile("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)): # If it doesn't exist, call Watson.
+                '[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + texto[ind_random] + "[/]"
+                print("[b white]State:[/][b yellow] The file is not cached... Let's try to generate it![/]")
+
+                # Tests with the first request after a module reset (There is no problem in this way).
+                # ================================================== ======================================
+                # Watson appears to impose a limited connection time from the first request.
+                # 1min of inactivity -> OK
+                # 2min of inactivity -> OK
+                # 8min of inactivity -> OK
+
+                # Tests with one request from another, without resetting the module.
+                # ================================================== ======================================
+                # 3min of inactivity from the first request -> OK
+                # 3.30min of inactivity from the first request -> OK
+                # 4min of inactivity from a first req. -> Crashed! (Request rejected)
+                # 5min of inactivity from the first request.-> Crashed! (Request rejected)
+
+                # Checks if the module has been inactive for more than 3min (180s) since the first request.
+                # print(first_requisition, (time.time() - auth_start_time))
+                if (not(first_requisition) and (time.time() - auth_start_time >= 180)):
+                    print("The module has been inactive for more than 3 minutes (since the first request) and a new authentication will be performed.")
+                    # Watson API key (config.)
+                    with open("robot_package/talk_module/ibm_cred.txt", "r") as ibm_cred: 
+                        ibm_config = ibm_cred.read().splitlines()
+                    apikey = ibm_config[0]
+                    url = ibm_config[1]
+                    # Setup Watson service
+                    authenticator = IAMAuthenticator(apikey)
+                    # TTS service
+                    tts = TextToSpeechV1(authenticator = authenticator)
+                    tts.set_service_url(url)
+                    first_requisition = False
+                    auth_start_time = time.time() # Momento da autenticação.
+
+                # Start the TTS process
+                tts_start = time.time() # Variable used to mark the processing time of the TTS service.
+                while(not audio_file_is_ok):
+                    # Functions of the TTS service for EVA
+                    with open("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION, 'wb') as audio_file:
+                        try:
+                            res = tts.synthesize(texto[ind_random], accept = config.ACCEPT_AUDIO_EXTENSION, voice = voice_type).get_result()
+                            print("[b white]State:[/][b green] Writing content to cache...[/]")
+                            audio_file.write(res.content)
+                            file_size = os.path.getsize("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)
+                            if file_size == 0: # Corrupted file!
+                                print("#### Corrupted file....")
+                                os.remove("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)
+                            else:
+                                try:
+                                    print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + texto[ind_random] + "[/]")
+                                    playsound("robot_package/talk_module/tts_cache_files/" + file_name + ".mp3", block = True)
+                                except FileNotFoundError as e:
+                                    print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
+                                    exit(1) 
+
+                                audio_file_is_ok = True
+                                first_requisition = False
+                        except ApiException as ex:
+                            print ("The function failed with the following error code: " + str(ex.code) + ": " + ex.message)
+                            exit(1)
+            else:
+                if (os.path.getsize("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)) == 0: # Corrupted file
+                    # The generated audio file is 0 bytes, corrupt and will be removed!
+                    os.remove("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)
+                else:
+                    # The file is more than 0 bytes and will be played now!
+                    try:
+                        print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + texto[ind_random] + '"[/]')
+                        playsound("robot_package/talk_module/tts_cache_files/" + file_name + ".mp3", block = True)
+                    except FileNotFoundError as e:
+                        print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
+                        exit(1) 
+                    audio_file_is_ok = True  
+
     else:
-        # Controla o robô físico
-        print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + texto[ind_random] + '"[/].')
-        
-        # # Testa se tem pitchShift
-        # if node.get("pitchShift") != None:
-        #     pitch = node.get("pitchShift")
-        # else:
-        #     pitch = "0"
+        # Controls the physical robot
+        print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + texto[ind_random] + '"[/]')
 
         if node.get("voiceType") == None:
             message = memory.default_voice + "|" + memory.default_voice_pitch_shift + "|" + texto[ind_random]

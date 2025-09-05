@@ -1,3 +1,9 @@
+import librosa
+import soundfile as sf
+import numpy as np
+import io
+from pydub import AudioSegment
+
 import threading
 import time
 
@@ -7,7 +13,6 @@ from tkinter import *
 from  tkinter import ttk # Using tables
 
 import hashlib
-import os
 
 from ibm_watson import TextToSpeechV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
@@ -25,7 +30,7 @@ import config # Module with network device configurations.
 broker = config.MQTT_BROKER_ADRESS # Broker address.
 port = config.MQTT_PORT # Broker Port.
 topic_base = config.SIMULATOR_TOPIC_BASE
-voice_tone = config.VOICE_TONE
+voice_type = config.VOICE_TYPE
 
 x_pos = 95
 y_pos = 30
@@ -83,19 +88,20 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    global voice_tone, auth_start_time, apikey, url, authenticator, tts, first_requisition
+    global voice_type, auth_start_time, apikey, url, authenticator, tts, first_requisition
     if msg.topic == topic_base + '/talk':
         print("Using IBM Watson to convert text to audio...")
         # Assumes the default UTF-8 (Generates the hashing of the audio file).
         # Additionally, use the voice timbre attribute in the file hash.
-        if len(msg.payload.decode().split("|")) == 2:
-            voice_tone = msg.payload.decode().split("|")[0]
-            msg.payload = (msg.payload.decode()).split("|")[1]
-            msg.payload = msg.payload.encode()
 
-        print("Voice:", voice_tone, "Message:", msg.payload.decode())
+        voice_type = msg.payload.decode().split("|")[0]
+        pitch_shift = msg.payload.decode().split("|")[1]
+        msg.payload = (msg.payload.decode()).split("|")[2]
+        # msg.payload = msg.payload.encode()
+
+        print("Voice:", voice_type, "Message:", msg.payload.decode())
         hash_object = hashlib.md5(msg.payload)
-        file_name = "_audio_"  + voice_tone + hash_object.hexdigest()
+        file_name = "_audio_"  + voice_type + "_pitch_" + pitch_shift + "_" + hash_object.hexdigest()
         
         audio_file_is_ok = False
         while(not audio_file_is_ok):
@@ -140,28 +146,55 @@ def on_message(client, userdata, msg):
                 tts_start = time.time() # Variable used to mark the processing time of the TTS service.
                 while(not audio_file_is_ok):
                     # Functions of the TTS service for EVA
-                    with open("sim_tts_ibm_watson/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION, 'wb') as audio_file:
-                        try:
-                            res = tts.synthesize(msg.payload.decode(), accept = config.ACCEPT_AUDIO_EXTENSION, voice = voice_tone).get_result()
-                            print("Writing content to disk...")
-                            audio_file.write(res.content)
-                            file_size = os.path.getsize("sim_tts_ibm_watson/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)
-                            print("File size:", file_size, " bytes.")
-                            if file_size == 0: # Corrupted file!
-                                print("#### Corrupted file....")
-                                os.remove("sim_tts_ibm_watson/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)
-                            else:
-                                tts_ending = time.time()
-                                client.publish(topic_base + "/log", "The audio was generated correctly in (s): %.2f" % (tts_ending - tts_start))
-                                print("The file will be played!")
-                                event_anim_state.clear()
-                                client.publish(topic_base + "/log", "EVA is busy trying to speak the text: " + msg.payload.decode())
-                                client.publish(topic_base + "/speech", file_name)
-                                audio_file_is_ok = True
-                                first_requisition = False
-                        except ApiException as ex:
-                            print ("The function failed with the following error code: " + str(ex.code) + ": " + ex.message)
-                            exit(1)
+                    try:
+                        res = tts.synthesize(msg.payload.decode(), accept = config.ACCEPT_AUDIO_EXTENSION, voice = voice_type).get_result()
+                        print("Writing content to disk...")                          
+        
+                        audio =  AudioSegment.from_mp3(io.BytesIO(res.content))
+                        
+                        if audio.channels > 1:
+                            audio = audio.set_channels(1)
+                        
+                        y = np.array(audio.get_array_of_samples(), dtype=np.float32) / (2**15)
+                        sr = audio.frame_rate
+
+                        steps = int(pitch_shift)
+                        if steps != 0:
+                            y_pitched = librosa.effects.pitch_shift(y, sr=sr, n_steps=int(pitch_shift)) # Executa o pirch de 3 semitons acima.
+                        else: # Sem processamento (Sem pitch)
+                            y_pitched = y
+
+                        y_stretched = librosa.effects.time_stretch(y_pitched, rate=1.3)
+
+                        # Simulação de mudança de formantes usando EQ
+                        # Realça frequências mais altas (simula trato vocal menor)
+                        b, a = signal.butter(2, [800, 4000], btype='band', fs=sr)
+                        y_formant = signal.filtfilt(b, a, y_stretched) * formant_shift
+                        
+                        # Combina o sinal original com o filtrado
+                        # new_y = y_stretched + y_formant * 0.3
+                        new_y = y_pitched
+
+                        sf.write("sim_tts_ibm_watson/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION, new_y, sr)  # WAV é melhor que MP3
+                        
+
+                        file_size = os.path.getsize("sim_tts_ibm_watson/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)
+                        print("File size:", file_size, " bytes.")
+                        if file_size == 0: # Corrupted file!
+                            print("#### Corrupted file....")
+                            os.remove("sim_tts_ibm_watson/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)
+                        else:
+                            tts_ending = time.time()
+                            client.publish(topic_base + "/log", "The audio was generated correctly in (s): %.2f" % (tts_ending - tts_start))
+                            print("The file will be played!")
+                            event_anim_state.clear()
+                            client.publish(topic_base + "/log", "EVA is busy trying to speak the text: " + msg.payload.decode())
+                            client.publish(topic_base + "/speech", file_name)
+                            audio_file_is_ok = True
+                            first_requisition = False
+                    except ApiException as ex:
+                        print ("The function failed with the following error code: " + str(ex.code) + ": " + ex.message)
+                        exit(1)
             else:
                 print("The file is cached!")
                 if (os.path.getsize("sim_tts_ibm_watson/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)) == 0: # Corrupted file

@@ -3,15 +3,14 @@ import time
 from rich.progress import Progress, TextColumn, BarColumn, TimeElapsedColumn
 
 
-
 def node_processing(node, memory, client_mqtt):
-    """ Função de tratamento do nó """
+    """ Node handling function """
 
     duration = node.attrib["duration"]
     
     seconds = int(duration)/1000
 
-    # Tempo em segundos
+    # Time in seconds
     tempo_total = int(seconds)
 
     # Barra de progresso personalizada
@@ -24,18 +23,18 @@ def node_processing(node, memory, client_mqtt):
         # Adicionar tarefa
         task = progress.add_task("", total=tempo_total, tempo="--:--")
         
-        # Contagem regressiva
+        # Countdown
         for segundos_restantes in range(tempo_total, -1, -1):
-            # Formatar o tempo restante
+            # Format the remaining time
             minutos = segundos_restantes // 60
             segundos = segundos_restantes % 60
             tempo_str = f"{minutos:02d}:{segundos:02d}"
             
-            # Atualizar a barra e o campo de tempo
+            # Update the bar and time field
             progresso_atual = tempo_total - segundos_restantes
             progress.update(task, completed=progresso_atual, tempo=tempo_str)
             
-            # Aguardar 1 segundo, mas apenas se não for o último valor
+            # Wait 1 second, but only if it is not the last value
             if segundos_restantes > 0:
                 time.sleep(1)
 

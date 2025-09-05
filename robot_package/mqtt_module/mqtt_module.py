@@ -5,11 +5,10 @@ import re
 import sys
 
 
-
 def node_processing(node, memory, client_mqtt):
-    """ Função de tratamento do nó """
+    """ Node handling function """
 
-    if (len(node.get("topic"))) == 0: # erro
+    if (len(node.get("topic"))) == 0: # error
         print("[b white on red blink] FATAL ERROR [/]: The [bold white]MQTT topic[/] is [b reverse white] EMPTY [/].✋⛔️")
         exit(1)
 
@@ -19,8 +18,8 @@ def node_processing(node, memory, client_mqtt):
 
     texto = node.text
     palavras = texto.split()
-    texto = ' '.join(palavras) # Removendo mais de um espaço entre as palavras.
-    texto = texto.replace('\n', '').replace('\r', '').replace('\t', '') # Remove tabulações e salto de linha.
+    texto = ' '.join(palavras) # Removing more than one space between words.
+    texto = texto.replace('\n', '').replace('\r', '').replace('\t', '') # Remove tabs and line breaks.
     # Replace variables throughout the text. variables must exist in memory
     if "#" in texto:
         var_list = re.findall(r'\#[a-zA-Z]+[a-zA-Z0-9_-]*', texto) # Generate list of occurrences of vars (#...)
@@ -54,9 +53,11 @@ def node_processing(node, memory, client_mqtt):
 
     print("[b white ]STATE[/]:[bold] Sending the [b white]MQTT message: [/][yellow]" + texto + "[/]. [b white] TOPIC: [/][reverse cyan] " + node.get("topic") + " [/].") #  to the topic: [b white]" + node.get("topic") + "[/]."
 
-    # Envia para o robô físico.
+    # Send the message
     if memory.running_mode == "robot":
-        # Envia para o robô.
+        # Send to the robot.
         client_mqtt.publish(node.get("topic"), texto)    
+    else:
+        client_mqtt.publish(node.get("topic"), texto)  
     
     return node # It returns the same node

@@ -5,15 +5,23 @@ console = Console()
 
 import sys
 
-sys.path.insert(0, "../")
-
 import robot_profile  # Module with network device configurations.
 
 import config
 
 
+
+# Função de bloqueio que é usada para sincronia entre os módulos e o Script Player
+# def block(state, memory, client_mqtt):
+#     memory.robot_state = state # Altera o estado do robô.
+#     client_mqtt.publish(topic_base + "/leds", "LISTEN")
+#     while memory.robot_state != "free": # Aguarda que o robô fique livre para seguir para o próximo comando.
+#         time.sleep(0.01)
+#     client_mqtt.publish(topic_base + "/leds", "STOP")
+
+
 def node_processing(node, memory, client_mqtt):
-    """ Função de tratamento do nó """
+    """ Node handling function """
 
     if memory.running_mode == "simulator":
         topic_base = config.SIMULATOR_TOPIC_BASE
@@ -28,19 +36,21 @@ def node_processing(node, memory, client_mqtt):
     else:
         language_for_listen =  node.get("language")
     
+    
+    # Whether in terminal mode or terminal-plus mode, entries are made via the keyboard via the terminal.
+    client_mqtt.publish(topic_base + "/leds", "LISTEN")
     print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + language_for_listen + '[/]. ', end="")
 
     user_answer = console.input("[b white on green blink] > [/] ")
     
+    client_mqtt.publish(topic_base + "/leds", "STOP")
     if node.get("var") == None: # Maintains compatibility with the use of the $ variable
         memory.var_dolar.append([user_answer, "<listen>"])
     else:
         var_name = node.get("var")
         memory.vars[var_name] = user_answer
-
-    # Tanto no modo terminal quanto no modo simulador, os inputs são feitos pelo terminal.
-    
-    # Controla o robô físico.
+        
+    # Controls the physical robot.
     if memory.running_mode == "robot": 
         pass
         # client = create_mqtt_client()

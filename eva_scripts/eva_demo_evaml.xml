@@ -1,6 +1,6 @@
 <evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="eva_demo" xsi:noNamespaceSchemaLocation="../robot_package/xml_schema/evaml_schema.xsd">
   <settings>
-    <voice type="en_US-amy-medium" pitchShift="5" />
+    <voice type="en-US_AllisonExpressive" pitchShift="5" />
     <lightEffects mode="ON" />
     <audioEffects mode="ON" />
   </settings>
