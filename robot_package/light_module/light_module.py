@@ -7,7 +7,7 @@ import robot_profile  # Module with network device configurations.
 import config
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Função de tratamento do nó """
     if memory.running_mode == "simulator":
         topic_base = config.SIMULATOR_TOPIC_BASE
@@ -39,6 +39,7 @@ def node_processing(node, memory, client_mqtt):
     print("[b white]State: Setting [/]the [b white]Smart Bulb[/]. 💡 " + tab_colors[light_color])
     
     if topic_base != "TERMINAL":
-        client_mqtt.publish(topic_base + "/light", message, qos=2); # Command for the physical smart bulb
+        pass
+        # client_mqtt.publish(topic_base + "/light", message, qos=2); # Command for the physical smart bulb
 
     return node # It returns the same node

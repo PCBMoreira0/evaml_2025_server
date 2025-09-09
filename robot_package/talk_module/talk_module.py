@@ -1,5 +1,5 @@
 import time
-import sys
+
 import random as rnd
 import re
 from rich import print
@@ -45,7 +45,7 @@ first_requisition = True; # Indicates that this is the first request for the Wat
 
 
 # Função de bloqueio que é usada para sincronia entre os módulos e o Script Player
-def block(state, memory, client_mqtt):
+def block(state, memory):
     pass
     # memory.robot_state = state # Altera o estado do robô.
     # client_mqtt.publish(topic_base + "/leds", "SPEAK")
@@ -55,7 +55,7 @@ def block(state, memory, client_mqtt):
 
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
 
     if memory.running_mode == "simulator":
@@ -142,14 +142,14 @@ def node_processing(node, memory, client_mqtt):
             voice_type = node.get('voiceType')
 
 
-        # print("Voice:", voice_type, "Text:", texto[ind_random])
+        texto[ind_random] = texto[ind_random].lower()
         hash_object = hashlib.md5(texto[ind_random].encode())
         file_name = "_audio_"  + voice_type + hash_object.hexdigest()
         audio_file_is_ok = False
         while(not audio_file_is_ok):
             # Checks if the speech audio already exists in the cache folder.
             if not (os.path.isfile("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)): # If it doesn't exist, call Watson.
-                '[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + texto[ind_random] + "[/]"
+                '[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + texto[ind_random] + '[/]"'
                 print("[b white]State:[/][b yellow] The file is not cached... Let's try to generate it![/]")
 
                 # Tests with the first request after a module reset (There is no problem in this way).
@@ -232,8 +232,8 @@ def node_processing(node, memory, client_mqtt):
         else:
             message = node.get("voiceType") + "|" + node.get("pitchShift") + "|" + texto[ind_random]
         
-        client_mqtt.publish(topic_base + '/' + node.tag, message)
+        # client_mqtt.publish(topic_base + '/' + node.tag, message)
         
-        block("Speaking", memory, client_mqtt)
+        # block("Speaking", memory, client_mqtt)
 
     return node # It returns the same node

@@ -84,7 +84,7 @@ def get_var_value(value, memory):
                 exit(1)
         
     
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Função de tratamento do nó """
 
     # Get the operator.

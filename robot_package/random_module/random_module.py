@@ -3,7 +3,7 @@ import random as rnd
 from rich import print
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
 
     min = node.get("min")

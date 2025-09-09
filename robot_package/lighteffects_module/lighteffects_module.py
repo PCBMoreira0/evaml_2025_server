@@ -5,7 +5,7 @@ import time
 from rich import print
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
         
     print("[b white]State: Setting [/]the [b white] light effects=" + node.get("mode") + "[/].")

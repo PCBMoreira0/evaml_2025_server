@@ -1,7 +1,7 @@
 from rich import print
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
 
     # Check if <goto> has the "target" attribute set

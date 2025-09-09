@@ -20,7 +20,7 @@ import config
 #     client_mqtt.publish(topic_base + "/leds", "STOP")
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
 
     if memory.running_mode == "simulator":
@@ -38,12 +38,12 @@ def node_processing(node, memory, client_mqtt):
     
     
     # Whether in terminal mode or terminal-plus mode, entries are made via the keyboard via the terminal.
-    client_mqtt.publish(topic_base + "/leds", "LISTEN")
+    # client_mqtt.publish(topic_base + "/leds", "LISTEN")
     print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + language_for_listen + '[/]. ', end="")
 
     user_answer = console.input("[b white on green blink] > [/] ")
     
-    client_mqtt.publish(topic_base + "/leds", "STOP")
+    # client_mqtt.publish(topic_base + "/leds", "STOP")
     if node.get("var") == None: # Maintains compatibility with the use of the $ variable
         memory.var_dolar.append([user_answer, "<listen>"])
     else:

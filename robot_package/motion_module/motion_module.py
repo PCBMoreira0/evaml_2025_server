@@ -6,7 +6,7 @@ import robot_profile  # Module with network device configurations.
 
 import config
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
     if memory.running_mode == "simulator":
         topic_base = config.SIMULATOR_TOPIC_BASE

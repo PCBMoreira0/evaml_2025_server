@@ -37,7 +37,7 @@ def get_var_value(value, memory):
 
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Função de tratamento do nó """
     # By definition, the switch can contain references to "$" and variables.
     # Variables are referenced by name, without the use of a "#" at the beginning.

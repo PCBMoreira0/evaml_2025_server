@@ -1,7 +1,7 @@
 from rich import print as rprint
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
 
     # Checks if the <macro> has the "id" attribute set

@@ -1,5 +1,3 @@
-from paho.mqtt import client as mqtt_client
-
 import sys
 
 import time
@@ -15,7 +13,7 @@ import robot_profile  # Module with network device configurations.
 robot_topic_base = robot_profile.ROBOT_TOPIC_BASE
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Função de tratamento do nó """
     if memory.running_mode == "simulator":
         topic_base = config.SIMULATOR_TOPIC_BASE
@@ -30,8 +28,8 @@ def node_processing(node, memory, client_mqtt):
     
 
     if topic_base != "TERMINAL":
-        client_mqtt.publish(topic_base + '/' + "leds", "STOP") # Although node.tag is "led" the defined topic was "leds".
+        # client_mqtt.publish(topic_base + '/' + "leds", "STOP") # Although node.tag is "led" the defined topic was "leds".
         time.sleep(0.1)
-        client_mqtt.publish(topic_base + '/' + "leds", message) # Although node.tag is "led" the defined topic was "leds".
+        # client_mqtt.publish(topic_base + '/' + "leds", message) # Although node.tag is "led" the defined topic was "leds".
 
     return node # It returns the same node

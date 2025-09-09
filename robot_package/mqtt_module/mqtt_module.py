@@ -5,7 +5,7 @@ import re
 import sys
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
 
     if (len(node.get("topic"))) == 0: # error

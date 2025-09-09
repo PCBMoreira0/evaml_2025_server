@@ -25,7 +25,7 @@ def block(state, memory):
         time.sleep(0.01)
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Função de tratamento do nó """
     if memory.running_mode == "simulator":
         topic_base = config.SIMULATOR_TOPIC_BASE
@@ -38,7 +38,7 @@ def node_processing(node, memory, client_mqtt):
         print('[b white]State:[/][b white] Playing[/] ▶️  the sound [bold][b white]"' + node.get("source") + '"[/] in [b white]BLOCKING[/] mode.')
         if topic_base != "TERMINAL":
             message = node.get("source") + "|" + node.get("block")
-            client_mqtt.publish(topic_base + '/' + node.tag, message)
+            # client_mqtt.publish(topic_base + '/' + node.tag, message)
             block("Playing a sound", memory)
         else:
             try:
@@ -50,7 +50,7 @@ def node_processing(node, memory, client_mqtt):
         print('[b white]State:[/][b white] Playing[/] ▶️  the sound [bold][b white]"' + node.get("source") + '"[/] in [b white]NON-BLOCKING[/] mode.')
         if topic_base != "TERMINAL":
             message = node.get("source") + "|" + node.get("block")
-            client_mqtt.publish(topic_base + '/' + node.tag, message)
+            # client_mqtt.publish(topic_base + '/' + node.tag, message)
         else:
             try:
                 playsound(os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/audio_module/audio_files/" + node.get("source") + ".wav", block = False)

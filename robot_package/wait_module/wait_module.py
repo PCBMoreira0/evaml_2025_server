@@ -3,7 +3,7 @@ import time
 from rich.progress import Progress, TextColumn, BarColumn, TimeElapsedColumn
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
 
     duration = node.attrib["duration"]

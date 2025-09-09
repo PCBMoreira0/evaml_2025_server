@@ -5,7 +5,7 @@ import time
 from rich import print
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
     memory.default_voice = node.get("type")
     if node.get("pitchShift") != None:

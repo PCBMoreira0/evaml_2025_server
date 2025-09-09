@@ -5,18 +5,11 @@
     <audioEffects mode="ON" />
   </settings>
   <script>
-    <light state="OFF" />
-    <led animation="STOP" />
-    <evaEmotion emotion="NEUTRAL" />
-    <wait duration="2000" />
-    <light state="ON" />
-    <wait duration="2000" />
-    <led animation="SPEAK" />
-    <wait duration="2000" />
-    <evaEmotion emotion="HAPPY" />
-    <audio source="efx-robot-head" block="TRUE" />
-    <light state="OFF" />
-    <led animation="STOP" />
-    <evaEmotion emotion="NEUTRAL" />
+    <listen />
+    <switch var="$">
+      <case op="exact" value="HAPPY">
+        <talk>OK, $</talk>
+      </case>
+    </switch>
   </script>
 </evaml>

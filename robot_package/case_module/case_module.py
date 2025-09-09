@@ -41,7 +41,7 @@ def get_var_value(value, memory):
 
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
     
     # Comparisons can be of 3 types: exact, contain and math (with conditional operators).
@@ -49,19 +49,19 @@ def node_processing(node, memory, client_mqtt):
     # Case 1 (Exact).
     if node.get("op") == "exact":
     # "Exact" comparisons are always string comparisons and are not case sensitive.
-        if memory.op_switch.lower() == get_var_value(node.get("value"), memory):
+        if memory.op_switch.lower() == get_var_value(node.get("value"), memory).lower():
             memory.flag_case = True
-            print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = exact)[/]. Comparing[b white] "' + memory.op_switch + '"[/] with [b white]"' + node.get("value") + '"[/]. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
+            print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = exact)[/]. Comparing[b white] "' + memory.op_switch.lower() + '"[/] with [b white]"' + node.get("value").lower() + '"[/]. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
         else:
             memory.flag_case = False
-            print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = exact)[/]. Comparing[b white] "' + memory.op_switch + '"[/] with [b white]"' + node.get("value") + '"[/]. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
+            print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = exact)[/]. Comparing[b white] "' + memory.op_switch.lower() + '"[/] with [b white]"' + node.get("value").lower() + '"[/]. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
 
         return node # It returns the same node
     
     # Case 2 (Contain).
     elif node.get("op") == "contain":
     # This comparison checks whether the string in "value" is contained in the string in "var".
-        if get_var_value(node.get("value"), memory) in memory.op_switch.lower() :
+        if get_var_value(node.get("value"), memory).lower() in memory.op_switch.lower() :
             memory.flag_case = True
             print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = contain)[/]. Is the string [b white]"' + node.get("value") + '"[/] [u]contained[/] in the string [b white]"' + memory.op_switch + '"[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
         else:

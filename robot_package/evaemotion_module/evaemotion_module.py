@@ -9,7 +9,7 @@ robot_topic_base = robot_profile.ROBOT_TOPIC_BASE
 import config
 
 
-def node_processing(node, memory, client_mqtt):
+def node_processing(node, memory):
     """ Node handling function """
 
     if memory.running_mode == "simulator":
