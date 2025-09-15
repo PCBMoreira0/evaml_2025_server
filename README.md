@@ -4,7 +4,7 @@
 #### Todo elemento XML deve ter um módulo python associado, a fim de processá-lo.
 #### O módulo deve ter o nome definido com o nome do elemento XML (com todos os caracteres minúsculos) concatenado a um "_" mais a palavra "module".
 #### Ele também deve estar dentro de uma pasta como o mesmo nome, no mesmo diretório do script_player
-#### O módulo deve implementar a interface "base_command_handler", definir a classe "CommandHandler" e implementar o método "nod_process". Esse método deve retornar um nó, que normalmente é o próprio node, com exceção do <goto> que retorna o nó "target".
+#### O módulo deve implementar a interface "base_command_handler", definir a classe "CommandHandler" e implementar o método "nod_process". Esse método deve retornar um nó, que normalmente é o próprio node, com exceção do "goto" que retorna o nó "target".
 
 Exemplos:
 
