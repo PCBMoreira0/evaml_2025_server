@@ -111,10 +111,8 @@ class ScriptEngine:
             print("O Player não se encontra no estado PLAY e não pode ser resetado.")
             return False
         # # Versão iterativa do player. Agora o XML é lido de maneira iterativa, sem recursão.
-        # while True: # Roda até ser interrompido por um break.
         if self.node == None: # None significa o fim de um um nível, onde não existe mais um nó irmão.
             if len(self.__robot_memory.get_node_stack()) != 0: # Se tem elemento na pilha.
-                # self.node = self.__robot_memory.node_stack.pop()
                 self.node = self.__robot_memory.node_stack_pop()
             else:
                 if self.__state  == "PLAY":
@@ -127,24 +125,20 @@ class ScriptEngine:
 
         # Processa os nós que têm filhos.
         elif len(self.node) > 0:
+            # Obtém a instância da classe referente a implementação do comando associado ao nó.
+            command_handler_instance = self.tab_modules[self.node.tag][2] 
             if self.node.tag == "switch":
                 if self.node.getnext() != None: # O nó "switch" tem um irmão adiante.
-                    # self.__robot_memory.node_stack.append(self.node.getnext()) # Nó que será executado após o retorno do <switch>.
                     self.__robot_memory.node_stack_push(self.node.getnext()) # Nó que será executado após o retorno do <switch>.
-                # mod = self.tab_modules[self.node.tag][2]
-                command_handler_instance = self.tab_modules[self.node.tag][2]
-                # self.node = eval('mod.node_processing')(self.node, self.__robot_memory) # Executa o <switch> colocando seu operador na memória.
-                self.node = command_handler_instance.node_process(self.node, self.__robot_memory)
+                # command_handler_instance = self.tab_modules[self.node.tag][2]
+                self.node = command_handler_instance.node_process(self.node, self.__robot_memory) # Executa o <switch> colocando seu operador na memória.
                 self.node = self.node[0] # Primeiro <case> do <switch>
 
             elif self.node.tag == "case":
                 # Um case só executa se houver um operador do switch na memória.
-                # if self.__robot_memory.op_switch != None: # Deve haver um operador do switch na memória. None indica que um case verdadeiro já ocorreu neste switch
                 if self.__robot_memory.get_op_switch() != None: # Deve haver um operador do switch na memória. None indica que um case verdadeiro já ocorreu neste switch
-                    # mod = self.tab_modules[self.node.tag][2]
-                    command_handler_instance = self.tab_modules[self.node.tag][2]
-                    # self.node = eval('mod.node_processing')(self.node, self.__robot_memory) # Executa o elemento <case> comparando com o operador (do switch) na memória. O result. da comparação fica em self.memory.flag_case.
-                    self.node = command_handler_instance.node_process(self.node, self.__robot_memory)
+                    # command_handler_instance = self.tab_modules[self.node.tag][2]
+                    self.node = command_handler_instance.node_process(self.node, self.__robot_memory) # Executa o elemento <case> comparando com o operador (do switch) na memória. O result. da comparação fica em self.memory.flag_case.
                     if self.__robot_memory.get_flag_case() == True:
                         self.__robot_memory.set_flag_case(False)
                         self.__robot_memory.set_op_switch(None)
@@ -154,13 +148,10 @@ class ScriptEngine:
                         # Senão encontrar, node será None.
                         self.node = self.node.getnext() 
                 else:
-                    # if len(memory.node_stack) != 0:
                     self.node = self.node.getnext() 
 
             elif self.node.tag == "default" and self.__robot_memory.get_op_switch() != None: # Se chegou aqui... então executa!
-                # mod = self.tab_modules[self.node.tag][2]
-                command_handler_instance = self.tab_modules[self.node.tag][2]
-                # self.node = eval('mod.node_processing')(self.node, self.__robot_memory)
+                # command_handler_instance = self.tab_modules[self.node.tag][2]
                 self.node = command_handler_instance.node_process(self.node, self.__robot_memory)
                 self.node = self.node[0] # Primeiro nó do <Default>
             
@@ -168,18 +159,17 @@ class ScriptEngine:
                 self.node = self.node.getnext()
 
         else: # Execução de nós comuns.
+            # Obtém a instância da classe referente a implementação do comando associado ao nó.
+            command_handler_instance = self.tab_modules[self.node.tag][2] 
             # Alguns casos de nós especiais.
             if self.node.tag == "goto":
-                # mod = self.tab_modules[self.node.tag][2]
-                command_handler_instance = self.tab_modules[self.node.tag][2]
-                # self.node = eval('mod.node_processing')(self.node, self.__robot_memory) # Executa o <goto> que retorna o nó destino (target).
+                # command_handler_instance = self.tab_modules[self.node.tag][2]
                 self.node = command_handler_instance.node_process(self.node, self.__robot_memory) # Executa o <goto> que retorna o nó destino (target).
                 self.node_target = self.node # Armazena o target do goto.
                 # Com a execução sendo direcionada para o nó "target" do <goto>
                 # Os nós na pilha de endereços de retorno podem perder o significado, caso o goto direcione
                 # a execução para um nó destino que pertence a um outro pai, dieferente do pai do goto.
                 # É preciso zerar a pilha e inserir novos nó que são os pais do nó "target".
-                # self.__robot_memory.node_stack = []
                 self.__robot_memory.node_stack_empty()
 
                 # Primeiro elemento da node_stack deve ser o próprio node target.
@@ -207,16 +197,12 @@ class ScriptEngine:
                 if self.node.getnext() != None: # O nó "useMacro" tem um irmão adiante.
                     self.__robot_memory.node_stack_push(self.node.getnext()) # Nó que será executado após o retorno do <useMacro>.
                 
-                # mod = self.tab_modules[self.node.tag][2]
-                command_handler_instance = self.tab_modules[self.node.tag][2]
-                # self.node = eval('mod.node_processing')(self.node, self.__robot_memory) # Executa o <useMacro> que retorna o nó "macro".
+                # command_handler_instance = self.tab_modules[self.node.tag][2]
                 self.node = command_handler_instance.node_process(self.node, self.__robot_memory) # Executa o <useMacro> que retorna o nó "macro".
                 self.node = self.node[0] # Primeiro nó  dentro da "macro"
 
             else:
-                # mod = self.tab_modules[self.node.tag][2]
-                command_handler_instance = self.tab_modules[self.node.tag][2]
-                # self.node = eval('mod.node_processing')(self.node, self.__robot_memory)
+                # command_handler_instance = self.tab_modules[self.node.tag][2]
                 self.node = command_handler_instance.node_process(self.node, self.__robot_memory)
                 if self.node.tag == "stop":
                     if self.__state  == "PLAY":
