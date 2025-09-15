@@ -1,9 +1,3 @@
-# This module defines two functions.
-# A function for identifying the elements used in the script.
-# A function for importing the modules associated with each of these elements.
-# The import function returns a table that associates the names (tags) of the elements with the objects of the imported modules.
-
-
 import sys
 import os
 
@@ -55,31 +49,30 @@ class ModuleLoader():
             diretorio = os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/" + module_name
             sys.path.insert(0, diretorio) # Put the module directory in the path.
             try:
-                mod = importlib.import_module(module_name) # import the module
+                mod = importlib.import_module(module_name) # Import the module
                 tab_modules[element_tag].append(module_name + ".py")
  
-                command_handler_class = getattr(mod, "CommandHandler") # Nome padrão para as classes dos módulos.
-                command_handler_instance = command_handler_class() # Cria a instância da classe de processamento do commando (nó Xml).
-                # tab_modules[element_tag].append(mod) # bkp da versão antiga. DELETAR FUTURAMNTE.
-                tab_modules[element_tag].append(command_handler_instance) # Armazena a instância da classe.
+                command_handler_class = getattr(mod, "CommandHandler") # Default name for module classes.
+                command_handler_instance = command_handler_class() # Creates the instance of the command processing class (Xml node).
+                tab_modules[element_tag].append(command_handler_instance) # Stores the instance of the class.
             except Exception as e:
                 tab_modules[element_tag].append("Not imported")
                 tab_modules[element_tag].append(None)
 
         if verbose_mode:
             print("")
-            table = Table(title="[bold]Table: XML Elements and Modules", box=box.DOUBLE_EDGE) # show_header=False, box=None (Algumas opções)
+            table = Table(title="[bold]Table: XML Elements and Modules", box=box.DOUBLE_EDGE) # show_header=False, box=None (Some options)
             table.add_column("XML Element")
             table.add_column("Occurrence", justify='center')
             table.add_column("Associated Module")
-            # At this moment, the tab_modules structure is: {elem.tag: [occurrences, dir. do módulo, module obj]}
+            # At this moment, the tab_modules structure is: {elem.tag: [occurrences, module name, module class instance]}
             for key, value in tab_modules.items():
-                if value[2]: # not None
+                if value[2]: # Not None
                     table.add_row("[bold yellow]" + key, "[bold cyan ]" + str(value[0]), "[bold green]" + value[1])
                 else:
                     table.add_row("[bold yellow]" + key, "[bold cyan ]" + str(value[0]), "[bold red]" + value[1])
             console.print(table)
-        
+   
         return tab_modules
 
 

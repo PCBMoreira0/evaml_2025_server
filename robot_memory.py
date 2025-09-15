@@ -1,16 +1,6 @@
 class RobotMemory(): # 
-    # _instance = None
-    # _is_initialized = False
-
-    # def __new__(cls, *args, **kwargs):
-    #     if cls._instance is None:
-    #         cls._instance = super().__new__(cls)
-    #     return cls._instance
-    
     def __init__(self):
-        # if not self._is_initialized: # Inicializa a memória
-            
-        # Is equivalent to the $ of the original Eva software.
+        # Is equivalent to the $ of the original Eva VPL software.
         # Is a list of results.
         self.var_dolar = []
 
@@ -47,14 +37,7 @@ class RobotMemory(): #
         self.default_voice = None
         self.default_voice_pitch_shift = None
 
-        #     # Indica que um objeto da memória foi instanciado
-        #     self._is_initialized = True
-
-        # else: # Se a memória já foi instanciada, pula o __init__ retornando a mesma instância.
-        #     pass
-        #     # print(f"[RobotMemory]: Instância já inicializada. Pulando __init__.")
-
-    # Getters and Setters 
+    # Setters and Getters 
     def setDollar(self, value):
         self.var_dolar.append(value)
 
@@ -121,13 +104,13 @@ class RobotMemory(): #
     def get_log_seq_numbers(self, log_name):
         return self.log_seq_numbers[log_name]
     
-    def set_tab_ids(self, tab_ids): # The complete table
+    def set_tab_ids(self, tab_ids): # The complete table.
         self.tab_ids = tab_ids
 
     def set_tab_ids_elemen_obj_ref(self, element_name, element_type, element_obj_ref):
         self.tab_ids[element_name] = [element_name, element_obj_ref]
 
-    def get_tab_ids(self): # The complete table
+    def get_tab_ids(self): # The complete table.
         return self.tab_ids
 
     def get_tab_ids_elemen_obj_ref(self, element_name):
@@ -145,7 +128,7 @@ class RobotMemory(): #
     def get_default_voice_pitch_shift(self):
         return self.default_voice_pitch_shift
     
-    def reset_memory(self):
+    def reset_memory(self): # 
         # 
         self.var_dolar = []
         self.node_stack = []
