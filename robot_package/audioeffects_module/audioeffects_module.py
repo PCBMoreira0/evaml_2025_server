@@ -1,13 +1,12 @@
-import sys
-
-import time
-
 from rich import print
 
+from base_command_handler import BaseCommandHandler
 
-def node_processing(node, memory):
-    """ Node handling function """
-        
-    print("[b white]State: Setting [/]the [b white] audio effects=" + node.get("mode") + "[/].")
+class CommandHandler(BaseCommandHandler):
 
-    return node # It returns the same node
+    def node_process(self, node, memory):
+        """ Node process function """
+            
+        print("[b white]State: Setting [/]the [b white] audio effects=" + node.get("mode") + "[/].")
+
+        return node # It returns the same node

@@ -1,9 +1,12 @@
 from rich import print
 
+from base_command_handler import BaseCommandHandler
 
-def node_processing(node, memory):
-    """ Node handling function """
-    print("[b white]State:[/] Executing the [b green reverse] Default [/] option.")
+class CommandHandler(BaseCommandHandler):
     
-    return node # It returns the same node
+    def node_process(self, node, memory):
+        """ Node handling function """
+        print("[b white]State:[/] Executing the [b green reverse] Default [/] option.")
+        
+        return node # It returns the same node
     

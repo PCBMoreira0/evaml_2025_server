@@ -10,12 +10,4 @@ while sp1.get_state() == "PLAY":
     sp1.play_next()
 
 
-# # Simula um Do-While no Python
-# while True:
-#     sp1.play_next("terminal-plus")
-#     if sp1.get_state() == "IDLE":
-#         break
-
-
-
 

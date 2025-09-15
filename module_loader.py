@@ -57,7 +57,11 @@ class ModuleLoader():
             try:
                 mod = importlib.import_module(module_name) # import the module
                 tab_modules[element_tag].append(module_name + ".py")
-                tab_modules[element_tag].append(mod)
+ 
+                command_handler_class = getattr(mod, "CommandHandler") # Nome padrão para as classes dos módulos.
+                command_handler_instance = command_handler_class() # Cria a instância da classe de processamento do commando (nó Xml).
+                # tab_modules[element_tag].append(mod) # bkp da versão antiga. DELETAR FUTURAMNTE.
+                tab_modules[element_tag].append(command_handler_instance) # Armazena a instância da classe.
             except Exception as e:
                 tab_modules[element_tag].append("Not imported")
                 tab_modules[element_tag].append(None)

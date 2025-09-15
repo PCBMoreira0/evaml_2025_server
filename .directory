@@ -1,2 +1,8 @@
 [Desktop Entry]
 Icon=/usr/share/icons/hicolor/256x256/apps/mega.png
+
+[Dolphin]
+HeaderColumnWidths=349,72,142
+Timestamp=2025,9,15,17,3,5.902
+Version=4
+ViewMode=2

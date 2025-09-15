@@ -1,10 +1,12 @@
 
+from base_command_handler import BaseCommandHandler
 
+class CommandHandler(BaseCommandHandler):
 
-def node_processing(node, memory):
-    """ Node handling function """
+    def node_process(self, node, memory):
+        """ Node handling function """
 
-    # Retorna o próprio node.
-    return node
+        # Retorna o próprio node.
+        return node
 
     

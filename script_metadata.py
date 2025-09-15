@@ -1,27 +1,11 @@
-# This module defines two functions.
-# A function for identifying the elements used in the script.
-# A function for importing the modules associated with each of these elements.
-# The import function returns a table that associates the names (tags) of the elements with the objects of the imported modules.
-
-
-import sys
-import os
-
-import importlib
-
 from rich import print, box
 from rich.console import Console
 from rich.table import Table
 
-import config
-
 console = Console()
 
 class ScriptMetadata():
-    def __init__(self):
-        pass
 
-    
     def identify_targets(self, xml_root, verbose_mode=False):
         tab_ids = {}
         for element in xml_root.iter():

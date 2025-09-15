@@ -4,7 +4,6 @@ from rich.console import Console
 
 console = Console()
 
-import sys
 
 import robot_profile  # Module with network device configurations.
 
@@ -20,37 +19,40 @@ import config
 #         time.sleep(0.01)
 #     client_mqtt.publish(topic_base + "/leds", "STOP")
 
+from base_command_handler import BaseCommandHandler
 
-def node_processing(node, memory):
-    """ Node handling function """
+class CommandHandler(BaseCommandHandler):
 
-    if memory.running_mode == "simulator":
-        topic_base = config.SIMULATOR_TOPIC_BASE
-    elif memory.running_mode == "robot":
-        topic_base = robot_profile.ROBOT_TOPIC_BASE
-    else:
-        topic_base = config.TERMINAL_TOPIC_BASE
-    
+    def node_process(self, node, memory):
+        """ Node handling function """
 
-    # Whether in terminal mode or terminal-plus mode, entries are made via the keyboard via the terminal.
-    if memory.running_mode == "terminal" or memory.running_mode == "terminal-plus": 
-        
-        print('[b white]State:[/] The Robot is [b green]recognizing[/] [b white]the user emotion[/].', end="")
-
-        user_answer = console.input("[b white on green blink] > [/] ")
-        
-        if node.get("var") == None: # Maintains compatibility with the use of the $ variable
-            memory.var_dolar.append([user_answer, "<userEmotion>"])
+        if memory.running_mode == "simulator":
+            topic_base = config.SIMULATOR_TOPIC_BASE
+        elif memory.running_mode == "robot":
+            topic_base = robot_profile.ROBOT_TOPIC_BASE
         else:
-            var_name = node.get("var")
-            memory.vars[var_name] = user_answer
-    
-    # Controls the physical robot.
-    elif memory.running_mode == "robot": 
-        pass
-        # client = create_mqtt_client()
-        # client.publish(robot_topic_base + '/' + node.tag, message)
+            topic_base = config.TERMINAL_TOPIC_BASE
+        
 
-    return node # It returns the same node
+        # Whether in terminal mode or terminal-plus mode, entries are made via the keyboard via the terminal.
+        if memory.running_mode == "terminal" or memory.running_mode == "terminal-plus": 
+            
+            print('[b white]State:[/] The Robot is [b green]recognizing[/] [b white]the user emotion[/].', end="")
+
+            user_answer = console.input("[b white on green blink] > [/] ")
+            
+            if node.get("var") == None: # Maintains compatibility with the use of the $ variable
+                memory.var_dolar.append([user_answer, "<userEmotion>"])
+            else:
+                var_name = node.get("var")
+                memory.vars[var_name] = user_answer
+        
+        # Controls the physical robot.
+        elif memory.running_mode == "robot": 
+            pass
+            # client = create_mqtt_client()
+            # client.publish(robot_topic_base + '/' + node.tag, message)
+
+        return node # It returns the same node
 
  

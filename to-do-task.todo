@@ -1,0 +1,47 @@
+✔ Corrigir o problema que está dando nas comparações. Revisar o <switch>, o <case> e o <default>. @done (13/09/2025, 15:50:35) @done
+
+✔ Mudar a unidade default do comando <wait> de milissegundos para segundos. @low @done (13/09/2025, 17:30:40)
+
+✔ Definir os setters e getters da classe Robot memory. @done (15/09/2025, 13:11:21)
+
+✔ Implementar a memória do robô no padrão singleton. @high @done (15/09/2025, 13:11:28)
+
+☐ Resolver a questão do cliente mqtt para o comando <log>. @high
+
+☐ Resolver a questão do cliente mqtt para o comando <mqtt>. @high
+
+✔ A utilização da classe robot memory no padrão singleton foi cancelada... @done (15/09/2025, 13:48:35)
+
+☐ Corrigir o nome da dolar por dollar (que meeerda) @low (Talvez eu deixe assim mesmo...)
+
+☐ Implementar no PARSER a função que processa o XML após a validação e insere os valores default e fixed no script XML. @low 
+
+    Obsservação:
+        O processo de validação de um XML contra um XSD (XML Schema) geralmente apenas verifica se o documento está em conformidade.
+        Ele retorna True (válido) ou False (inválido), mas não modifica a árvore de elementos do XML na memória.
+        Os valores default e fixed definidos no XSD são, na verdade, diretivas para a lógica da sua aplicação, e não para o próprio validador.
+        Se um atributo com um valor default não estiver presente no seu arquivo XML, ele não será automaticamente adicionado ao objeto Python que representa o XML.
+        
+
+    Para usar o valor default, seu programa precisa seguir um fluxo de processamento mais explícito:
+
+    1. Ler o XML de Instância:
+        Parsear o arquivo XML como ele é.
+
+    2. Validar o XML:
+        Validar a instância contra o XSD para garantir que a estrutura está correta.
+
+    3. Ler o XML Schema (XSD):
+        Parsear o próprio arquivo XSD.
+
+    4. Processamento Lógico:
+        Percorrer a árvore do XML de instância e, para cada atributo esperado que esteja ausente,
+        buscar o seu valor default na representação em memória do XSD e adicioná-lo ao objeto XML na memória.
+
+    * A biblioteca lxml (que não é embutida no Python, mas é a mais recomendada para esse tipo de tarefa)
+    facilita bastante esse processo, pois ela lida muito bem tanto com o parsing do XML quanto com a validação do XSD.
+    * Em resumo, o valor default é um contrato entre o designer do schema e o desenvolvedor da aplicação.
+    É responsabilidade do desenvolvedor implementar a lógica que honra esse contrato, adicionando o valor quando ele está ausente.
+
+☐ Terminar os módulos para o EVA e copiar para o FRED. @low
+
