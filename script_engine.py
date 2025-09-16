@@ -130,13 +130,17 @@ class ScriptEngine:
             if self.node.tag == "switch":
                 if self.node.getnext() != None: # The "switch" node has a sibling ahead.
                     self.__robot_memory.node_stack_push(self.node.getnext()) # Node that will be executed after <switch> returns.
+                self.__state = "BLOCKED"
                 self.node = command_handler_instance.node_process(self.node, self.__robot_memory) # Executes the <switch> by placing its operator in memory.
+                self.__state = "PLAY"
                 self.node = self.node[0] # First <case> of <switch>
 
             elif self.node.tag == "case":
                 # A case only executes if there is a switch operator in memory.
                 if self.__robot_memory.get_op_switch() != None: # There must be a switch operator in memory. None indicates that a true case has already occurred in this switch.
+                    self.__state = "BLOCKED"
                     self.node = command_handler_instance.node_process(self.node, self.__robot_memory) # Executes the <case> element by comparing it with the (switch) operator in memory. The result of the comparison is in robot_memory.flag_case.
+                    self.__state = "PLAY"
                     if self.__robot_memory.get_flag_case() == True:
                         self.__robot_memory.set_flag_case(False)
                         self.__robot_memory.set_op_switch(None)
@@ -149,7 +153,9 @@ class ScriptEngine:
                     self.node = self.node.getnext() 
 
             elif self.node.tag == "default" and self.__robot_memory.get_op_switch() != None: # If you've made it this far... then run!
+                self.__state = "BLOCKED"
                 self.node = command_handler_instance.node_process(self.node, self.__robot_memory)
+                self.__state = "PLAY"
                 self.node = self.node[0] # First <Default> node
             
             else:
@@ -160,7 +166,9 @@ class ScriptEngine:
             command_handler_instance = self.tab_modules[self.node.tag][2] 
             # Some cases of special nodes.
             if self.node.tag == "goto":
+                self.__state = "BLOCKED"
                 self.node = command_handler_instance.node_process(self.node, self.__robot_memory) # Executa o <goto> que retorna o nó destino (target).
+                self.__state = "PLAY"
                 self.node_target = self.node # Stores the target of the goto.
                 # With execution directed to the <goto> "target" node
                 # The nodes in the return address stack may lose their meaning if the goto directs
@@ -193,11 +201,15 @@ class ScriptEngine:
                 if self.node.getnext() != None: # The "useMacro" node has a sibling ahead.
                     self.__robot_memory.node_stack_push(self.node.getnext()) # Node that will be executed after <useMacro> returns.
                 
+                self.__state = "BLOCKED"
                 self.node = command_handler_instance.node_process(self.node, self.__robot_memory) # Run <useMacro> which returns the "macro" node.
+                self.__state = "PLAY"
                 self.node = self.node[0] # First node inside the "macro".
 
             else:
+                self.__state = "BLOCKED"
                 self.node = command_handler_instance.node_process(self.node, self.__robot_memory)
+                self.__state = "PLAY"
                 if self.node.tag == "stop":
                     if self.__state  == "PLAY":
                         # End of script
