@@ -18,6 +18,7 @@ Revision: 2025/04/16
     <!-- EVAML lightEffects command definition ** -->
 	<xs:element name="lightEffects">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="NULL"/>
 			<xs:attribute name="mode" type="modeType" use="required"/>
 		</xs:complexType>
 	</xs:element>

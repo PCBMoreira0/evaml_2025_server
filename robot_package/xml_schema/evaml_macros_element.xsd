@@ -22,6 +22,7 @@ Revision: 2025/04/16
 			<xs:sequence minOccurs="1" maxOccurs="unbounded">
 				<xs:element ref="macro"/>
 			</xs:sequence>
+			<xs:attribute name="commMode" type="xs:string" fixed="NULL"/>
 		</xs:complexType>
 	</xs:element>
 	

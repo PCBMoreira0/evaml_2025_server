@@ -11,6 +11,9 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
 
 # Função de bloqueio que é usada para sincronia entre os módulos e o Script Player
 # def block(state, memory, client_mqtt):
@@ -21,7 +24,7 @@ class CommandHandler(BaseCommandHandler):
 #     client_mqtt.publish(topic_base + "/leds", "STOP")
 
 
-    def node_process(self, node, memory):
+    def node_process(self, xml_node, memory):
         """ Node handling function """
 
         if memory.running_mode == "simulator":
@@ -31,11 +34,11 @@ class CommandHandler(BaseCommandHandler):
         else:
             topic_base = config.TERMINAL_TOPIC_BASE
 
-        if node.get("language") == None: # Maintains compatibility with the use of <listen> in old scripts
+        if xml_node.get("language") == None: # Maintains compatibility with the use of <listen> in old scripts
             # It will be used the default value defined in config.py file
             language_for_listen = config.LANG_DEFAULT_GOOGLE_TRANSLATING
         else:
-            language_for_listen =  node.get("language")
+            language_for_listen =  xml_node.get("language")
         
         
         # Whether in terminal mode or terminal-plus mode, entries are made via the keyboard via the terminal.
@@ -45,17 +48,17 @@ class CommandHandler(BaseCommandHandler):
         user_answer = console.input("[b white on green blink] > [/] ")
         
         # client_mqtt.publish(topic_base + "/leds", "STOP")
-        if node.get("var") == None: # Maintains compatibility with the use of the $ variable
+        if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
             memory.var_dolar.append([user_answer, "<listen>"])
         else:
-            var_name = node.get("var")
+            var_name = xml_node.get("var")
             memory.vars[var_name] = user_answer
             
         # Controls the physical robot.
         if memory.running_mode == "robot": 
             pass
             # client = create_mqtt_client()
-            # client.publish(robot_topic_base + '/' + node.tag, message)
+            # client.publish(robot_topic_base + '/' + xml_node.tag, message)
 
-        return node # It returns the same node
+        return xml_node # It returns the same node
 

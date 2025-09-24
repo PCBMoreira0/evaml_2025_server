@@ -18,6 +18,7 @@ Revision: 2025/04/16
     <!-- EVAML useMacro command definition ** -->
 	<xs:element name="useMacro">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="NULL"/>
 			<xs:attribute name="macro" type="xs:IDREF" use="required"/>
 		</xs:complexType>
 	</xs:element>

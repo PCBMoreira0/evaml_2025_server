@@ -6,10 +6,14 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
-    def node_process(self, node, memory):
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+
+    def node_process(self, xml_node, memory):
         """ Node handling function """
 
-        duration = node.attrib["duration"]
+        duration = xml_node.attrib["duration"]
 
         seconds = int(duration)
 
@@ -41,4 +45,4 @@ class CommandHandler(BaseCommandHandler):
                 if segundos_restantes > 0:
                     time.sleep(1)
 
-        return node # It returns the same node
+        return xml_node # It returns the same node

@@ -18,8 +18,10 @@ Revision: 2025/04/16
     <!-- ** EVAML mqtt command definition ** -->
 	<xs:element name="mqtt">
 		<xs:complexType mixed="true">
+			<xs:attribute name="commMode" type="xs:string" fixed="MQTT_PUB"/>
+			<xs:attribute name="pubTopic" type="xs:string" use="required"/>
 			<xs:attribute name="id" type="idType"/>
-			<xs:attribute name="topic" type="topicType" use="required"/>
+			<!-- <xs:attribute name="topic" type="xs:string" use="required"/> -->
 		</xs:complexType>
 	</xs:element>
 

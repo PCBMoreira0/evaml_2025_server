@@ -1,15 +1,22 @@
 from abc import ABC, abstractmethod
-import xml.etree.ElementTree as ET
+
 
 class BaseCommandHandler(ABC):
     """
     Base class for all EvaML language command modules.
     All must implement the node_process() method.
     """
+    def __init__(self, xml_node, communicator_obj):
 
+        self.xml_node = xml_node
+        self.comms = communicator_obj
+
+    def send(self, data: dict):
+        self.comms.send(data)
+
+    def receive(self) -> dict:
+        return self.comms.receive()
+    
     @abstractmethod
-    def node_process(self, xml_node: ET.Element, memory) -> ET.Element:
-        """
-        Processes the XML node corresponding to the command.
-        """
-
+    def node_process(self, xml_node, memory):
+        pass

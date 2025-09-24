@@ -1,18 +1,29 @@
 <evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="teste" xsi:noNamespaceSchemaLocation="../robot_package/xml_schema/evaml_schema.xsd">
   <settings>
-    <voice type="pt-BR_IsabelaV3Voice" pitchShift="3" />
-    <lightEffects mode="ON" />
-    <audioEffects mode="ON" />
+    <voice type="pt_BR-faber-medium" pitchShift="0" commMode="NULL" />
+    <lightEffects mode="ON" commMode="NULL" />
+    <audioEffects mode="ON" commMode="NULL" vol="100%" />
   </settings>
   <script>
-    <talk voiceType="pt_BR-faber-medium">Olá, meu nome é Frédi! Como você se chama?</talk>
-    <listen />
-    <talk voiceType="pt_BR-faber-medium">Muito prazer em conhecê-lo, $</talk>
-    <audio source="efx-display" block="TRUE" />
-    <talk voiceType="pt_BR-faber-medium" pitchShift="8">Olá, meu nome é Frédi! Como você se chama?</talk>
-    <listen />
-    <talk voiceType="pt_BR-faber-medium" pitchShift="8">Muito prazer em conhecê-lo, $</talk>
-    <audio source="efx-display" block="TRUE" />
-    <talk voiceType="en_US-amy-medium" pitchShift="5">Hi, my name is Fréd! How are you?</talk>
+    <light state="ON" commMode="MQTT_PUB" pubTopic="LIGHT" color="WHITE" />
+    <mqtt pubTopic="MQTT" commMode="MQTT_PUB">
+      Olá MQTT novo
+    </mqtt>
+    <audio source="efx-blin" block="TRUE" commMode="MQTT_PUB_SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+    <log name="LOG1" commMode="MQTT_PUB" pubTopic="LOG">
+      Teste de LOG1
+    </log>
+    <log name="LOG2" commMode="MQTT_PUB" pubTopic="LOG">
+      Teste de LOG2
+    </log>
+    <log name="LOG1" commMode="MQTT_PUB" pubTopic="LOG">
+      Teste de LOG1
+    </log>
+    <http url="http://127.0.0.1:5000" commMode="HTTP">
+      {"command": "move_to", "destination": "home"}
+    </http>
+    <log name="LOG2" commMode="MQTT_PUB" pubTopic="LOG">
+      Teste de LOG2
+    </log>
   </script>
 </evaml>

@@ -4,6 +4,10 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)    
+
     def get_var_value(self, value, memory):
         # Values ​​in var (var_value) can only be numbers, $ (of all types) and variables without # at the beginning.
         if value[0] == "$": # Is of type $, $n, or $-n
@@ -44,107 +48,107 @@ class CommandHandler(BaseCommandHandler):
 
 
 
-    def node_process(self, node, memory):
+    def node_process(self, xml_node, memory):
         """ Node handling function """
         
         # Comparisons can be of 3 types: exact, contain and math (with conditional operators).
 
         # Case 1 (Exact).
-        if node.get("op") == "exact":
+        if xml_node.get("op") == "exact":
         # "Exact" comparisons are always string comparisons and are not case sensitive.
-            if memory.op_switch.lower() == self.get_var_value(node.get("value"), memory).lower():
+            if memory.op_switch.lower() == self.get_var_value(xml_node.get("value"), memory).lower():
                 memory.flag_case = True
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = exact)[/]. Comparing[b white] "' + memory.op_switch.lower() + '"[/] with [b white]"' + node.get("value").lower() + '"[/]. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = exact)[/]. Comparing[b white] "' + memory.op_switch.lower() + '"[/] with [b white]"' + xml_node.get("value").lower() + '"[/]. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
             else:
                 memory.flag_case = False
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = exact)[/]. Comparing[b white] "' + memory.op_switch.lower() + '"[/] with [b white]"' + node.get("value").lower() + '"[/]. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = exact)[/]. Comparing[b white] "' + memory.op_switch.lower() + '"[/] with [b white]"' + xml_node.get("value").lower() + '"[/]. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
 
-            return node # It returns the same node
+            return xml_node # It returns the same node
         
         # Case 2 (Contain).
-        elif node.get("op") == "contain":
+        elif xml_node.get("op") == "contain":
         # This comparison checks whether the string in "value" is contained in the string in "var".
-            if self.get_var_value(node.get("value"), memory).lower() in memory.op_switch.lower() :
+            if self.get_var_value(xml_node.get("value"), memory).lower() in memory.op_switch.lower() :
                 memory.flag_case = True
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = contain)[/]. Is the string [b white]"' + node.get("value") + '"[/] [u]contained[/] in the string [b white]"' + memory.op_switch + '"[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = contain)[/]. Is the string [b white]"' + xml_node.get("value") + '"[/] [u]contained[/] in the string [b white]"' + memory.op_switch + '"[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
             else:
                 memory.flag_case = False
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = contain)[/]. Is the string [b white]"' + node.get("value") + '"[/] [u]contained[/] in the string [b white]"' + memory.op_switch + '"[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = contain)[/]. Is the string [b white]"' + xml_node.get("value") + '"[/] [u]contained[/] in the string [b white]"' + memory.op_switch + '"[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
 
-            return node # It returns the same node
+            return xml_node # It returns the same node
         
         # Case 3 (Math comparison - eq, gt, gte, lt, lte e ne).
         # Mathematical comparison compares the operands considering them as numbers.
         # To do this, they are transformed from strings (as they are stored in the robot's memory) to integers.
         
         # Operator "eq" -> Equality.
-        elif node.get("op") == "eq": # Tests whether the value contained in "var" is equal to the value contained in "value".
-            value_str = self.get_var_value(node.get("value"), memory)
-            if int(memory.op_switch) == int(self.get_var_value(node.get("value"), memory)):
+        elif xml_node.get("op") == "eq": # Tests whether the value contained in "var" is equal to the value contained in "value".
+            value_str = self.get_var_value(xml_node.get("value"), memory)
+            if int(memory.op_switch) == int(self.get_var_value(xml_node.get("value"), memory)):
                 memory.flag_case = True
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
             else:
                 memory.flag_case = False
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
 
-            return node # It returns the same node
+            return xml_node # It returns the same node
         
         # Operator "gt" -> Greater than.
-        elif node.get("op") == "gt": # Tests whether the value contained in "var" is greater than the value contained in "value".
-            value_str = self.get_var_value(node.get("value"), memory)
-            if int(memory.op_switch) > int(self.get_var_value(node.get("value"), memory)):
+        elif xml_node.get("op") == "gt": # Tests whether the value contained in "var" is greater than the value contained in "value".
+            value_str = self.get_var_value(xml_node.get("value"), memory)
+            if int(memory.op_switch) > int(self.get_var_value(xml_node.get("value"), memory)):
                 memory.flag_case = True
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]greater than[/] the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]greater than[/] the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
             else:
                 memory.flag_case = False
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]greater than[/] the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]greater than[/] the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
 
-            return node # It returns the same node
+            return xml_node # It returns the same node
         
         # Operator "gte" -> Greater than or equal to.
-        elif node.get("op") == "gte": # Tests whether the value contained in "var" is greater than or equal to the value contained in "value".
-            value_str = self.get_var_value(node.get("value"), memory)
-            if int(memory.op_switch) >= int(self.get_var_value(node.get("value"), memory)):
+        elif xml_node.get("op") == "gte": # Tests whether the value contained in "var" is greater than or equal to the value contained in "value".
+            value_str = self.get_var_value(xml_node.get("value"), memory)
+            if int(memory.op_switch) >= int(self.get_var_value(xml_node.get("value"), memory)):
                 memory.flag_case = True
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]greater than or equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]greater than or equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
             else:
                 memory.flag_case = False
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]greater than or equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]greater than or equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
 
-            return node # It returns the same node
+            return xml_node # It returns the same node
         
         # Operator "lt" -> Less than.
-        elif node.get("op") == "lt": # Tests whether the value contained in "var" is less than the value contained in "value".
-            value_str = self.get_var_value(node.get("value"), memory)
-            if int(memory.op_switch) < int(self.get_var_value(node.get("value"), memory)):
+        elif xml_node.get("op") == "lt": # Tests whether the value contained in "var" is less than the value contained in "value".
+            value_str = self.get_var_value(xml_node.get("value"), memory)
+            if int(memory.op_switch) < int(self.get_var_value(xml_node.get("value"), memory)):
                 memory.flag_case = True
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]less than[/] the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]less than[/] the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
             else:
                 memory.flag_case = False
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]less than[/] the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]less than[/] the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
 
-            return node # It returns the same node
+            return xml_node # It returns the same node
         
         # Operator "lte" -> Less than or equal to.
-        elif node.get("op") == "lte": # Tests whether the value contained in "var" is less than or equal to the value contained in "value".
-            value_str = self.get_var_value(node.get("value"), memory)
-            if int(memory.op_switch) <= int(self.get_var_value(node.get("value"), memory)):
+        elif xml_node.get("op") == "lte": # Tests whether the value contained in "var" is less than or equal to the value contained in "value".
+            value_str = self.get_var_value(xml_node.get("value"), memory)
+            if int(memory.op_switch) <= int(self.get_var_value(xml_node.get("value"), memory)):
                 memory.flag_case = True
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]less than or equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]less than or equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
             else:
                 memory.flag_case = False
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]less than or equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]less than or equal[/] to the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
 
-            return node # It returns the same node
+            return xml_node # It returns the same node
         
         # Operator "ne" -> Different from.
-        elif node.get("op") == "ne": # Tests whether the value contained in "var" is different from the value contained in "value".
-            value_str = self.get_var_value(node.get("value"), memory)
-            if int(memory.op_switch) != int(self.get_var_value(node.get("value"), memory)):
+        elif xml_node.get("op") == "ne": # Tests whether the value contained in "var" is different from the value contained in "value".
+            value_str = self.get_var_value(xml_node.get("value"), memory)
+            if int(memory.op_switch) != int(self.get_var_value(xml_node.get("value"), memory)):
                 memory.flag_case = True
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]different[/] from the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]different[/] from the value [b white]' + value_str + '[/] ?. Result: [b reverse green] ' + str(memory.flag_case).upper() + ' [/]')
             else:
                 memory.flag_case = False
-                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]different[/] from the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
+                print('[b white]State:[/] Executing a [b white]Case[/] [b yellow](type = math(' + xml_node.get("op") + '))[/]. Is the value [b white]' + memory.op_switch + '[/] [u]different[/] from the value [b white]' + value_str + '[/] ?. Result: [b reverse red] ' + str(memory.flag_case).upper() + ' [/]')
 
-            return node # It returns the same node
+            return xml_node # It returns the same node

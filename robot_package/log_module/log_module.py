@@ -15,18 +15,22 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
-    def node_process(self, node, memory):
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+
+    def node_process(self, xml_node, memory):
         """ Node handling function """
 
-        if (len(node.get("name"))) == 0: # erro
+        if (len(xml_node.get("name"))) == 0: # erro
             print('[b white on red blink] FATAL ERROR [/]: The [bold white]"log name" [/]attribute is [b reverse yellow] EMPTY [/].✋⛔️')
             exit(1)
 
-        if node.text == None: # There is no text to send.
+        if xml_node.text == None: # There is no text to send.
             print("[b white on red blink] FATAL ERROR [/]:[bold] There is [b reverse white] no text [/] to send in the element [b white]<log>[/].✋⛔️")
             exit(1)
 
-        texto = node.text
+        texto = xml_node.text
         
         # Replace variables throughout the text. Variables must exist in memory.
         if "#" in texto:
@@ -68,14 +72,15 @@ class CommandHandler(BaseCommandHandler):
                                 exit(1)
                             
 
-        if node.get("name") in memory.log_seq_numbers:
-            log_seq_number = memory.log_seq_numbers[node.get("name")] = memory.log_seq_numbers[node.get("name")] + 1
+        if xml_node.get("name") in memory.log_seq_numbers:
+            log_seq_number = memory.log_seq_numbers[xml_node.get("name")] = memory.log_seq_numbers[xml_node.get("name")] + 1
         else:
-            log_seq_number = memory.log_seq_numbers[node.get("name")] = 1
+            log_seq_number = memory.log_seq_numbers[xml_node.get("name")] = 1
 
-        print('[b white ]State[/]:[b white] Sending [/]to the log ([b white]' + node.get("name") + '[/]), with sequence number ' + str(log_seq_number) + ', the text [b white]"' + texto.strip() + '"[/].')
+        print('[b white ]State[/]:[b white] Sending [/]to the log ([b white]' + xml_node.get("name") + '[/]), with sequence number ' + str(log_seq_number) + ', the text [b white]"' + texto.strip() + '"[/].')
 
         # Strip is used to remove \n from texts that may come from xml.
-        client_mqtt.publish(robot_topic_base + "/log", node.get("name") + "_" + str(log_seq_number) + '_' + texto.strip())    
+        # client_mqtt.publish(robot_topic_base + "/log", xml_node.get("name") + "_" + str(log_seq_number) + '_' + texto.strip())
+        self.send(xml_node.get("name") + "_" + str(log_seq_number) + '_' + texto.strip())    
         
-        return node # It returns the same node
+        return xml_node # It returns the same node

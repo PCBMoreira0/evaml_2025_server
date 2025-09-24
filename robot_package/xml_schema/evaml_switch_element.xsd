@@ -26,6 +26,7 @@ Revision: 2025/04/16
 				<xs:element ref="case" minOccurs="1" maxOccurs="unbounded" />
 				<xs:element ref="default" minOccurs="0" maxOccurs="1"/>
 			</xs:sequence>
+			<xs:attribute name="commMode" type="xs:string" fixed="NULL"/>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="var" type="switchVarType" use="required"/>
 		</xs:complexType>

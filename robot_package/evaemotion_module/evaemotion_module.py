@@ -10,7 +10,11 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
-    def node_process(self, node, memory):
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+
+    def node_process(self, xml_node, memory):
         """ Node handling function """
 
         if memory.running_mode == "simulator":
@@ -20,29 +24,29 @@ class CommandHandler(BaseCommandHandler):
         else:
             topic_base = config.TERMINAL_TOPIC_BASE
 
-        if node.get("emotion") == "NEUTRAL":
+        if xml_node.get("emotion") == "NEUTRAL":
             emoji = " 😐"
-        elif node.get("emotion") == "ANGRY":
+        elif xml_node.get("emotion") == "ANGRY":
             emoji = " 😡"
-        elif node.get("emotion") == "DISGUST":
+        elif xml_node.get("emotion") == "DISGUST":
             emoji = " 😖"
-        elif node.get("emotion") == "FEAR":
+        elif xml_node.get("emotion") == "FEAR":
             emoji = " 😧"
-        elif node.get("emotion") == "HAPPY":
+        elif xml_node.get("emotion") == "HAPPY":
             emoji = " 😄"
-        elif node.get("emotion") == "INLOVE":
+        elif xml_node.get("emotion") == "INLOVE":
             emoji = " 🥰"
-        elif node.get("emotion") == "SAD":
+        elif xml_node.get("emotion") == "SAD":
             emoji = " 😔"
-        elif node.get("emotion") == "SURPRISE":
+        elif xml_node.get("emotion") == "SURPRISE":
             emoji = " 😲"
 
-        print("[b white]State:[/] Setting the robot [b white]expression[/] to [b white]" + node.get("emotion") + emoji + "[/].")
+        print("[b white]State:[/] Setting the robot [b white]expression[/] to [b white]" + xml_node.get("emotion") + emoji + "[/].")
 
         # if topic_base != "TERMINAL":
-        #     message = node.get("emotion")
+        #     message = xml_node.get("emotion")
         #     topic = "evaEmotion" # Para o FRED o tópico é "expression"
         #     client_mqtt.publish(topic_base + '/' + topic, message)
 
-        return node # It returns the same node
+        return xml_node # It returns the same node
 

@@ -2,11 +2,11 @@ from script_engine import ScriptEngine
 
 sp2 = ScriptEngine() # Empty state.
 
-if not (sp2.load_script("eva_scripts/pcb2_evaml.xml")): # If file was loaded, it is in a Not_Init state.
+if not (sp2.load_script("eva_scripts/teste_voice_evaml.xml")): # If file was loaded, it is in a Not_Init state.
     # We have a problem with the file.
     exit(1)
 
-sp2.initialize(False) # After initialization it is in Idle state.
+sp2.initialize(True) # After initialization it is in Idle state.
 
 sp2.start_script("terminal-plus") # Now, it is in Play state.
 

@@ -7,14 +7,16 @@ from rich import print, box
 from rich.console import Console
 from rich.table import Table
 
+from communicator_factory import CommunicatorFactory
+
 import config
 
 console = Console()
 
 class ModuleLoader():
     def __init__(self):
-        pass
 
+        self.comm_factory = CommunicatorFactory() # Fábrica de objetos de comunicação
 
     def __identify_elements(self, xml_root, verbose_mode=False):
         """Percorre toda a seção de script identificando os elementos utilizados."""
@@ -29,9 +31,15 @@ class ModuleLoader():
             else:
                 tab_elements[element.tag] = [1]
                 if element.getparent() == None: # It is the root element (EvaML).
+                    tab_elements[element.tag].append(element)
                     tab_elements[element.tag].append("[b white]Root element[/]")
                 elif element.getparent().tag == "evaml": # Its is an EvaML section.
+                    tab_elements[element.tag].append(element)
                     tab_elements[element.tag].append("[b magenta]Section <" +  element.tag + ">[/]")
+                else:
+                    tab_elements[element.tag].append(element)
+            
+
         if verbose_mode:
             print("[white]The script uses [bold]" + str(sum(1 for _ in xml_root.iter()) - 1) + " element(s).")
         
@@ -51,11 +59,18 @@ class ModuleLoader():
             try:
                 mod = importlib.import_module(module_name) # Import the module
                 tab_modules[element_tag].append(module_name + ".py")
- 
-                command_handler_class = getattr(mod, "CommandHandler") # Default name for module classes.
-                command_handler_instance = command_handler_class() # Creates the instance of the command processing class (Xml node).
+
+                # Usa a fábrica de comunicadores para criar um obj de comunicação com base no atributo commMode do nó xml que está em element_tag][1].
+                comm = self.comm_factory.create_communicator(tab_modules[element_tag][1]) 
+                
+                # Pega a referência da classe (CommandHandler) que está no módulo (mod) do comando.
+                command_handler_class = getattr(mod, "CommandHandler") # CommandHandler é o default name for command module classes.
+                # Cria a intância da classe usando o construtor da super classe BaseCommandHandler passando a instância da classe Comunicator.
+                command_handler_instance = command_handler_class(tab_modules[element_tag][1], comm) # Params xml_node amd Communicator obj.
+                
                 tab_modules[element_tag].append(command_handler_instance) # Stores the instance of the class.
             except Exception as e:
+                print("Exceção na importação do módulo", element_tag, e)
                 tab_modules[element_tag].append("Not imported")
                 tab_modules[element_tag].append(None)
 
@@ -67,12 +82,12 @@ class ModuleLoader():
             table.add_column("Associated Module")
             # At this moment, the tab_modules structure is: {elem.tag: [occurrences, module name, module class instance]}
             for key, value in tab_modules.items():
-                if value[2]: # Not None
-                    table.add_row("[bold yellow]" + key, "[bold cyan ]" + str(value[0]), "[bold green]" + value[1])
+                if value[3]: # Not None
+                    table.add_row("[bold yellow]" + key, "[bold cyan ]" + str(value[0]), "[bold green]" + value[2])
                 else:
-                    table.add_row("[bold yellow]" + key, "[bold cyan ]" + str(value[0]), "[bold red]" + value[1])
+                    table.add_row("[bold yellow]" + key, "[bold cyan ]" + str(value[0]), "[bold red]" + value[2])
             console.print(table)
-   
+
         return tab_modules
 
 

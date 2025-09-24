@@ -23,7 +23,11 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
-    def node_process(self, node, memory):
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+
+    def node_process(self, xml_node, memory):
         """ Node handling function """
 
         if memory.running_mode == "simulator":
@@ -41,18 +45,18 @@ class CommandHandler(BaseCommandHandler):
 
             user_answer = console.input("[b white on green blink] > [/] ")
             
-            if node.get("var") == None: # Maintains compatibility with the use of the $ variable
+            if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
                 memory.var_dolar.append([user_answer, "<userEmotion>"])
             else:
-                var_name = node.get("var")
+                var_name = xml_node.get("var")
                 memory.vars[var_name] = user_answer
         
         # Controls the physical robot.
         elif memory.running_mode == "robot": 
             pass
             # client = create_mqtt_client()
-            # client.publish(robot_topic_base + '/' + node.tag, message)
+            # client.publish(robot_topic_base + '/' + xml_node.tag, message)
 
-        return node # It returns the same node
+        return xml_node # It returns the same node
 
  

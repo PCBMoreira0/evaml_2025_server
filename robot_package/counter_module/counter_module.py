@@ -4,6 +4,10 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+        
     def get_var_ref(self, var, memory):
         if var[0] == "$": # Is of type $, $n, or $-n
             if len(memory.var_dolar) == 0: # The memory for $ does not yet contain any elements. The program will exit.
@@ -87,17 +91,17 @@ class CommandHandler(BaseCommandHandler):
                     exit(1)
             
         
-    def node_process(self, node, memory):
+    def node_process(self, xml_node, memory):
         """ Função de tratamento do nó """
         # Get the operator.
-        self.op= node.get("op")
+        self.op= xml_node.get("op")
 
         # Gets the variable reference in the robot's memory. It can be a list (from a $) or a string (the variable's key in memory).
         # A list, because each element of $ has a value and a source (a listen, a qrread, etc.).
-        self.var_ref= self.get_var_ref(node.get("var"), memory)
+        self.var_ref= self.get_var_ref(xml_node.get("var"), memory)
 
         # Values ​​can be numbers and references to $, $n, $-n, and #some_var.
-        self.var_value = self.get_var_value(node.get("value") , memory) 
+        self.var_value = self.get_var_value(xml_node.get("value") , memory) 
         
 
         # Start processing operations.
@@ -105,10 +109,10 @@ class CommandHandler(BaseCommandHandler):
             if isinstance(self.var_ref, list): # If it's a list, then it's a reference to a $ type.
                 self.var_ref[0] = self.var_value
                 self.var_ref[1] = "<counter>" # Updates the source of the $ variable, which becomes the <counter>
-                print('[b white]State:[/] [b white]Assigning[/] the value [b white]' + self.var_ref[0] + '[/] to the variable [b white]' + node.get("var") + "[/].")
+                print('[b white]State:[/] [b white]Assigning[/] the value [b white]' + self.var_ref[0] + '[/] to the variable [b white]' + xml_node.get("var") + "[/].")
             else: # It is a string that represents the key to the user variables dictionary.
-                memory.vars[node.get("var")] = self.var_value
-                print('[b white]State:[/] [b white]Assigning[/] the value [b white]' + str(self.var_value) + '[/] to the variable [b white]' + node.get("var") + "[/].")
+                memory.vars[xml_node.get("var")] = self.var_value
+                print('[b white]State:[/] [b white]Assigning[/] the value [b white]' + str(self.var_value) + '[/] to the variable [b white]' + xml_node.get("var") + "[/].")
 
         elif self.op== "+": # Perform the addition
             if isinstance(self.var_ref, list): # If it is a list, then it is a reference to a type of $.
@@ -116,14 +120,14 @@ class CommandHandler(BaseCommandHandler):
                 op2 = self.var_value
                 self.var_ref[0] = str(op1 + op2)
                 self.var_ref[1] = "<counter>" # Update the source of the $ variable
-                print('[b white]State:[/] [b white]Adding[/] the [b white]op1(' + node.get("var") + ')=' + str(op1) + '[/] and [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
+                print('[b white]State:[/] [b white]Adding[/] the [b white]op1(' + xml_node.get("var") + ')=' + str(op1) + '[/] and [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
             else: # It is a string that represents the key to the user variables dictionary.
                 if self.var_ref== None: # Variável não inicializada, o programa pára.
-                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
+                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + xml_node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
                     exit(1)
                 aux = memory.vars[self.var_ref]
                 memory.vars[self.var_ref] = str(int(memory.vars[self.var_ref]) + int(self.var_value))
-                print('[b white]State:[/] [b white]Adding[/] the [b white]op1(' + node.get("var") + ')=' + str(aux) + '[/] and [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
+                print('[b white]State:[/] [b white]Adding[/] the [b white]op1(' + xml_node.get("var") + ')=' + str(aux) + '[/] and [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
                 
         elif self.op== "-": # Perform the addition
             if isinstance(self.var_ref, list): # If it is a list, then it is a reference to a type of $.
@@ -131,14 +135,14 @@ class CommandHandler(BaseCommandHandler):
                 op2 = self.var_value
                 self.var_ref[0] = str(op1 - op2)
                 self.var_ref[1] = "<counter>" # Update the source of the $ variable
-                print('[b white]State:[/] [b white]Subtracting[/] the [b white]op1(' + node.get("var") + ')=' + str(op1) + '[/] and [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
+                print('[b white]State:[/] [b white]Subtracting[/] the [b white]op1(' + xml_node.get("var") + ')=' + str(op1) + '[/] and [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
             else: # It is a string that represents the key to the user variables dictionary.
                 if self.var_ref== None: # Variable not initialized, program stops.
-                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
+                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + xml_node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
                     exit(1)
                 aux = memory.vars[self.var_ref]
                 memory.vars[self.var_ref] = str(int(memory.vars[self.var_ref]) - int(self.var_value))
-                print('[b white]State:[/] [b white]Adding[/] the [b white]op1(' + node.get("var") + ')=' + str(aux) + '[/] and [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
+                print('[b white]State:[/] [b white]Adding[/] the [b white]op1(' + xml_node.get("var") + ')=' + str(aux) + '[/] and [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
                 
         elif self.op== "*": # Perform the product
             if isinstance(self.var_ref, list): # If it is a list, then it is a reference to a type of $.
@@ -146,14 +150,14 @@ class CommandHandler(BaseCommandHandler):
                 op2 = self.var_value
                 self.var_ref[0] = str(op1 * op2)
                 self.var_ref[1] = "<counter>" # Update the source of the $ variable
-                print('[b white]State:[/] [b white]Multiplying[/] the [b white]op1(' + node.get("var") + ')=' + str(op1) + '[/] and [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
+                print('[b white]State:[/] [b white]Multiplying[/] the [b white]op1(' + xml_node.get("var") + ')=' + str(op1) + '[/] and [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
             else: # It is a string that represents the key to the user variables dictionary.
                 if self.var_ref== None: # Variable not initialized, program stops.
-                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
+                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + xml_node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
                     exit(1)
                 aux = memory.vars[self.var_ref]
                 memory.vars[self.var_ref] = str(int(memory.vars[self.var_ref]) * int(self.var_value))
-                print('[b white]State:[/] [b white]Multiplying[/] the [b white]op1(' + node.get("var") + ')=' + str(aux) + '[/] and [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
+                print('[b white]State:[/] [b white]Multiplying[/] the [b white]op1(' + xml_node.get("var") + ')=' + str(aux) + '[/] and [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
 
         elif self.op== "/": # Performs the division (it was /=) but I changed it to //= (integer division)
             if isinstance(self.var_ref, list): # If it is a list, then it is a reference to a type of $.
@@ -161,14 +165,14 @@ class CommandHandler(BaseCommandHandler):
                 op2 = self.var_value
                 self.var_ref[0] = str(op1 // op2)
                 self.var_ref[1] = "<counter>" # Update the source of the $ variable
-                print('[b white]State:[/] [b white]Dividing[/] the [b white]op1(' + node.get("var") + ')=' + str(op1) + '[/] and [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
+                print('[b white]State:[/] [b white]Dividing[/] the [b white]op1(' + xml_node.get("var") + ')=' + str(op1) + '[/] and [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
             else: # It is a string that represents the key to the user variables dictionary.
                 if self.var_ref== None: # Variable not initialized, program stops.
-                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
+                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + xml_node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
                     exit(1)
                 aux = memory.vars[self.var_ref]
                 memory.vars[self.var_ref] = str(int(memory.vars[self.var_ref]) // int(self.var_value))
-                print('[b white]State:[/] [b white]Dividing[/] the [b white]op1(' + node.get("var") + ')=' + str(aux) + '[/] and [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
+                print('[b white]State:[/] [b white]Dividing[/] the [b white]op1(' + xml_node.get("var") + ')=' + str(aux) + '[/] and [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
 
         elif self.op== "^": # Calculating op1 to the power of op2.
             if isinstance(self.var_ref, list): # If it is a list, then it is a reference to a type of $.
@@ -176,14 +180,14 @@ class CommandHandler(BaseCommandHandler):
                 op2 = self.var_value
                 self.var_ref[0] = str(op1 ** op2)
                 self.var_ref[1] = "<counter>" # Update the source of the $ variable
-                print('[b white]State:[/] [b white]Calculating op1(' + node.get("var") + ')=' + str(op1) + ' [/] to the [b white]power[/] of [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
+                print('[b white]State:[/] [b white]Calculating op1(' + xml_node.get("var") + ')=' + str(op1) + ' [/] to the [b white]power[/] of [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
             else: # It is a string that represents the key to the user variables dictionary.
                 if self.var_ref== None: # Variável não inicializada, o programa pára.
-                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
+                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + xml_node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
                     exit(1)
                 aux = memory.vars[self.var_ref]
                 memory.vars[self.var_ref] = str(int(memory.vars[self.var_ref]) ** int(self.var_value))
-                print('[b white]State:[/] [b white]Calculating op1(' + node.get("var") + ')=' + str(aux) + ' [/]to the [b white]power[/] of [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
+                print('[b white]State:[/] [b white]Calculating op1(' + xml_node.get("var") + ')=' + str(aux) + ' [/]to the [b white]power[/] of [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
 
         elif self.op== "%": # Calculate the module
             if isinstance(self.var_ref, list): # If it is a list, then it is a reference to a type of $.
@@ -191,14 +195,14 @@ class CommandHandler(BaseCommandHandler):
                 op2 = self.var_value
                 self.var_ref[0] = str(op1 % op2)
                 self.var_ref[1] = "<counter>" # Update the source of the $ variable
-                print('[b white]State:[/] [b white]Calculating the modulus of division between[/] the [b white]op1(' + node.get("var") + ')=' + str(op1) + '[/] and [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
+                print('[b white]State:[/] [b white]Calculating the modulus of division between[/] the [b white]op1(' + xml_node.get("var") + ')=' + str(op1) + '[/] and [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + self.var_ref[0] + '[/].')
             else: # It is a string that represents the key to the user variables dictionary.
                 if self.var_ref== None: # Variable not initialized, program stops.
-                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
+                    print('[b white on red blink] FATAL ERROR [/]: The variable[b white] "' + xml_node.get("var") + '"[/] [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
                     exit(1)
                 aux = memory.vars[self.var_ref]
                 memory.vars[self.var_ref] = str(int(memory.vars[self.var_ref]) % int(self.var_value))
-                print('[b white]State:[/] [b white]Calculating the modulus of division between[/] the [b white]op1(' + node.get("var") + ')=' + str(aux) + '[/] and [b white]op2(' + node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
+                print('[b white]State:[/] [b white]Calculating the modulus of division between[/] the [b white]op1(' + xml_node.get("var") + ')=' + str(aux) + '[/] and [b white]op2(' + xml_node.get("value")  + ')=' + str(self.var_value) + '[/]. [b white]The result is ' + str(memory.vars[self.var_ref]) + '[/].')
                 
 
-        return node # It returns the same node
+        return xml_node # It returns the same nodenode

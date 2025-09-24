@@ -18,6 +18,8 @@ Revision: 2025/04/16
     <!-- EVAML led command definition ** -->
 	<xs:element name="led">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="MQTT_PUB"/>
+			<xs:attribute name="pubTopic" type="xs:string" fixed="LEDS"/>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="animation" type="ledAnimationType" use="required"/>
 		</xs:complexType>

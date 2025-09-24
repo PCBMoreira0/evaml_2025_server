@@ -9,14 +9,25 @@
     <audioEffects mode="ON" />
   </settings>
   <script>
-    <talk voiceType="pt_BR-faber-medium">Olá, meu nome é Frédi! Como você se chama?</talk>
-    <listen />
-    <talk voiceType="pt_BR-faber-medium">Muito prazer em conhecê-lo, $</talk>
-    <audio source="efx-display" block="TRUE" />
-    <talk voiceType="pt_BR-faber-medium" pitchShift="8">Olá, meu nome é Frédi! Como você se chama?</talk>
-    <listen />
-    <talk voiceType="pt_BR-faber-medium" pitchShift="8">Muito prazer em conhecê-lo, $</talk>
-    <audio source="efx-display" block="TRUE" />
-    <talk voiceType="en_US-amy-medium" pitchShift="5">Hi, my name is Fréd! How are you?</talk>
+    <light state="ON" />
+    <mqtt pubTopic="MQTT">
+      Olá MQTT novo
+    </mqtt>
+    <audio source="efx-blin" block="TRUE" />
+    <log name="LOG1">
+      Teste de LOG1
+    </log>
+    <log name="LOG2">
+      Teste de LOG2
+    </log>
+    <log name="LOG1">
+      Teste de LOG1
+    </log>
+    <http url="http://127.0.0.1:5000">
+      {"command": "move_to", "destination": "home"}
+    </http>
+    <log name="LOG2">
+      Teste de LOG2
+    </log>
   </script>
 </evaml>

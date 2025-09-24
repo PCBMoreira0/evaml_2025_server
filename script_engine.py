@@ -126,7 +126,7 @@ class ScriptEngine:
         # Process nodes that have children.
         elif len(self.node) > 0:
             # Gets the instance of the class corresponding to the implementation of the command associated with the node.
-            command_handler_instance = self.tab_modules[self.node.tag][2] 
+            command_handler_instance = self.tab_modules[self.node.tag][3] 
             if self.node.tag == "switch":
                 if self.node.getnext() != None: # The "switch" node has a sibling ahead.
                     self.__robot_memory.node_stack_push(self.node.getnext()) # Node that will be executed after <switch> returns.
@@ -163,7 +163,7 @@ class ScriptEngine:
 
         else: # Execution of common nodes.
             # Gets the instance of the class corresponding to the implementation of the command associated with the node.
-            command_handler_instance = self.tab_modules[self.node.tag][2] 
+            command_handler_instance = self.tab_modules[self.node.tag][3] 
             # Some cases of special nodes.
             if self.node.tag == "goto":
                 self.__state = "BLOCKED"

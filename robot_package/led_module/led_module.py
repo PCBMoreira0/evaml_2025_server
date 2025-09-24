@@ -12,7 +12,11 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
-    def node_process(self, node, memory):
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+
+    def node_process(self, xml_node, memory):
         """ Função de tratamento do nó """
         if memory.running_mode == "simulator":
             topic_base = config.SIMULATOR_TOPIC_BASE
@@ -21,14 +25,14 @@ class CommandHandler(BaseCommandHandler):
         else:
             topic_base = config.TERMINAL_TOPIC_BASE
             
-        print("[b white]State: Setting [/]the robot [b white]LEDs[/] to the animation/color [bold]" + node.get("animation") + "![/].")
+        print("[b white]State: Setting [/]the robot [b white]LEDs[/] to the animation/color [bold]" + xml_node.get("animation") + "![/].")
 
-        message = node.get("animation")
+        message = xml_node.get("animation")
         
 
         if topic_base != "TERMINAL":
-            # client_mqtt.publish(topic_base + '/' + "leds", "STOP") # Although node.tag is "led" the defined topic was "leds".
+            # client_mqtt.publish(topic_base + '/' + "leds", "STOP") # Although xml_node.tag is "led" the defined topic was "leds".
             time.sleep(0.1)
-            # client_mqtt.publish(topic_base + '/' + "leds", message) # Although node.tag is "led" the defined topic was "leds".
+            # client_mqtt.publish(topic_base + '/' + "leds", message) # Although xml_node.tag is "led" the defined topic was "leds".
 
-        return node # It returns the same node
+        return xml_node # It returns the same node

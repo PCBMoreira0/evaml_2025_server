@@ -18,6 +18,9 @@ Revision: 2025/04/16
     <!-- EVAML listen command definition ** -->
 	<xs:element name="listen">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="MQTT_PUB_SUB"/>
+			<xs:attribute name="pubTopic" type="xs:string" fixed="LISTEN"/>
+			<xs:attribute name="subTopic" type="xs:string" fixed="LISTEN_RESPONSE"/>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="var" type="switchVarAll"/>
 			<!-- The language attribute was not defined as mandatory to maintain compatibility with old scripts -->

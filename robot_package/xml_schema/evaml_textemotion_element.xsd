@@ -18,6 +18,9 @@ Revision: 2025/04/16
     <!-- ** EVAML textEmotion command definition ** -->
 	<xs:element name="textEmotion">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="MQTT_PUB_SUB"/>
+			<xs:attribute name="pubTopic" type="xs:string" fixed="TEXTEMOTION"/>
+			<xs:attribute name="subTopic" type="xs:string" fixed="TEXTEMOTION_RESPONSE"/>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="language" type="languageType"/>
 			<xs:attribute name="var" type="xs:string"/>

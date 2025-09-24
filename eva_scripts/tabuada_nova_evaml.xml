@@ -1,169 +1,169 @@
 <evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Jogo_Tabuada" xsi:noNamespaceSchemaLocation="../robot_package/xml_schema/evaml_schema.xsd">
   <settings>
-    <voice type="pt-BR_IsabelaV3Voice" />
-    <lightEffects mode="ON" />
-    <audioEffects mode="ON" />
+    <voice type="pt-BR_IsabelaV3Voice" commMode="NO_OP" />
+    <lightEffects mode="ON" commMode="NO_OP" />
+    <audioEffects mode="ON" commMode="NO_OP" vol="100%" />
   </settings>
   <script>
-    <counter var="pont_min" op="=" value="0" />
-    <useMacro macro="Apresenta" />
-    <useMacro macro="Fixa_dolar" />
-    <talk>$1, vamos jogar o jogo da tabuada. Mas, antes de começar o jogo, você gostaria de saber nossas regras?</talk>
-    <listen />
-    <switch var="$">
-      <case op="exact" value="sim">
-        <useMacro macro="Regras" />
-        <talk>$1, Agora que conhece brevemente as regras do jogo eu vou fazer mais algumas perguntas.</talk>
-    <useMacro macro="Multiplicando" />
-    <useMacro macro="Nivelamento" />
-    <useMacro macro="Multiplicando" />
-    <useMacro macro="Nivelamento" />
-    <useMacro macro="Multiplicando" />
-    <useMacro macro="Nivelamento" />
-    <switch var="pont_min">
-      <case op="lt" value="2">
-        <talk>Então agora iniciaremos o nível 1, vamos testar o seu conhecimento nas tabuadas.</talk>
-        <counter var="pontos" op="=" value="0" />
-        <useMacro macro="Multiplicando" />
-        <counter var="ponto" op="=" value="0" />
-       <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID1_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando" />
-        <useMacro macro="nível_1" />
-       <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID1_Loop" /></case></switch><counter var="multiplicando" op="=" value="0" />
-       <switch var="ponto">
-        <case op="eq" value="3">
-          <counter var="ponto" op="=" value="0" />
-          <talk>Que bom que voce chegou aqui no nível dois!</talk>
-          <talk>Podemos começar?</talk>
-          <listen />
-          <switch var="$">
-            <case op="exact" value="sim">
-              <talk>Então nós iremos começar agora.</talk>
-              <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID2_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                <useMacro macro="nível_2" />
-              <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID2_Loop" /></case></switch><switch var="ponto">
-                <case op="gte" value="2">
-                  <counter var="ponto" op="=" value="0" />
-                  <talk>Que bom que voce chegou aqui no nível três!</talk>
-                  <talk>Podemos começar?</talk>
-                  <listen />
-                  <switch var="$">
-                    <case op="exact" value="sim">
-                      <talk>Então vamos começar.</talk>
-                      <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID3_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                        <useMacro macro="nível_3" />
-                      <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID3_Loop" /></case></switch><useMacro macro="final" />
+    <counter var="pont_min" op="=" value="0" commMode="NO_OP" />
+    <useMacro macro="Apresenta" commMode="NO_OP" />
+    <useMacro macro="Fixa_dolar" commMode="NO_OP" />
+    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$1, vamos jogar o jogo da tabuada. Mas, antes de começar o jogo, você gostaria de saber nossas regras?</talk>
+    <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+    <switch var="$" commMode="NO_OP">
+      <case op="exact" value="sim" commMode="NO_OP">
+        <useMacro macro="Regras" commMode="NO_OP" />
+        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$1, Agora que conhece brevemente as regras do jogo eu vou fazer mais algumas perguntas.</talk>
+    <useMacro macro="Multiplicando" commMode="NO_OP" />
+    <useMacro macro="Nivelamento" commMode="NO_OP" />
+    <useMacro macro="Multiplicando" commMode="NO_OP" />
+    <useMacro macro="Nivelamento" commMode="NO_OP" />
+    <useMacro macro="Multiplicando" commMode="NO_OP" />
+    <useMacro macro="Nivelamento" commMode="NO_OP" />
+    <switch var="pont_min" commMode="NO_OP">
+      <case op="lt" value="2" commMode="NO_OP">
+        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então agora iniciaremos o nível 1, vamos testar o seu conhecimento nas tabuadas.</talk>
+        <counter var="pontos" op="=" value="0" commMode="NO_OP" />
+        <useMacro macro="Multiplicando" commMode="NO_OP" />
+        <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+       <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID1_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando" commMode="NO_OP" />
+        <useMacro macro="nível_1" commMode="NO_OP" />
+       <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID1_Loop" /></case></switch><counter var="multiplicando" op="=" value="0" commMode="NO_OP" />
+       <switch var="ponto" commMode="NO_OP">
+        <case op="eq" value="3" commMode="NO_OP">
+          <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+          <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
+          <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="sim" commMode="NO_OP">
+              <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
+              <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID2_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                <useMacro macro="nível_2" commMode="NO_OP" />
+              <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID2_Loop" /></case></switch><switch var="ponto" commMode="NO_OP">
+                <case op="gte" value="2" commMode="NO_OP">
+                  <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+                  <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
+                  <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+                  <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                  <switch var="$" commMode="NO_OP">
+                    <case op="exact" value="sim" commMode="NO_OP">
+                      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
+                      <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID3_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                        <useMacro macro="nível_3" commMode="NO_OP" />
+                      <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID3_Loop" /></case></switch><useMacro macro="final" commMode="NO_OP" />
                     </case>
-                    <case op="exact" value="não">
-                      <useMacro macro="final" />
+                    <case op="exact" value="não" commMode="NO_OP">
+                      <useMacro macro="final" commMode="NO_OP" />
                     </case>
                   </switch>
                </case>
               </switch>
             </case>
-            <case op="exact" value="não">
-              <useMacro macro="final" />
+            <case op="exact" value="não" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
             </case>
           </switch>
         </case>  
        </switch>
       </case>
-      <case op="gte" value="2">
-        <useMacro macro="Multiplicando" />
-        <useMacro macro="Nivelamento_2" />
-        <useMacro macro="Multiplicando" />
-        <useMacro macro="Nivelamento_2" />
-        <switch var="pont_min">
-          <case op="lte" value="6">
-            <counter var="ponto" op="=" value="0" />
-            <counter var="pontos" op="=" value="3" />
-            <talk>Que bom que voce chegou aqui no nível dois!</talk>
-            <talk>Podemos começar?</talk>
-            <listen />
-            <switch var="$">
-              <case op="exact" value="sim">
-                <talk>Então nós iremos começar agora.</talk>
-                <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID4_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                  <useMacro macro="nível_2" />
-                <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID4_Loop" /></case></switch><switch var="ponto">
-                  <case op="gte" value="2">
-                    <counter var="ponto" op="=" value="0" />
-                    <talk>Que bom que voce chegou aqui no nível três!</talk>
-                    <talk>Podemos começar?</talk>
-                    <listen />
-                    <switch var="$">
-                      <case op="exact" value="sim">
-                        <talk>Então vamos começar.</talk>
-                        <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID5_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                          <useMacro macro="nível_3" />
-                        <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID5_Loop" /></case></switch><useMacro macro="final" />
+      <case op="gte" value="2" commMode="NO_OP">
+        <useMacro macro="Multiplicando" commMode="NO_OP" />
+        <useMacro macro="Nivelamento_2" commMode="NO_OP" />
+        <useMacro macro="Multiplicando" commMode="NO_OP" />
+        <useMacro macro="Nivelamento_2" commMode="NO_OP" />
+        <switch var="pont_min" commMode="NO_OP">
+          <case op="lte" value="6" commMode="NO_OP">
+            <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+            <counter var="pontos" op="=" value="3" commMode="NO_OP" />
+            <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
+            <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+            <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+            <switch var="$" commMode="NO_OP">
+              <case op="exact" value="sim" commMode="NO_OP">
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
+                <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID1_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                  <useMacro macro="nível_2" commMode="NO_OP" />
+                <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID1_Loop" /></case></switch><switch var="ponto" commMode="NO_OP">
+                  <case op="gte" value="2" commMode="NO_OP">
+                    <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+                    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
+                    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+                    <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                    <switch var="$" commMode="NO_OP">
+                      <case op="exact" value="sim" commMode="NO_OP">
+                        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
+                        <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID2_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                          <useMacro macro="nível_3" commMode="NO_OP" />
+                        <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID2_Loop" /></case></switch><useMacro macro="final" commMode="NO_OP" />
                       </case>
-                      <case op="exact" value="não">
-                        <useMacro macro="final" />
+                      <case op="exact" value="não" commMode="NO_OP">
+                        <useMacro macro="final" commMode="NO_OP" />
                       </case>
                     </switch>
                  </case>
                 </switch>
               </case>
-              <case op="exact" value="não">
-                <useMacro macro="final" />
+              <case op="exact" value="não" commMode="NO_OP">
+                <useMacro macro="final" commMode="NO_OP" />
               </case>
             </switch>
           </case>
-          <default>
-            <useMacro macro="Multiplicando" />
-            <useMacro macro="Nivelamento_3" />
-            <switch var="pont_min">
-              <case op="gte" value="19">
-                <counter var="pontos" op="=" value="6" />
-                <counter var="ponto" op="=" value="0" />
-                <talk>Que bom que voce chegou aqui no nível três!</talk>
-                <talk>Podemos começar?</talk>
-                <listen />
-                <switch var="$">
-                  <case op="exact" value="sim">
-                    <talk>Então vamos começar.</talk>
-                    <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID6_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                      <useMacro macro="nível_3" />
-                    <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID6_Loop" /></case></switch><useMacro macro="final" />
+          <default commMode="NO_OP">
+            <useMacro macro="Multiplicando" commMode="NO_OP" />
+            <useMacro macro="Nivelamento_3" commMode="NO_OP" />
+            <switch var="pont_min" commMode="NO_OP">
+              <case op="gte" value="19" commMode="NO_OP">
+                <counter var="pontos" op="=" value="6" commMode="NO_OP" />
+                <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+                <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                <switch var="$" commMode="NO_OP">
+                  <case op="exact" value="sim" commMode="NO_OP">
+                    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
+                    <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID1_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                      <useMacro macro="nível_3" commMode="NO_OP" />
+                    <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID1_Loop" /></case></switch><useMacro macro="final" commMode="NO_OP" />
                   </case>
-                  <case op="exact" value="não">
-                    <useMacro macro="final" />
+                  <case op="exact" value="não" commMode="NO_OP">
+                    <useMacro macro="final" commMode="NO_OP" />
                   </case>
                 </switch>
               </case>
-              <default>
-                <counter var="ponto" op="=" value="0" />
-            <counter var="pontos" op="=" value="3" />
-            <talk>Que bom que voce chegou aqui no nível dois!</talk>
-            <talk>Podemos começar?</talk>
-            <listen />
-            <switch var="$">
-              <case op="exact" value="sim">
-                <talk>Então nós iremos começar agora.</talk>
-                <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID7_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                  <useMacro macro="nível_2" />
-                <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID7_Loop" /></case></switch><switch var="ponto">
-                  <case op="gte" value="2">
-                    <counter var="ponto" op="=" value="0" />
-                    <talk>Que bom que voce chegou aqui no nível três!</talk>
-                    <talk>Podemos começar?</talk>
-                    <listen />
-                    <switch var="$">
-                      <case op="exact" value="sim">
-                        <talk>Então vamos começar.</talk>
-                        <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID8_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                          <useMacro macro="nível_3" />
-                        <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID8_Loop" /></case></switch><useMacro macro="final" />
+              <default commMode="NO_OP">
+                <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+            <counter var="pontos" op="=" value="3" commMode="NO_OP" />
+            <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
+            <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+            <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+            <switch var="$" commMode="NO_OP">
+              <case op="exact" value="sim" commMode="NO_OP">
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
+                <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID1_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                  <useMacro macro="nível_2" commMode="NO_OP" />
+                <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID1_Loop" /></case></switch><switch var="ponto" commMode="NO_OP">
+                  <case op="gte" value="2" commMode="NO_OP">
+                    <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+                    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
+                    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+                    <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                    <switch var="$" commMode="NO_OP">
+                      <case op="exact" value="sim" commMode="NO_OP">
+                        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
+                        <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID2_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                          <useMacro macro="nível_3" commMode="NO_OP" />
+                        <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID2_Loop" /></case></switch><useMacro macro="final" commMode="NO_OP" />
                       </case>
-                      <case op="exact" value="não">
-                        <useMacro macro="final" />
+                      <case op="exact" value="não" commMode="NO_OP">
+                        <useMacro macro="final" commMode="NO_OP" />
                       </case>
                     </switch>
                  </case>
                 </switch>
               </case>
-              <case op="exact" value="não">
-                <useMacro macro="final" />
+              <case op="exact" value="não" commMode="NO_OP">
+                <useMacro macro="final" commMode="NO_OP" />
               </case>
             </switch>
               </default>
@@ -173,159 +173,159 @@
       </case>
     </switch>  
       </case>
-      <case op="exact" value="não">
-        <talk>Certo. Então vamos começar, mas antes preciso te fazer algumas perguntas.
+      <case op="exact" value="não" commMode="NO_OP">
+        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Certo. Então vamos começar, mas antes preciso te fazer algumas perguntas.
         </talk>
-    <useMacro macro="Multiplicando" />
-    <useMacro macro="Nivelamento" />
-    <useMacro macro="Multiplicando" />
-    <useMacro macro="Nivelamento" />
-    <useMacro macro="Multiplicando" />
-    <useMacro macro="Nivelamento" />
-    <switch var="pont_min">
-      <case op="lt" value="2">
-        <talk>Então agora iniciaremos o nível 1, vamos testar o seu conhecimento nas tabuadas.</talk>
-        <counter var="pontos" op="=" value="0" />
-        <useMacro macro="Multiplicando" />
-        <counter var="ponto" op="=" value="0" />
-       <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID9_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando" />
-        <useMacro macro="nível_1" />
-       <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID9_Loop" /></case></switch><counter var="multiplicando" op="=" value="0" />
-       <switch var="ponto">
-        <case op="eq" value="3">
-          <counter var="ponto" op="=" value="0" />
-          <talk>Que bom que voce chegou aqui no nível dois!</talk>
-          <talk>Podemos começar?</talk>
-          <listen />
-          <switch var="$">
-            <case op="exact" value="sim">
-              <talk>Então nós iremos começar agora.</talk>
-              <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID10_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                <useMacro macro="nível_2" />
-              <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID10_Loop" /></case></switch><switch var="ponto">
-                <case op="gte" value="2">
-                  <counter var="ponto" op="=" value="0" />
-                  <talk>Que bom que voce chegou aqui no nível três!</talk>
-                  <talk>Podemos começar?</talk>
-                  <listen />
-                  <switch var="$">
-                    <case op="exact" value="sim">
-                      <talk>Então vamos começar.</talk>
-                      <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID11_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                        <useMacro macro="nível_3" />
-                      <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID11_Loop" /></case></switch><useMacro macro="final" />
+    <useMacro macro="Multiplicando" commMode="NO_OP" />
+    <useMacro macro="Nivelamento" commMode="NO_OP" />
+    <useMacro macro="Multiplicando" commMode="NO_OP" />
+    <useMacro macro="Nivelamento" commMode="NO_OP" />
+    <useMacro macro="Multiplicando" commMode="NO_OP" />
+    <useMacro macro="Nivelamento" commMode="NO_OP" />
+    <switch var="pont_min" commMode="NO_OP">
+      <case op="lt" value="2" commMode="NO_OP">
+        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então agora iniciaremos o nível 1, vamos testar o seu conhecimento nas tabuadas.</talk>
+        <counter var="pontos" op="=" value="0" commMode="NO_OP" />
+        <useMacro macro="Multiplicando" commMode="NO_OP" />
+        <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+       <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID1_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando" commMode="NO_OP" />
+        <useMacro macro="nível_1" commMode="NO_OP" />
+       <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID1_Loop" /></case></switch><counter var="multiplicando" op="=" value="0" commMode="NO_OP" />
+       <switch var="ponto" commMode="NO_OP">
+        <case op="eq" value="3" commMode="NO_OP">
+          <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+          <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
+          <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="sim" commMode="NO_OP">
+              <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
+              <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID2_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                <useMacro macro="nível_2" commMode="NO_OP" />
+              <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID2_Loop" /></case></switch><switch var="ponto" commMode="NO_OP">
+                <case op="gte" value="2" commMode="NO_OP">
+                  <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+                  <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
+                  <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+                  <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                  <switch var="$" commMode="NO_OP">
+                    <case op="exact" value="sim" commMode="NO_OP">
+                      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
+                      <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID3_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                        <useMacro macro="nível_3" commMode="NO_OP" />
+                      <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID3_Loop" /></case></switch><useMacro macro="final" commMode="NO_OP" />
                     </case>
-                    <case op="exact" value="não">
-                      <useMacro macro="final" />
+                    <case op="exact" value="não" commMode="NO_OP">
+                      <useMacro macro="final" commMode="NO_OP" />
                     </case>
                   </switch>
                </case>
               </switch>
             </case>
-            <case op="exact" value="não">
-              <useMacro macro="final" />
+            <case op="exact" value="não" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
             </case>
           </switch>
         </case>  
        </switch>
       </case>
-      <case op="gte" value="2">
-        <useMacro macro="Multiplicando" />
-        <useMacro macro="Nivelamento_2" />
-        <useMacro macro="Multiplicando" />
-        <useMacro macro="Nivelamento_2" />
-        <switch var="pont_min">
-          <case op="lte" value="6">
-            <counter var="ponto" op="=" value="0" />
-            <counter var="pontos" op="=" value="3" />
-            <talk>Que bom que voce chegou aqui no nível dois!</talk>
-            <talk>Podemos começar?</talk>
-            <listen />
-            <switch var="$">
-              <case op="exact" value="sim">
-                <talk>Então nós iremos começar agora.</talk>
-                <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID12_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                  <useMacro macro="nível_2" />
-                <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID12_Loop" /></case></switch><switch var="ponto">
-                  <case op="gte" value="2">
-                    <counter var="ponto" op="=" value="0" />
-                    <talk>Que bom que voce chegou aqui no nível três!</talk>
-                    <talk>Podemos começar?</talk>
-                    <listen />
-                    <switch var="$">
-                      <case op="exact" value="sim">
-                        <talk>Então vamos começar.</talk>
-                        <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID13_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                          <useMacro macro="nível_3" />
-                        <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID13_Loop" /></case></switch><useMacro macro="final" />
+      <case op="gte" value="2" commMode="NO_OP">
+        <useMacro macro="Multiplicando" commMode="NO_OP" />
+        <useMacro macro="Nivelamento_2" commMode="NO_OP" />
+        <useMacro macro="Multiplicando" commMode="NO_OP" />
+        <useMacro macro="Nivelamento_2" commMode="NO_OP" />
+        <switch var="pont_min" commMode="NO_OP">
+          <case op="lte" value="6" commMode="NO_OP">
+            <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+            <counter var="pontos" op="=" value="3" commMode="NO_OP" />
+            <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
+            <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+            <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+            <switch var="$" commMode="NO_OP">
+              <case op="exact" value="sim" commMode="NO_OP">
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
+                <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID1_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                  <useMacro macro="nível_2" commMode="NO_OP" />
+                <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID1_Loop" /></case></switch><switch var="ponto" commMode="NO_OP">
+                  <case op="gte" value="2" commMode="NO_OP">
+                    <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+                    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
+                    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+                    <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                    <switch var="$" commMode="NO_OP">
+                      <case op="exact" value="sim" commMode="NO_OP">
+                        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
+                        <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID2_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                          <useMacro macro="nível_3" commMode="NO_OP" />
+                        <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID2_Loop" /></case></switch><useMacro macro="final" commMode="NO_OP" />
                       </case>
-                      <case op="exact" value="não">
-                        <useMacro macro="final" />
+                      <case op="exact" value="não" commMode="NO_OP">
+                        <useMacro macro="final" commMode="NO_OP" />
                       </case>
                     </switch>
                  </case>
                 </switch>
               </case>
-              <case op="exact" value="não">
-                <useMacro macro="final" />
+              <case op="exact" value="não" commMode="NO_OP">
+                <useMacro macro="final" commMode="NO_OP" />
               </case>
             </switch>
           </case>
-          <default>
-            <useMacro macro="Multiplicando" />
-            <useMacro macro="Nivelamento_3" />
-            <switch var="pont_min">
-              <case op="gte" value="19">
-                <counter var="pontos" op="=" value="6" />
-                <counter var="ponto" op="=" value="0" />
-                <talk>Que bom que voce chegou aqui no nível três!</talk>
-                <talk>Podemos começar?</talk>
-                <listen />
-                <switch var="$">
-                  <case op="exact" value="sim">
-                    <talk>Então vamos começar.</talk>
-                    <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID14_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                      <useMacro macro="nível_3" />
-                    <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID14_Loop" /></case></switch><useMacro macro="final" />
+          <default commMode="NO_OP">
+            <useMacro macro="Multiplicando" commMode="NO_OP" />
+            <useMacro macro="Nivelamento_3" commMode="NO_OP" />
+            <switch var="pont_min" commMode="NO_OP">
+              <case op="gte" value="19" commMode="NO_OP">
+                <counter var="pontos" op="=" value="6" commMode="NO_OP" />
+                <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+                <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                <switch var="$" commMode="NO_OP">
+                  <case op="exact" value="sim" commMode="NO_OP">
+                    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
+                    <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID1_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                      <useMacro macro="nível_3" commMode="NO_OP" />
+                    <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID1_Loop" /></case></switch><useMacro macro="final" commMode="NO_OP" />
                   </case>
-                  <case op="exact" value="não">
-                    <useMacro macro="final" />
+                  <case op="exact" value="não" commMode="NO_OP">
+                    <useMacro macro="final" commMode="NO_OP" />
                   </case>
                 </switch>
               </case>
-              <default>
-                <counter var="ponto" op="=" value="0" />
-            <counter var="pontos" op="=" value="3" />
-            <talk>Que bom que voce chegou aqui no nível dois!</talk>
-            <talk>Podemos começar?</talk>
-            <listen />
-            <switch var="$">
-              <case op="exact" value="sim">
-                <talk>Então nós iremos começar agora.</talk>
-                <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID15_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                  <useMacro macro="nível_2" />
-                <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID15_Loop" /></case></switch><switch var="ponto">
-                  <case op="gte" value="2">
-                    <counter var="ponto" op="=" value="0" />
-                    <talk>Que bom que voce chegou aqui no nível três!</talk>
-                    <talk>Podemos começar?</talk>
-                    <listen />
-                    <switch var="$">
-                      <case op="exact" value="sim">
-                        <talk>Então vamos começar.</talk>
-                        <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID16_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" />
-                          <useMacro macro="nível_3" />
-                        <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID16_Loop" /></case></switch><useMacro macro="final" />
+              <default commMode="NO_OP">
+                <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+            <counter var="pontos" op="=" value="3" commMode="NO_OP" />
+            <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
+            <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+            <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+            <switch var="$" commMode="NO_OP">
+              <case op="exact" value="sim" commMode="NO_OP">
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
+                <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID1_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                  <useMacro macro="nível_2" commMode="NO_OP" />
+                <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID1_Loop" /></case></switch><switch var="ponto" commMode="NO_OP">
+                  <case op="gte" value="2" commMode="NO_OP">
+                    <counter var="ponto" op="=" value="0" commMode="NO_OP" />
+                    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
+                    <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
+                    <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                    <switch var="$" commMode="NO_OP">
+                      <case op="exact" value="sim" commMode="NO_OP">
+                        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
+                        <counter var="Loop" op="=" value="1" /><switch id="LOOP_ID2_Loop" var="Loop"><case op="lte" value="3"><useMacro macro="Multiplicando_2" commMode="NO_OP" />
+                          <useMacro macro="nível_3" commMode="NO_OP" />
+                        <counter var="Loop" op="+" value="1" /><goto target="LOOP_ID2_Loop" /></case></switch><useMacro macro="final" commMode="NO_OP" />
                       </case>
-                      <case op="exact" value="não">
-                        <useMacro macro="final" />
+                      <case op="exact" value="não" commMode="NO_OP">
+                        <useMacro macro="final" commMode="NO_OP" />
                       </case>
                     </switch>
                  </case>
                 </switch>
               </case>
-              <case op="exact" value="não">
-                <useMacro macro="final" />
+              <case op="exact" value="não" commMode="NO_OP">
+                <useMacro macro="final" commMode="NO_OP" />
               </case>
             </switch>
               </default>
@@ -337,403 +337,403 @@
       </case>
     </switch>
   </script>
-  <macros>
-    <macro id="Pont_total">
-      <counter var="pontos" op="+" value="1" />
+  <macros commMode="NO_OP">
+    <macro id="Pont_total" commMode="NO_OP">
+      <counter var="pontos" op="+" value="1" commMode="NO_OP" />
     </macro>
-    <macro id="Fixa_tabuada">
-      <listen />
-      <switch var="$">
-        <case op="exact" value="1">
-          <counter var="multiplicando" op="=" value="1" />
+    <macro id="Fixa_tabuada" commMode="NO_OP">
+      <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+      <switch var="$" commMode="NO_OP">
+        <case op="exact" value="1" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="1" commMode="NO_OP" />
         </case>
-        <case op="exact" value="2">
-          <counter var="multiplicando" op="=" value="2" />
+        <case op="exact" value="2" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="2" commMode="NO_OP" />
         </case>
-        <case op="exact" value="3">
-          <counter var="multiplicando" op="=" value="3" />
+        <case op="exact" value="3" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="3" commMode="NO_OP" />
         </case>
-        <case op="exact" value="4">
-          <counter var="multiplicando" op="=" value="4" />
+        <case op="exact" value="4" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="4" commMode="NO_OP" />
         </case>
-        <case op="exact" value="5">
-          <counter var="multiplicando" op="=" value="5" />
+        <case op="exact" value="5" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="5" commMode="NO_OP" />
         </case>
-        <case op="exact" value="6">
-          <counter var="multiplicando" op="=" value="6" />
+        <case op="exact" value="6" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="6" commMode="NO_OP" />
         </case>
-        <case op="exact" value="7">
-          <counter var="multiplicando" op="=" value="7" />
+        <case op="exact" value="7" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="7" commMode="NO_OP" />
         </case>
-        <case op="exact" value="8">
-          <counter var="multiplicando" op="=" value="8" />
+        <case op="exact" value="8" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="8" commMode="NO_OP" />
         </case>
-        <case op="exact" value="9">
-          <counter var="multiplicando" op="=" value="9" />
+        <case op="exact" value="9" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="9" commMode="NO_OP" />
         </case>
-        <case op="exact" value="10">
-          <counter var="multiplicando" op="=" value="10" />
+        <case op="exact" value="10" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="10" commMode="NO_OP" />
         </case>
       </switch>
-      <counter var="multiplicando" op="*" value="1" />
-      <talk>$ vezes 1 é = a #multiplicando </talk>
-      <counter var="multiplicando" op="/" value="1" />
-      <counter var="multiplicando" op="*" value="2" />
-      <talk>$ vezes 2 é = a #multiplicando </talk>
-      <counter var="multiplicando" op="/" value="2" />
-      <counter var="multiplicando" op="*" value="3" />
-      <talk>$ vezes 3 é = a #multiplicando </talk>
-      <counter var="multiplicando" op="/" value="3" />
-      <counter var="multiplicando" op="*" value="4" />
-      <talk>$ vezes 4 é = a #multiplicando </talk>
-      <counter var="multiplicando" op="/" value="4" />
-      <counter var="multiplicando" op="*" value="5" />
-      <talk>$ vezes 5  é = a #multiplicando </talk>
-      <counter var="multiplicando" op="/" value="5" />
-      <counter var="multiplicando" op="*" value="6" />
-      <talk>$ vezes 6 é = a #multiplicando </talk>
-      <counter var="multiplicando" op="/" value="6" />
-      <counter var="multiplicando" op="*" value="7" />
-      <talk>$ vezes 7 é = a #multiplicando </talk>
-      <counter var="multiplicando" op="/" value="7" />
-      <counter var="multiplicando" op="*" value="8" />
-      <talk>$ vezes 8 é = a #multiplicando </talk>
-      <counter var="multiplicando" op="/" value="8" />
-      <counter var="multiplicando" op="*" value="9" />
-      <talk>$ vezes 9 é = a #multiplicando </talk>
-      <counter var="multiplicando" op="/" value="9" />
-      <counter var="multiplicando" op="*" value="10" />
-      <talk>$ vezes 10 é = a #multiplicando </talk>
+      <counter var="multiplicando" op="*" value="1" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$ vezes 1 é = a #multiplicando </talk>
+      <counter var="multiplicando" op="/" value="1" commMode="NO_OP" />
+      <counter var="multiplicando" op="*" value="2" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$ vezes 2 é = a #multiplicando </talk>
+      <counter var="multiplicando" op="/" value="2" commMode="NO_OP" />
+      <counter var="multiplicando" op="*" value="3" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$ vezes 3 é = a #multiplicando </talk>
+      <counter var="multiplicando" op="/" value="3" commMode="NO_OP" />
+      <counter var="multiplicando" op="*" value="4" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$ vezes 4 é = a #multiplicando </talk>
+      <counter var="multiplicando" op="/" value="4" commMode="NO_OP" />
+      <counter var="multiplicando" op="*" value="5" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$ vezes 5  é = a #multiplicando </talk>
+      <counter var="multiplicando" op="/" value="5" commMode="NO_OP" />
+      <counter var="multiplicando" op="*" value="6" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$ vezes 6 é = a #multiplicando </talk>
+      <counter var="multiplicando" op="/" value="6" commMode="NO_OP" />
+      <counter var="multiplicando" op="*" value="7" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$ vezes 7 é = a #multiplicando </talk>
+      <counter var="multiplicando" op="/" value="7" commMode="NO_OP" />
+      <counter var="multiplicando" op="*" value="8" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$ vezes 8 é = a #multiplicando </talk>
+      <counter var="multiplicando" op="/" value="8" commMode="NO_OP" />
+      <counter var="multiplicando" op="*" value="9" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$ vezes 9 é = a #multiplicando </talk>
+      <counter var="multiplicando" op="/" value="9" commMode="NO_OP" />
+      <counter var="multiplicando" op="*" value="10" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$ vezes 10 é = a #multiplicando </talk>
     </macro>
-    <macro id="Fixa_dolar">
-      <random min="1" max="1" />
-      <random min="2" max="2" />
-      <random min="3" max="3" />
-      <random min="4" max="4" />
-      <random min="5" max="5" />
-      <random min="6" max="6" />
-      <random min="7" max="7" />
-      <random min="8" max="8" />
-      <random min="9" max="9" />
-      <random min="10" max="10" />
+    <macro id="Fixa_dolar" commMode="NO_OP">
+      <random min="1" max="1" commMode="NO_OP" />
+      <random min="2" max="2" commMode="NO_OP" />
+      <random min="3" max="3" commMode="NO_OP" />
+      <random min="4" max="4" commMode="NO_OP" />
+      <random min="5" max="5" commMode="NO_OP" />
+      <random min="6" max="6" commMode="NO_OP" />
+      <random min="7" max="7" commMode="NO_OP" />
+      <random min="8" max="8" commMode="NO_OP" />
+      <random min="9" max="9" commMode="NO_OP" />
+      <random min="10" max="10" commMode="NO_OP" />
     </macro>
-    <macro id="Multiplicando">
-      <random min="1" max="10" />
-      <switch var="$">
-        <case op="exact" value="1">
-          <counter var="multiplicando" op="=" value="1" />
+    <macro id="Multiplicando" commMode="NO_OP">
+      <random min="1" max="10" commMode="NO_OP" />
+      <switch var="$" commMode="NO_OP">
+        <case op="exact" value="1" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="1" commMode="NO_OP" />
         </case>
-        <case op="exact" value="2">
-          <counter var="multiplicando" op="=" value="2" />
+        <case op="exact" value="2" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="2" commMode="NO_OP" />
         </case>
-        <case op="exact" value="3">
-          <counter var="multiplicando" op="=" value="3" />
+        <case op="exact" value="3" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="3" commMode="NO_OP" />
         </case>
-        <case op="exact" value="4">
-          <counter var="multiplicando" op="=" value="4" />
+        <case op="exact" value="4" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="4" commMode="NO_OP" />
         </case>
-        <case op="exact" value="5">
-          <counter var="multiplicando" op="=" value="5" />
+        <case op="exact" value="5" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="5" commMode="NO_OP" />
         </case>
-        <case op="exact" value="6">
-          <counter var="multiplicando" op="=" value="6" />
+        <case op="exact" value="6" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="6" commMode="NO_OP" />
         </case>
-        <case op="exact" value="7">
-          <counter var="multiplicando" op="=" value="7" />
+        <case op="exact" value="7" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="7" commMode="NO_OP" />
         </case>
-        <case op="exact" value="8">
-          <counter var="multiplicando" op="=" value="8" />
+        <case op="exact" value="8" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="8" commMode="NO_OP" />
         </case>
-        <case op="exact" value="9">
-          <counter var="multiplicando" op="=" value="9" />
+        <case op="exact" value="9" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="9" commMode="NO_OP" />
         </case>
-        <case op="exact" value="10">
-          <counter var="multiplicando" op="=" value="10" />
+        <case op="exact" value="10" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="10" commMode="NO_OP" />
         </case>
       </switch>
     </macro>
-    <macro id="nível_1">
-        <talk>Quanto é #multiplicando vezes $?</talk>
-        <switch var="$">
-            <case op="exact" value="1">
-                <counter var="multiplicando" op="*" value="1" />
+    <macro id="nível_1" commMode="NO_OP">
+        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Quanto é #multiplicando vezes $?</talk>
+        <switch var="$" commMode="NO_OP">
+            <case op="exact" value="1" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="1" commMode="NO_OP" />
             </case>
-            <case op="exact" value="2">
-                <counter var="multiplicando" op="*" value="2" />
+            <case op="exact" value="2" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="2" commMode="NO_OP" />
             </case>
-            <case op="exact" value="3">
-                <counter var="multiplicando" op="*" value="3" />
+            <case op="exact" value="3" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="3" commMode="NO_OP" />
             </case>
-            <case op="exact" value="4">
-                <counter var="multiplicando" op="*" value="4" />
+            <case op="exact" value="4" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="4" commMode="NO_OP" />
             </case>
-            <case op="exact" value="5">
-                <counter var="multiplicando" op="*" value="5" />
+            <case op="exact" value="5" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="5" commMode="NO_OP" />
             </case>
-            <case op="exact" value="6">
-                <counter var="multiplicando" op="*" value="6" />
+            <case op="exact" value="6" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="6" commMode="NO_OP" />
             </case>
-            <case op="exact" value="7">
-                <counter var="multiplicando" op="*" value="7" />
+            <case op="exact" value="7" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="7" commMode="NO_OP" />
             </case>
-            <case op="exact" value="8">
-                <counter var="multiplicando" op="*" value="8" />
+            <case op="exact" value="8" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="8" commMode="NO_OP" />
             </case>
-            <case op="exact" value="9">
-                <counter var="multiplicando" op="*" value="9" />
+            <case op="exact" value="9" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="9" commMode="NO_OP" />
             </case>
-            <case op="exact" value="10">
-                <counter var="multiplicando" op="*" value="10" />
+            <case op="exact" value="10" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="10" commMode="NO_OP" />
             </case>
         </switch>
-        <listen />
-        <switch var="$">
-          <case op="exact" value="parar">
-            <useMacro macro="final" />
-            <stop />
+        <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+        <switch var="$" commMode="NO_OP">
+          <case op="exact" value="parar" commMode="NO_OP">
+            <useMacro macro="final" commMode="NO_OP" />
+            <stop commMode="NO_OP" />
           </case>
-            <case op="eq" value="#multiplicando">
-                <useMacro macro="Pontuou" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+                <useMacro macro="Pontuou" commMode="NO_OP" />
             </case>
-            <default>
-                <useMacro macro="Não_pontuou" />
+            <default commMode="NO_OP">
+                <useMacro macro="Não_pontuou" commMode="NO_OP" />
             </default>
         </switch>
     </macro>
-    <macro id="Pontuou">
-      <evaEmotion emotion="HAPPY" />
-      <led animation="HAPPY" />
-      <motion type="2UP_RIGHT" rightArm="UP" leftArm="DOWN" />
-      <random min="1" max="3" />
-      <switch var="$">
-        <case op="exact" value="1">
-          <light state="ON" color="GREEN" />
-          <useMacro macro="Pont_total" />
+    <macro id="Pontuou" commMode="NO_OP">
+      <evaEmotion emotion="HAPPY" commMode="PUB" pubTopic="EVAEMOTION" />
+      <led animation="HAPPY" commMode="PUB" pubTopic="LEDS" />
+      <motion type="2UP_RIGHT" rightArm="UP" leftArm="DOWN" commMode="PUB" pubTopic="MOTION" />
+      <random min="1" max="3" commMode="NO_OP" />
+      <switch var="$" commMode="NO_OP">
+        <case op="exact" value="1" commMode="NO_OP">
+          <light state="ON" color="GREEN" commMode="PUB" pubTopic="LIGHT" />
+          <useMacro macro="Pont_total" commMode="NO_OP" />
         </case>
-        <case op="exact" value="2">
-          <light state="ON" color="BLUE" />
-          <useMacro macro="Pont_total" />
+        <case op="exact" value="2" commMode="NO_OP">
+          <light state="ON" color="BLUE" commMode="PUB" pubTopic="LIGHT" />
+          <useMacro macro="Pont_total" commMode="NO_OP" />
         </case>
-        <case op="exact" value="3">
-          <light state="ON" color="PINK" />
-          <useMacro macro="Pont_total" />
-        </case>
-      </switch>
-      <audio source="efx-aplausos-bom" block="TRUE" />
-      <counter var="ponto" op="+" value="1" />
-      <talk>Parabéns, voce ganhou um ponto </talk>
-      <evaEmotion emotion="NEUTRAL" />
-      <light state="ON" color="WHITE" />
-      <motion type="CENTER" leftArm="POSITION 0" rightArm="POSITION 0" />
-    </macro>
-    <macro id="Não_pontuou">
-      <evaEmotion emotion="SAD" />
-      <random min="1" max="3" />
-      <switch var="$">
-        <case op="exact" value="1">
-          <light state="ON" color="RED" />
-        </case>
-        <case op="exact" value="2">
-          <light state="ON" color="YELLOW" />
-        </case>
-        <case op="exact" value="3">
-          <light state="ON" color="BLACK" />
+        <case op="exact" value="3" commMode="NO_OP">
+          <light state="ON" color="PINK" commMode="PUB" pubTopic="LIGHT" />
+          <useMacro macro="Pont_total" commMode="NO_OP" />
         </case>
       </switch>
-      <motion type="NO" leftArm="UP" rightArm="UP" />
-      <led animation="SAD" />
-      <talk>A resposta dessa operação é #multiplicando</talk>
-      <talk>Que pena, dessa vez você não pontuou, vamos para a próxima</talk>
-      <light state="ON" color="WHITE" />
-      <evaEmotion emotion="NEUTRAL" />
-      <motion leftArm="POSITION 0" rightArm="POSITION 0" />
+      <audio source="efx-aplausos-bom" block="TRUE" commMode="PUB/SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+      <counter var="ponto" op="+" value="1" commMode="NO_OP" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Parabéns, voce ganhou um ponto </talk>
+      <evaEmotion emotion="NEUTRAL" commMode="PUB" pubTopic="EVAEMOTION" />
+      <light state="ON" color="WHITE" commMode="PUB" pubTopic="LIGHT" />
+      <motion type="CENTER" leftArm="POSITION 0" rightArm="POSITION 0" commMode="PUB" pubTopic="MOTION" />
     </macro>
-    <macro id="materiais">
-      <talk>Ana tem #multiplicando caixas de canetas.  Cada caixa contém $ canetas.    Quantas canetas no total tem Ana? / 
+    <macro id="Não_pontuou" commMode="NO_OP">
+      <evaEmotion emotion="SAD" commMode="PUB" pubTopic="EVAEMOTION" />
+      <random min="1" max="3" commMode="NO_OP" />
+      <switch var="$" commMode="NO_OP">
+        <case op="exact" value="1" commMode="NO_OP">
+          <light state="ON" color="RED" commMode="PUB" pubTopic="LIGHT" />
+        </case>
+        <case op="exact" value="2" commMode="NO_OP">
+          <light state="ON" color="YELLOW" commMode="PUB" pubTopic="LIGHT" />
+        </case>
+        <case op="exact" value="3" commMode="NO_OP">
+          <light state="ON" color="BLACK" commMode="PUB" pubTopic="LIGHT" />
+        </case>
+      </switch>
+      <motion type="NO" leftArm="UP" rightArm="UP" commMode="PUB" pubTopic="MOTION" />
+      <led animation="SAD" commMode="PUB" pubTopic="LEDS" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">A resposta dessa operação é #multiplicando</talk>
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que pena, dessa vez você não pontuou, vamos para a próxima</talk>
+      <light state="ON" color="WHITE" commMode="PUB" pubTopic="LIGHT" />
+      <evaEmotion emotion="NEUTRAL" commMode="PUB" pubTopic="EVAEMOTION" />
+      <motion leftArm="POSITION 0" rightArm="POSITION 0" commMode="PUB" pubTopic="MOTION" />
+    </macro>
+    <macro id="materiais" commMode="NO_OP">
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Ana tem #multiplicando caixas de canetas.  Cada caixa contém $ canetas.    Quantas canetas no total tem Ana? / 
         Na escola de Alice existem #multiplicando salas de aula, e em cada uma existem $ cadeiras. Quantas cadeiras existem na escola de Alice? /
         João comprou #multiplicando brigadeiros. Cada brigadeiro custa $ reais.        Quanto João pagou nos brigadeiros? /
         Renan tem #multiplicando sacos com $ balas em cada um. Quantas balas há em todos os sacos? /
         Na mesa da professora há #multiplicando gavetas com $ livros cada.   Quantos livros há na mesa da professora?
       </talk>
     </macro>
-    <macro id="nível_2">
-      <random min="2" max="10" />
-      <switch var="$">
-        <case op="exact" value="2">
-          <useMacro macro="materiais" />
-          <counter var="multiplicando" op="*" value="2" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+    <macro id="nível_2" commMode="NO_OP">
+      <random min="2" max="10" commMode="NO_OP" />
+      <switch var="$" commMode="NO_OP">
+        <case op="exact" value="2" commMode="NO_OP">
+          <useMacro macro="materiais" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="2" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="2" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="2" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="2" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="2" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="3">
-          <useMacro macro="materiais" />
-          <counter var="multiplicando" op="*" value="3" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="3" commMode="NO_OP">
+          <useMacro macro="materiais" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="3" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="3" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="3" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="3" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="3" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="4">
-          <useMacro macro="materiais" />
-          <counter var="multiplicando" op="*" value="4" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="4" commMode="NO_OP">
+          <useMacro macro="materiais" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="4" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="4" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="4" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="4" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="4" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="5">
-          <useMacro macro="materiais" />
-          <counter var="multiplicando" op="*" value="5" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="5" commMode="NO_OP">
+          <useMacro macro="materiais" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="5" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="5" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="5" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="5" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="5" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="6">
-          <useMacro macro="materiais" />
-          <counter var="multiplicando" op="*" value="6" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="6" commMode="NO_OP">
+          <useMacro macro="materiais" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="6" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="6" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="6" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="6" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="6" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="7">
-          <useMacro macro="materiais" />
-          <counter var="multiplicando" op="*" value="7" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="7" commMode="NO_OP">
+          <useMacro macro="materiais" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="7" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="7" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="7" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="7" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="7" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="8">
-          <useMacro macro="materiais" />
-          <counter var="multiplicando" op="*" value="8" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="8" commMode="NO_OP">
+          <useMacro macro="materiais" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="8" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="8" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="8" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="8" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="8" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="9">
-          <useMacro macro="materiais" />
-          <counter var="multiplicando" op="*" value="9" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="9" commMode="NO_OP">
+          <useMacro macro="materiais" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="9" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="9" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="9" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="9" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="9" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="10">
-          <useMacro macro="materiais" />
-          <counter var="multiplicando" op="*" value="10" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="10" commMode="NO_OP">
+          <useMacro macro="materiais" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="10" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="10" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="10" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="10" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="10" commMode="NO_OP" />
             </default>
           </switch>
         </case>
       </switch>
     </macro>
-    <macro id="problemas">
-      <talk>Um jogador comprou #multiplicando blusas que custam $ reais cada uma. Quanto ele gastou em blusas?/
+    <macro id="problemas" commMode="NO_OP">
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Um jogador comprou #multiplicando blusas que custam $ reais cada uma. Quanto ele gastou em blusas?/
         Um caixote tem #multiplicando maçãs. Quantas maçãs terão $ caixotes?/
         Marcelo estocou #multiplicando caixas contendo $ tubos de cola em cada  caixa. Quantos tubos Marcelo estocou?/
         Joana precisa encher #multiplicando copos de $ ml com refrigerante. Qual a quantidade total de refrigerante de que ele precisará? /
@@ -743,402 +743,402 @@
         Bruna comprou #multiplicando caixas de morango para vender. Cada  caixa contém $ morangos. Quantos morangos Bruna comprou?
       </talk>
     </macro>
-    <macro id="nível_3">
-      <random min="4" max="10" />
-      <switch var="$">
-        <case op="exact" value="1">
-          <useMacro macro="problemas" />
-          <counter var="multiplicando" op="*" value="1" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+    <macro id="nível_3" commMode="NO_OP">
+      <random min="4" max="10" commMode="NO_OP" />
+      <switch var="$" commMode="NO_OP">
+        <case op="exact" value="1" commMode="NO_OP">
+          <useMacro macro="problemas" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="1" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="1" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="1" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="1" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="1" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="2">
-          <useMacro macro="problemas" />
-          <counter var="multiplicando" op="*" value="2" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="2" commMode="NO_OP">
+          <useMacro macro="problemas" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="2" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="2" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="2" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="2" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="2" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="3">
-          <useMacro macro="problemas" />
-          <counter var="multiplicando" op="*" value="3" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="3" commMode="NO_OP">
+          <useMacro macro="problemas" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="3" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="3" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="3" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="3" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="3" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="4">
-          <useMacro macro="problemas" />
-          <counter var="multiplicando" op="*" value="4" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="4" commMode="NO_OP">
+          <useMacro macro="problemas" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="4" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="4" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="4" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="4" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="4" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="5">
-          <useMacro macro="problemas" />
-          <counter var="multiplicando" op="*" value="5" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="5" commMode="NO_OP">
+          <useMacro macro="problemas" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="5" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="5" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="5" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="5" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="5" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="6">
-          <useMacro macro="problemas" />
-          <counter var="multiplicando" op="*" value="6" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="6" commMode="NO_OP">
+          <useMacro macro="problemas" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="6" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="6" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="6" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="6" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="6" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="7">
-          <useMacro macro="problemas" />
-          <counter var="multiplicando" op="*" value="7" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="7" commMode="NO_OP">
+          <useMacro macro="problemas" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="7" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="7" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="7" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="7" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="7" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="8">
-          <useMacro macro="problemas" />
-          <counter var="multiplicando" op="*" value="8" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="8" commMode="NO_OP">
+          <useMacro macro="problemas" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="8" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="8" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="8" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="8" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="8" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="9">
-          <useMacro macro="problemas" />
-          <counter var="multiplicando" op="*" value="9" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="9" commMode="NO_OP">
+          <useMacro macro="problemas" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="9" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="9" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="9" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="9" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="9" commMode="NO_OP" />
             </default>
           </switch>
         </case>
-        <case op="exact" value="10">
-          <useMacro macro="problemas" />
-          <counter var="multiplicando" op="*" value="10" />
-          <listen />
-          <switch var="$">
-            <case op="exact" value="parar">
-              <useMacro macro="final" />
-              <stop />
+        <case op="exact" value="10" commMode="NO_OP">
+          <useMacro macro="problemas" commMode="NO_OP" />
+          <counter var="multiplicando" op="*" value="10" commMode="NO_OP" />
+          <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <switch var="$" commMode="NO_OP">
+            <case op="exact" value="parar" commMode="NO_OP">
+              <useMacro macro="final" commMode="NO_OP" />
+              <stop commMode="NO_OP" />
             </case>
-            <case op="eq" value="#multiplicando">
-              <useMacro macro="Pontuou" />
-              <counter var="multiplicando" op="/" value="10" />
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+              <useMacro macro="Pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="10" commMode="NO_OP" />
             </case>
-            <default>
-              <useMacro macro="Não_pontuou" />
-              <counter var="multiplicando" op="/" value="10" />
+            <default commMode="NO_OP">
+              <useMacro macro="Não_pontuou" commMode="NO_OP" />
+              <counter var="multiplicando" op="/" value="10" commMode="NO_OP" />
             </default>
           </switch>
         </case>
       </switch>
     </macro>
-    <macro id="Multiplicando_2">
-      <random min="3" max="10" />
-      <switch var="$">
-        <case op="exact" value="3">
-          <counter var="multiplicando" op="=" value="3" />
+    <macro id="Multiplicando_2" commMode="NO_OP">
+      <random min="3" max="10" commMode="NO_OP" />
+      <switch var="$" commMode="NO_OP">
+        <case op="exact" value="3" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="3" commMode="NO_OP" />
         </case>
-        <case op="exact" value="4">
-          <counter var="multiplicando" op="=" value="4" />
+        <case op="exact" value="4" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="4" commMode="NO_OP" />
         </case>
-        <case op="exact" value="5">
-          <counter var="multiplicando" op="=" value="5" />
+        <case op="exact" value="5" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="5" commMode="NO_OP" />
         </case>
-        <case op="exact" value="6">
-          <counter var="multiplicando" op="=" value="6" />
+        <case op="exact" value="6" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="6" commMode="NO_OP" />
         </case>
-        <case op="exact" value="7">
-          <counter var="multiplicando" op="=" value="7" />
+        <case op="exact" value="7" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="7" commMode="NO_OP" />
         </case>
-        <case op="exact" value="8">
-          <counter var="multiplicando" op="=" value="8" />
+        <case op="exact" value="8" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="8" commMode="NO_OP" />
         </case>
-        <case op="exact" value="9">
-          <counter var="multiplicando" op="=" value="9" />
+        <case op="exact" value="9" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="9" commMode="NO_OP" />
         </case>
-        <case op="exact" value="10">
-          <counter var="multiplicando" op="=" value="10" />
+        <case op="exact" value="10" commMode="NO_OP">
+          <counter var="multiplicando" op="=" value="10" commMode="NO_OP" />
         </case>
       </switch>
     </macro>
-    <macro id="Regras">
-      <audio source="efx-mario-start-02" block="TRUE" />
-      <light state="ON" color="RED" />
-      <talk> $1, o jogo da tabuada funciona da seguinte maneira.</talk>
-      <talk>Cada pergunta terá uma pontuação e seu objetivo final é conseguir acertar todas as perguntas, totalizando 9 pontos. 
+    <macro id="Regras" commMode="NO_OP">
+      <audio source="efx-mario-start-02" block="TRUE" commMode="PUB/SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+      <light state="ON" color="RED" commMode="PUB" pubTopic="LIGHT" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE"> $1, o jogo da tabuada funciona da seguinte maneira.</talk>
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Cada pergunta terá uma pontuação e seu objetivo final é conseguir acertar todas as perguntas, totalizando 9 pontos. 
         Caso já inicie em um nível avançado, todos os pontos dos níveis anteriores ja serão automaticamente conquistados por você.</talk>
-      <talk>Ao final de cada nível farei uma pergunta para saber se quer jogar mais ou se quer parar. Ao fim de tudo, direi sua pontuação final. Espero que você goste do jogo!</talk>
-      <light state="ON" color="WHITE" />
-      <evaEmotion emotion="NEUTRAL" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Ao final de cada nível farei uma pergunta para saber se quer jogar mais ou se quer parar. Ao fim de tudo, direi sua pontuação final. Espero que você goste do jogo!</talk>
+      <light state="ON" color="WHITE" commMode="PUB" pubTopic="LIGHT" />
+      <evaEmotion emotion="NEUTRAL" commMode="PUB" pubTopic="EVAEMOTION" />
     </macro>
-    <macro id="Apresenta">
-      <audio source="efx-mario-game-intro" block="TRUE" />
-      <evaEmotion emotion="HAPPY" />
-      <light state="ON" color="YELLOW" />
-      <talk>Olá, eu sou robô Eva. E você? Qual é o seu nome?</talk>
-      <evaEmotion emotion="NEUTRAL" />
-      <listen />
-      <light state="ON" color="GREEN" />
+    <macro id="Apresenta" commMode="NO_OP">
+      <audio source="efx-mario-game-intro" block="TRUE" commMode="PUB/SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+      <evaEmotion emotion="HAPPY" commMode="PUB" pubTopic="EVAEMOTION" />
+      <light state="ON" color="YELLOW" commMode="PUB" pubTopic="LIGHT" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Olá, eu sou robô Eva. E você? Qual é o seu nome?</talk>
+      <evaEmotion emotion="NEUTRAL" commMode="PUB" pubTopic="EVAEMOTION" />
+      <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+      <light state="ON" color="GREEN" commMode="PUB" pubTopic="LIGHT" />
     </macro>
-    <macro id="final">
-      <evaEmotion emotion="HAPPY" />
-      <motion type="2UP_LEFT" leftArm="SHAKE1" rightArm="SHAKE1" />
-      <led animation="RAINBOW" />
-      <audio source="efx-mario-end-03" block="TRUE" />
-      <light state="ON" color="BLACK" />
-      <talk>$1, então encerramos por aqui a nossa sessão. Você conseguiu um total de #pontos pontos. Tôrço para que tenha gostado da experiência de ter jogado comigo. Estarei te esperando para jogarmos em outro momento.</talk>
-      <motion type="CENTER" leftArm="POSITION 0" rightArm="POSITION 0" />
+    <macro id="final" commMode="NO_OP">
+      <evaEmotion emotion="HAPPY" commMode="PUB" pubTopic="EVAEMOTION" />
+      <motion type="2UP_LEFT" leftArm="SHAKE1" rightArm="SHAKE1" commMode="PUB" pubTopic="MOTION" />
+      <led animation="RAINBOW" commMode="PUB" pubTopic="LEDS" />
+      <audio source="efx-mario-end-03" block="TRUE" commMode="PUB/SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+      <light state="ON" color="BLACK" commMode="PUB" pubTopic="LIGHT" />
+      <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$1, então encerramos por aqui a nossa sessão. Você conseguiu um total de #pontos pontos. Tôrço para que tenha gostado da experiência de ter jogado comigo. Estarei te esperando para jogarmos em outro momento.</talk>
+      <motion type="CENTER" leftArm="POSITION 0" rightArm="POSITION 0" commMode="PUB" pubTopic="MOTION" />
     </macro>
-    <macro id="Nivelamento_3">
-        <random min="6" max="9" />
-        <talk>Para fazer um bolo são necessários #multiplicando ovos. Quantos ovos serão necessários para fazer $ bolos?/
+    <macro id="Nivelamento_3" commMode="NO_OP">
+        <random min="6" max="9" commMode="NO_OP" />
+        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Para fazer um bolo são necessários #multiplicando ovos. Quantos ovos serão necessários para fazer $ bolos?/
             Bruna comprou #multiplicando caixas de morango para vender, em cada caixa há $ morangos. Quantos morangos ela comprou?</talk>
-            <switch var="$">
-                <case op="exact" value="1">
-                    <counter var="multiplicando" op="*" value="1" />
+            <switch var="$" commMode="NO_OP">
+                <case op="exact" value="1" commMode="NO_OP">
+                    <counter var="multiplicando" op="*" value="1" commMode="NO_OP" />
                 </case>
-                <case op="exact" value="2">
-                    <counter var="multiplicando" op="*" value="2" />
+                <case op="exact" value="2" commMode="NO_OP">
+                    <counter var="multiplicando" op="*" value="2" commMode="NO_OP" />
                 </case>
-                <case op="exact" value="3">
-                    <counter var="multiplicando" op="*" value="3" />
+                <case op="exact" value="3" commMode="NO_OP">
+                    <counter var="multiplicando" op="*" value="3" commMode="NO_OP" />
                 </case>
-                <case op="exact" value="4">
-                    <counter var="multiplicando" op="*" value="4" />
+                <case op="exact" value="4" commMode="NO_OP">
+                    <counter var="multiplicando" op="*" value="4" commMode="NO_OP" />
                 </case>
-                <case op="exact" value="5">
-                    <counter var="multiplicando" op="*" value="5" />
+                <case op="exact" value="5" commMode="NO_OP">
+                    <counter var="multiplicando" op="*" value="5" commMode="NO_OP" />
                 </case>
-                <case op="exact" value="6">
-                    <counter var="multiplicando" op="*" value="6" />
+                <case op="exact" value="6" commMode="NO_OP">
+                    <counter var="multiplicando" op="*" value="6" commMode="NO_OP" />
                 </case>
-                <case op="exact" value="7">
-                    <counter var="multiplicando" op="*" value="7" />
+                <case op="exact" value="7" commMode="NO_OP">
+                    <counter var="multiplicando" op="*" value="7" commMode="NO_OP" />
                 </case>
-                <case op="exact" value="8">
-                    <counter var="multiplicando" op="*" value="8" />
+                <case op="exact" value="8" commMode="NO_OP">
+                    <counter var="multiplicando" op="*" value="8" commMode="NO_OP" />
                 </case>
-                <case op="exact" value="9">
-                    <counter var="multiplicando" op="*" value="9" />
+                <case op="exact" value="9" commMode="NO_OP">
+                    <counter var="multiplicando" op="*" value="9" commMode="NO_OP" />
                 </case>
-                <case op="exact" value="10">
-                    <counter var="multiplicando" op="*" value="10" />
+                <case op="exact" value="10" commMode="NO_OP">
+                    <counter var="multiplicando" op="*" value="10" commMode="NO_OP" />
                 </case>
             </switch>
-            <listen />
-            <switch var="$">
-                <case op="eq" value="#multiplicando">
-                  <counter var="pont_min" op="+" value="15" />
-                  <audio source="successed" block="TRUE" />
-                  <talk>Parabéns!</talk>
+            <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+            <switch var="$" commMode="NO_OP">
+                <case op="eq" value="#multiplicando" commMode="NO_OP">
+                  <counter var="pont_min" op="+" value="15" commMode="NO_OP" />
+                  <audio source="successed" block="TRUE" commMode="PUB/SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+                  <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Parabéns!</talk>
                 </case>
-                <default>
-                  <audio source="negative_beep" block="TRUE" />
-                  <talk>A resposta certa é #multiplicando. Vamos para a próxima, esta foi por pouco.</talk>
+                <default commMode="NO_OP">
+                  <audio source="negative_beep" block="TRUE" commMode="PUB/SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+                  <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">A resposta certa é #multiplicando. Vamos para a próxima, esta foi por pouco.</talk>
                 </default>
             </switch>
     </macro>
-    <macro id="Nivelamento_2">
-        <random min="2" max="5" />
-        <talk>Em um pote cabem #multiplicando canetas.      Quantas canetas serão necessárias para colocarmos em $ potes? /
+    <macro id="Nivelamento_2" commMode="NO_OP">
+        <random min="2" max="5" commMode="NO_OP" />
+        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Em um pote cabem #multiplicando canetas.      Quantas canetas serão necessárias para colocarmos em $ potes? /
             Uma sala possui #multiplicando computadores com $ telas.    Quantas telas existem nesta sala?
         </talk>
-        <switch var="$">
-            <case op="exact" value="1">
-                <counter var="multiplicando" op="*" value="1" />
+        <switch var="$" commMode="NO_OP">
+            <case op="exact" value="1" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="1" commMode="NO_OP" />
             </case>
-            <case op="exact" value="2">
-                <counter var="multiplicando" op="*" value="2" />
+            <case op="exact" value="2" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="2" commMode="NO_OP" />
             </case>
-            <case op="exact" value="3">
-                <counter var="multiplicando" op="*" value="3" />
+            <case op="exact" value="3" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="3" commMode="NO_OP" />
             </case>
-            <case op="exact" value="4">
-                <counter var="multiplicando" op="*" value="4" />
+            <case op="exact" value="4" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="4" commMode="NO_OP" />
             </case>
-            <case op="exact" value="5">
-                <counter var="multiplicando" op="*" value="5" />
+            <case op="exact" value="5" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="5" commMode="NO_OP" />
             </case>
-            <case op="exact" value="6">
-                <counter var="multiplicando" op="*" value="6" />
+            <case op="exact" value="6" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="6" commMode="NO_OP" />
             </case>
-            <case op="exact" value="7">
-                <counter var="multiplicando" op="*" value="7" />
+            <case op="exact" value="7" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="7" commMode="NO_OP" />
             </case>
-            <case op="exact" value="8">
-                <counter var="multiplicando" op="*" value="8" />
+            <case op="exact" value="8" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="8" commMode="NO_OP" />
             </case>
-            <case op="exact" value="9">
-                <counter var="multiplicando" op="*" value="9" />
+            <case op="exact" value="9" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="9" commMode="NO_OP" />
             </case>
-            <case op="exact" value="10">
-                <counter var="multiplicando" op="*" value="10" />
+            <case op="exact" value="10" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="10" commMode="NO_OP" />
             </case>
         </switch>
-        <listen />
-        <switch var="$">
-            <case op="eq" value="#multiplicando">
-                <counter var="pont_min" op="+" value="3" />
-                <audio source="successed" block="TRUE" />
-                <talk>Parabéns!</talk>
+        <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+        <switch var="$" commMode="NO_OP">
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+                <counter var="pont_min" op="+" value="3" commMode="NO_OP" />
+                <audio source="successed" block="TRUE" commMode="PUB/SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Parabéns!</talk>
             </case>
-            <default>
-                <audio source="negative_beep" block="TRUE" />
-                <talk>A resposta certa é #multiplicando.       Vamos para a próxima, esta foi por pouco.</talk>
+            <default commMode="NO_OP">
+                <audio source="negative_beep" block="TRUE" commMode="PUB/SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">A resposta certa é #multiplicando.       Vamos para a próxima, esta foi por pouco.</talk>
             </default>
         </switch>
     </macro>
-    <macro id="Nivelamento">
-        <random min="2" max="10" />
-        <talk>Quanto é #multiplicando vezes $?</talk>
-        <switch var="$">
-            <case op="exact" value="1">
-                <counter var="multiplicando" op="*" value="1" />
+    <macro id="Nivelamento" commMode="NO_OP">
+        <random min="2" max="10" commMode="NO_OP" />
+        <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Quanto é #multiplicando vezes $?</talk>
+        <switch var="$" commMode="NO_OP">
+            <case op="exact" value="1" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="1" commMode="NO_OP" />
             </case>
-            <case op="exact" value="2">
-                <counter var="multiplicando" op="*" value="2" />
+            <case op="exact" value="2" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="2" commMode="NO_OP" />
             </case>
-            <case op="exact" value="3">
-                <counter var="multiplicando" op="*" value="3" />
+            <case op="exact" value="3" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="3" commMode="NO_OP" />
             </case>
-            <case op="exact" value="4">
-                <counter var="multiplicando" op="*" value="4" />
+            <case op="exact" value="4" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="4" commMode="NO_OP" />
             </case>
-            <case op="exact" value="5">
-                <counter var="multiplicando" op="*" value="5" />
+            <case op="exact" value="5" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="5" commMode="NO_OP" />
             </case>
-            <case op="exact" value="6">
-                <counter var="multiplicando" op="*" value="6" />
+            <case op="exact" value="6" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="6" commMode="NO_OP" />
             </case>
-            <case op="exact" value="7">
-                <counter var="multiplicando" op="*" value="7" />
+            <case op="exact" value="7" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="7" commMode="NO_OP" />
             </case>
-            <case op="exact" value="8">
-                <counter var="multiplicando" op="*" value="8" />
+            <case op="exact" value="8" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="8" commMode="NO_OP" />
             </case>
-            <case op="exact" value="9">
-                <counter var="multiplicando" op="*" value="9" />
+            <case op="exact" value="9" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="9" commMode="NO_OP" />
             </case>
-            <case op="exact" value="10">
-                <counter var="multiplicando" op="*" value="10" />
+            <case op="exact" value="10" commMode="NO_OP">
+                <counter var="multiplicando" op="*" value="10" commMode="NO_OP" />
             </case>
         </switch>
-        <listen />
-        <switch var="$">
-            <case op="eq" value="#multiplicando">
-                <counter var="pont_min" op="+" value="1" />
-                <audio source="successed" block="TRUE" />
-                <talk>Parabéns!</talk>
+        <listen commMode="PUB/SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+        <switch var="$" commMode="NO_OP">
+            <case op="eq" value="#multiplicando" commMode="NO_OP">
+                <counter var="pont_min" op="+" value="1" commMode="NO_OP" />
+                <audio source="successed" block="TRUE" commMode="PUB/SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Parabéns!</talk>
             </case>
-            <default>
-                <audio source="negative_beep" block="TRUE" />
-                <talk>A resposta certa é #multiplicando.       Vamos para a próxima, esta foi por pouco.</talk>
+            <default commMode="NO_OP">
+                <audio source="negative_beep" block="TRUE" commMode="PUB/SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+                <talk commMode="PUB/SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">A resposta certa é #multiplicando.       Vamos para a próxima, esta foi por pouco.</talk>
             </default>
         </switch>
     </macro>

@@ -16,10 +16,6 @@ Revision: 2024/09/26
 	<xs:simpleType name="idType">
 		<xs:restriction base="xs:ID"/>
 	</xs:simpleType>
-
-	<xs:simpleType name="topicType">
-		<xs:restriction base="xs:string"/>
-	</xs:simpleType>
 	
 	<xs:simpleType name="switchVarOnlyDollar">
 		<xs:restriction base="xs:token">

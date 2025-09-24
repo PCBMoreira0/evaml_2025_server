@@ -18,9 +18,11 @@ Revision: 2025/04/16
     <!-- ** EVAML userId command definition ** -->
 	<xs:element name="userID">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="MQTT_PUB_SUB"/>
+			<xs:attribute name="pubTopic" type="xs:string" fixed="USERID"/>
+			<xs:attribute name="subTopic" type="xs:string" fixed="USERID_RESPONSE"/>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="var" type="switchVarAll"/>
 		</xs:complexType>
 	</xs:element>
-
 </xs:schema>

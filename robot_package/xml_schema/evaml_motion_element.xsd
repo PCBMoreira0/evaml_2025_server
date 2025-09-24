@@ -18,6 +18,8 @@ Revision: 2025/04/16
     <!-- EVAML motion command definition ** -->
 	<xs:element name="motion">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="MQTT_PUB"/>
+			<xs:attribute name="pubTopic" type="xs:string" fixed="MOTION"/> <!-- Here it should be more topics. It needs to be solved... May be in the robot module... -->
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="type" type="headMotionListType"/> <!-- Still exists to maintain compatibility with the previous model -->
 			<!-- New head, leftArm and rightArm features -->

@@ -18,6 +18,8 @@ Revision: 2025/04/16
     <!-- ** EVAML log command definition ** -->
 	<xs:element name="log">
 		<xs:complexType mixed="true">
+			<xs:attribute name="commMode" type="xs:string" fixed="MQTT_PUB"/>
+			<xs:attribute name="pubTopic" type="xs:string" fixed="LOG"/>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="name" type="logNameType" use="required"/>
 		</xs:complexType>

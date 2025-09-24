@@ -18,6 +18,7 @@ Revision: 2025/04/16
     <!-- EVAML counter command definition ** -->
 	<xs:element name="counter">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="NULL"/>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="var" type="switchVarType" use="required"/>
 			<xs:attribute name="op" type="counterOpType" use="required"/>

@@ -15,6 +15,7 @@ Revision: 2025/04/16
     <!-- ** EVAML goto command definition ** -->
 	<xs:element name="goto">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="NULL"/>
 			<xs:attribute name="target" type="xs:IDREF" use="required"/>
 		</xs:complexType>
 	</xs:element>

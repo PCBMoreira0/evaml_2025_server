@@ -19,6 +19,8 @@ Revision: 2025/04/16
     <!-- ** EVAML evaEmotion command definition ** -->
 	<xs:element name="evaEmotion">
 		<xs:complexType >
+			<xs:attribute name="commMode" type="xs:string" fixed="MQTT_PUB"/>
+			<xs:attribute name="pubTopic" type="xs:string" fixed="EVAEMOTION"/>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="emotion" type="evaEmotionType" use="required"/>
 		</xs:complexType>

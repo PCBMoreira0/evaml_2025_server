@@ -8,7 +8,11 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
-    def node_process(self, node, memory):
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+
+    def node_process(self, xml_node, memory):
         """ Função de tratamento do nó """
         if memory.running_mode == "simulator":
             topic_base = config.SIMULATOR_TOPIC_BASE
@@ -18,16 +22,16 @@ class CommandHandler(BaseCommandHandler):
             topic_base = config.TERMINAL_TOPIC_BASE
 
         # It is necessary to handle cases where the node comes without the "color" defined
-        if node.get('state') == "OFF":
+        if xml_node.get('state') == "OFF":
             light_color = 'BLACK'
             message = light_color + "|" + 'OFF'
         else:
-            if node.get('color') == None:
+            if xml_node.get('color') == None:
                 light_color = 'WHITE'
-                message = light_color + "|" + node.get("state")
+                message = light_color + "|" + xml_node.get("state")
             else:
-                light_color = node.get('color')
-                message = light_color + "|" + node.get("state")
+                light_color = xml_node.get('color')
+                message = light_color + "|" + xml_node.get("state")
 
         tab_colors = {"BLACK": "[b white on grey19] OFF [/]",
                     "BLUE": "[b white on blue ] ON [/]",
@@ -39,8 +43,10 @@ class CommandHandler(BaseCommandHandler):
                     }
         print("[b white]State: Setting [/]the [b white]Smart Bulb[/]. 💡 " + tab_colors[light_color])
         
+        self.send(message)
+
         if topic_base != "TERMINAL":
             pass
             # client_mqtt.publish(topic_base + "/light", message, qos=2); # Command for the physical smart bulb
 
-        return node # It returns the same node
+        return xml_node # It returns the same node

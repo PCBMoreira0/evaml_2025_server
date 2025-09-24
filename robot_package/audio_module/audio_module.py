@@ -21,6 +21,11 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+
+        
     # Função de bloqueio que é usada para sincronia entre os módulos e o Script Player
     def block(self, state, memory):
         memory.robot_state = state # Altera o estado do robô.
@@ -28,7 +33,7 @@ class CommandHandler(BaseCommandHandler):
             time.sleep(0.01)
 
 
-    def node_process(self, node, memory):
+    def node_process(self, xml_node, memory):
         """ Função de tratamento do nó """
         if memory.running_mode == "simulator":
             topic_base = config.SIMULATOR_TOPIC_BASE
@@ -37,28 +42,28 @@ class CommandHandler(BaseCommandHandler):
         else:
             topic_base = config.TERMINAL_TOPIC_BASE
 
-        if node.get("block") == "TRUE":
-            print('[b white]State:[/][b white] Playing[/] ▶️  the sound [bold][b white]"' + node.get("source") + '"[/] in [b white]BLOCKING[/] mode.')
+        if xml_node.get("block") == "TRUE":
+            print('[b white]State:[/][b white] Playing[/] ▶️  the sound [bold][b white]"' + xml_node.get("source") + '"[/] in [b white]BLOCKING[/] mode.')
             if topic_base != "TERMINAL":
-                message = node.get("source") + "|" + node.get("block")
-                # client_mqtt.publish(topic_base + '/' + node.tag, message)
-                block("Playing a sound", memory)
+                message = xml_node.get("source") + "|" + xml_node.get("block")
+                # client_mqtt.publish(topic_base + '/' + xml_node.tag, message)
+                self.block("Playing a sound", memory)
             else:
                 try:
-                    playsound(os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/audio_module/audio_files/" + node.get("source") + ".wav", block = True)
+                    playsound(os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/audio_module/audio_files/" + xml_node.get("source") + ".wav", block = True)
                 except FileNotFoundError as e:
-                    print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + node.get("source") + '"[/]. Check if it [b white u]exists[/] or is in the [b white u]correct format[/] (wav).✋⛔️')
+                    print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + xml_node.get("source") + '"[/]. Check if it [b white u]exists[/] or is in the [b white u]correct format[/] (wav).✋⛔️')
                     exit(1) 
         else:
-            print('[b white]State:[/][b white] Playing[/] ▶️  the sound [bold][b white]"' + node.get("source") + '"[/] in [b white]NON-BLOCKING[/] mode.')
+            print('[b white]State:[/][b white] Playing[/] ▶️  the sound [bold][b white]"' + xml_node.get("source") + '"[/] in [b white]NON-BLOCKING[/] mode.')
             if topic_base != "TERMINAL":
-                message = node.get("source") + "|" + node.get("block")
-                # client_mqtt.publish(topic_base + '/' + node.tag, message)
+                message = xml_node.get("source") + "|" + xml_node.get("block")
+                # client_mqtt.publish(topic_base + '/' + xml_node.tag, message)
             else:
                 try:
-                    playsound(os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/audio_module/audio_files/" + node.get("source") + ".wav", block = False)
+                    playsound(os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/audio_module/audio_files/" + xml_node.get("source") + ".wav", block = False)
                 except FileNotFoundError as e:
-                    print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
+                    print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + xml_node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
                     exit(1) 
         
-        return node # It returns the same node
+        return xml_node # It returns the same node

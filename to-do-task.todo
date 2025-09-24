@@ -6,15 +6,17 @@
 
 ✔ Implementar a memória do robô no padrão singleton. @high @done (15/09/2025, 13:11:28)
 
-☐ Resolver a questão do cliente mqtt para o comando <log>. @high
+✔ Resolver a questão do cliente mqtt para o comando <log>. @high @done (23/09/2025, 20:09:17)
 
-☐ Resolver a questão do cliente mqtt para o comando <mqtt>. @high
+✔ Resolver a questão do cliente mqtt para o comando <mqtt>. @high @done (23/09/2025, 20:09:19)
 
 ✔ A utilização da classe robot memory no padrão singleton foi cancelada... @done (15/09/2025, 13:48:35)
 
 ☐ Corrigir o nome da dolar por dollar (que meeerda) @low (Talvez eu deixe assim mesmo...)
 
-☐ Implementar no PARSER a função que processa o XML após a validação e insere os valores default e fixed no script XML. @low 
+☐ Preciso verificar as classes, suas interações e formas de representação no diagrama UML do Draw.io.
+
+✔ Implementar no PARSER a função que processa o XML após a validação e insere os valores default e fixed no script XML. @low @done (23/09/2025, 20:09:10)
 
     Obsservação:
         O processo de validação de um XML contra um XSD (XML Schema) geralmente apenas verifica se o documento está em conformidade.

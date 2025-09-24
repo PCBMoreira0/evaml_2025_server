@@ -58,7 +58,11 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
-    def node_process(self, node, memory):
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+
+    def node_process(self, xml_node, memory):
         """ Node handling function """
 
         if memory.running_mode == "simulator":
@@ -69,11 +73,11 @@ class CommandHandler(BaseCommandHandler):
             topic_base = config.TERMINAL_TOPIC_BASE
 
         # Node processing
-        if node.text == None: # There is no text to speech
+        if xml_node.text == None: # There is no text to speech
             print("[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There is no text to speech [/] in the element [b white]<talk>[/]. Please, check your code.✋⛔️")
             exit(1)
 
-        texto = node.text
+        texto = xml_node.text
         palavras = texto.split()
         texto_normalizado = ' '.join(palavras)
         texto = texto_normalizado.replace('\n', '').replace('\r', '').replace('\t', '') # Remove tabulações e salto de linha.
@@ -139,10 +143,10 @@ class CommandHandler(BaseCommandHandler):
             global voice_type, auth_start_time, apikey, url, authenticator, tts, first_requisition
             # Assumes the default UTF-8 (Generates the hashing of the audio file).
             # Additionally, use the voice timbre attribute in the file hash.
-            if node.get("voiceType") == None:
+            if xml_node.get("voiceType") == None:
                 voice_type = memory.default_voice
             else:
-                voice_type = node.get('voiceType')
+                voice_type = xml_node.get('voiceType')
 
 
             texto[ind_random] = texto[ind_random].lower()
@@ -204,7 +208,7 @@ class CommandHandler(BaseCommandHandler):
                                         print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + texto[ind_random] + '[/]"')
                                         playsound("robot_package/talk_module/tts_cache_files/" + file_name + ".mp3", block = True)
                                     except FileNotFoundError as e:
-                                        print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
+                                        print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + xml_node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
                                         exit(1) 
 
                                     audio_file_is_ok = True
@@ -222,7 +226,7 @@ class CommandHandler(BaseCommandHandler):
                             print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + texto[ind_random] + '"[/]')
                             playsound("robot_package/talk_module/tts_cache_files/" + file_name + ".mp3", block = True)
                         except FileNotFoundError as e:
-                            print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
+                            print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + xml_node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
                             exit(1) 
                         audio_file_is_ok = True  
 
@@ -230,13 +234,13 @@ class CommandHandler(BaseCommandHandler):
             # Controls the physical robot
             print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + texto[ind_random] + '"[/]')
 
-            if node.get("voiceType") == None:
+            if xml_node.get("voiceType") == None:
                 message = memory.default_voice + "|" + memory.default_voice_pitch_shift + "|" + texto[ind_random]
             else:
-                message = node.get("voiceType") + "|" + node.get("pitchShift") + "|" + texto[ind_random]
+                message = xml_node.get("voiceType") + "|" + xml_node.get("pitchShift") + "|" + texto[ind_random]
             
-            # client_mqtt.publish(topic_base + '/' + node.tag, message)
+            # client_mqtt.publish(topic_base + '/' + xml_node.tag, message)
             
             # block("Speaking", memory, client_mqtt)
 
-        return node # It returns the same node
+        return xml_node # It returns the same node

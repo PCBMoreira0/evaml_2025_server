@@ -18,6 +18,9 @@ Revision: 2025/04/16
     <!-- ** EVAML userEmotion command definition ** -->
 	<xs:element name="userEmotion">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="MQTT_PUB_SUB"/>
+			<xs:attribute name="pubTopic" type="xs:string" fixed="USEREMOTION"/>
+			<xs:attribute name="subTopic" type="xs:string" fixed="USEREMOTION_RESPONSE"/>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="var" type="switchVarAll"/>
 		</xs:complexType>

@@ -3,6 +3,7 @@
   name="pcb2"
   xsi:noNamespaceSchemaLocation="../robot_package/xml_schema/evaml_schema.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
   <settings>
     <voice type="pt-BR_IsabelaV3Voice" />
     <lightEffects mode="ON" />
@@ -28,10 +29,7 @@
             <audio source="song-take-on-me" block="TRUE" />
             <talk>Felicidade detectada! Parece que você acordou com o pé direito hoje. Eu fico assim quando encontro Wi-Fi rápido.</talk>
             <led animation="HAPPY" />
-
-
         </case>
-
         <case op="exact" value="triste">
             <evaEmotion emotion="SAD" />
             <audio source="song-sad-violin" block="TRUE" />
@@ -55,7 +53,6 @@
                     <switch var="$">
                         <case op="contain" value="sim">
                             <goto target="volt" />
-
                         </case>
                         <case op="contain" value="quero">
                             <goto target="volt" />
@@ -63,7 +60,6 @@
                         </case>
                         <case op="contain" value="não">
                             <talk>Tudo bem! Sem problemas.</talk>
-
                         </case>
                     </switch>
                 </case>
@@ -76,11 +72,9 @@
                         </case>
                         <case op="contain" value="quero">
                             <goto target="volt" />
-
                         </case>
                         <case op="contain" value="sim">
                             <goto target="volt" />
-
                         </case>
                         <case op="contain" value="não">
                             <talk>Tudo bem! Sem problemas.</talk>
@@ -88,25 +82,19 @@
                     </switch>
                 </case>
             </switch>
-
         </case>
-
         <case op="exact" value="raiva">
             <evaEmotion emotion="ANGRY" />
             <talk>Raiva detectada! Que tal uma pausa para respirar um pouco? Vou tocar um som de meditação para ajudar</talk>
             <evaEmotion emotion="NEUTRAL" />
             <audio source="efx-wand1" block="TRUE" />
         </case>
-        
         <case op="exact" value="surpreso">
             <evaEmotion emotion="SURPRISE" />
             <audio source="efx-susto" block="TRUE" />
             <talk>Uau! Surpresa detectada! O que será que te deixou assim? Foi minha beleza robótica?</talk>
             <evaEmotion emotion="NEUTRAL" />
-
-
         </case>
-
         <case op="exact" value="medo">
             <evaEmotion emotion="FEAR" />
             <talk>Vejo que você está com medo. Isso é normal, não precisa se preocupar.</talk>
@@ -114,7 +102,6 @@
              <audio source="efx-wand1" block="TRUE" />
             <evaEmotion emotion="NEUTRAL" />
             <wait duration="1000" />
-
         </case>
         <case op="exact" value="nojo">
             <evaEmotion emotion="DISGUST" />
@@ -132,8 +119,6 @@
             <evaEmotion emotion="NEUTRAL" />
             <audio source="efx-tic-toc" block="TRUE" />
             <talk>Então esssa é a famosa cara de segunda feira!</talk>
-
-
         </case>
     </switch>
     <evaEmotion emotion="NEUTRAL" />
@@ -203,8 +188,7 @@
             <motion head="NO"/>
             <audio source="song-vivaldi-spring" block="TRUE" />
             <led animation="RAINBOW" />
-            <evaEmotion emotion="NEUTRAL" />
-            
+            <evaEmotion emotion="NEUTRAL" /> 
         </case>
         <case op="contain" value="samba">
             <evaEmotion emotion="HAPPY" />

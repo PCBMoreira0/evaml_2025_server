@@ -18,6 +18,7 @@ Revision: 2025/04/16
     <!-- EVAML voice command definition ** -->
 	<xs:element name="voice">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="NULL"/>
 			<xs:attribute name="type" type="voiceType" use="required"/>
 			<xs:attribute name="pitchShift" type="pitchShiftType" />
 		</xs:complexType>

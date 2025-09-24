@@ -4,6 +4,10 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+        
     def get_var_value(self, value, memory):
         # Values ​​in var (var_value) can only be numbers, $ (of all types) and variables without # at the beginning.
         if value[0] == "$": # Is of type $, $n, or $-n
@@ -40,13 +44,13 @@ class CommandHandler(BaseCommandHandler):
 
 
 
-    def node_process(self, node, memory):
+    def node_process(self, xml_node, memory):
         """ Função de tratamento do nó """
         # By definition, the switch can contain references to "$" and variables.
         # Variables are referenced by name, without the use of a "#" at the beginning.
 
-        memory.op_switch = self.get_var_value(node.get("var"), memory)
+        memory.op_switch = self.get_var_value(xml_node.get("var"), memory)
         memory.flag_case = False
-        print('[b white]State:[/] Processing a [b white]Switch[/]. [b white]Var = "' + node.get("var") + '"[/], with[b white] the string = "' + memory.op_switch + '".')
+        print('[b white]State:[/] Processing a [b white]Switch[/]. [b white]Var = "' + xml_node.get("var") + '"[/], with[b white] the string = "' + memory.op_switch + '".')
         
-        return node # It returns the same node
+        return xml_node # It returns the same node

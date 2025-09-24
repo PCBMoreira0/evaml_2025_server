@@ -6,18 +6,22 @@ from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
 
-    def node_process(self, node, memory):
+    def __init__(self, xml_node, communicator_obj):
+        
+        super().__init__(self, communicator_obj)
+
+    def node_process(self, xml_node, memory):
         """ Node handling function """
 
-        if (len(node.get("topic"))) == 0: # error
+        if (len(xml_node.get("pubTopic"))) == 0: # error
             print("[b white on red blink] FATAL ERROR [/]: The [bold white]MQTT topic[/] is [b reverse white] EMPTY [/].✋⛔️")
             exit(1)
 
-        if node.text == None: # There is no text to send.
+        if xml_node.text == None: # There is no text to send.
             print("[b white on red blink] FATAL ERROR [/]:[bold] There is [b reverse white] no message [/] to send.✋⛔️")
             exit(1)
 
-        texto = node.text
+        texto = xml_node.text
         palavras = texto.split()
         texto = ' '.join(palavras) # Removing more than one space between words.
         texto = texto.replace('\n', '').replace('\r', '').replace('\t', '') # Remove tabs and line breaks.
@@ -52,13 +56,15 @@ class CommandHandler(BaseCommandHandler):
                             indice = int(var_dollar[1:]) # Var dollar is of type $n. then just take n and convert it to int
                             texto = texto.replace(var_dollar, memory.var_dolar[(indice - 1)][0])
 
-        print("[b white ]STATE[/]:[bold] Sending the [b white]MQTT message: [/][yellow]" + texto + "[/]. [b white] TOPIC: [/][reverse cyan] " + node.get("topic") + " [/].") #  to the topic: [b white]" + node.get("topic") + "[/]."
+        print("[b white ]STATE[/]:[bold] Sending the [b white]MQTT message: [/][yellow]" + texto + "[/]. [b white] TOPIC: [/][reverse cyan] " + xml_node.get("pubTopic") + " [/].") #  to the topic: [b white]" + node.get("topic") + "[/]."
 
         # Send the message
         if memory.running_mode == "robot":
             # Send to the robot.
-            client_mqtt.publish(node.get("topic"), texto)    
+            # client_mqtt.publish(xml_node.get("topic"), texto)   
+            self.send(texto) 
         else:
-            client_mqtt.publish(node.get("topic"), texto)  
+            # client_mqtt.publish(xml_node.get("topic"), texto)  
+            self.send(texto) 
         
-        return node # It returns the same node
+        return xml_node # It returns the same node

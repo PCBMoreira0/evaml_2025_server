@@ -18,6 +18,7 @@ Revision: 2025/04/16
     <!-- ** EVAML random command definition ** -->
 	<xs:element name="random">
 		<xs:complexType>
+			<xs:attribute name="commMode" type="xs:string" fixed="NULL"/>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="min" type="xs:nonNegativeInteger" use="required"/>
 			<xs:attribute name="max" type="xs:nonNegativeInteger" use="required"/>
