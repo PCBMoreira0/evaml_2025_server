@@ -4,8 +4,7 @@ import time
 import random as rnd
 import hashlib
 import os
-from play_audio import playsound # Adapter module for the audio library.
-# Depending on the OS it matters and defines a function called "playsound".
+
 
 from rich import print
 
@@ -83,7 +82,7 @@ class TtsIBM():
                 # Start the TTS process
                 tts_start = time.time() # Variable used to mark the processing time of the TTS service.
                 while(not audio_file_is_ok):
-                    # Functions of the TTS service for EVA
+                    # Functions of the TTS service
                     with open("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION, 'wb') as audio_file:
                         try:
                             res = self.tts.synthesize(text_to_speech, accept = config.ACCEPT_AUDIO_EXTENSION, voice = voice_type).get_result()
@@ -94,28 +93,33 @@ class TtsIBM():
                                 print("#### Corrupted file....")
                                 os.remove("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)
                             else:
-                                try:
-                                    print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + text_to_speech + '[/]"')
-                                    playsound("robot_package/talk_module/tts_cache_files/" + file_name + ".mp3", block = True)
-                                except FileNotFoundError as e:
-                                    print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + xml_node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
-                                    exit(1) 
-
                                 audio_file_is_ok = True
                                 self.first_requisition = False
+                                return file_name # The new audio file was generated and is ready to play.
+                                # try:
+                                #     print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + text_to_speech + '[/]"')
+                                #     playsound("robot_package/talk_module/tts_cache_files/" + file_name + ".mp3", block = True)
+                                # except FileNotFoundError as e:
+                                #     print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + xml_node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
+                                #     exit(1) 
+
+                                # audio_file_is_ok = True
+                                # self.first_requisition = False
                         except self.ApiException as ex:
                             print ("The function failed with the following error code: " + str(ex.code) + ": " + ex.message)
-                            exit(1)
+                            return False
             else:
                 if (os.path.getsize("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)) == 0: # Corrupted file
                     # The generated audio file is 0 bytes, corrupt and will be removed!
-                    os.remove("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)
+                    os.removeaudio_file_is_ok = True
+                    # self.first_requisition = False("robot_package/talk_module/tts_cache_files/" + file_name + config.WATSON_AUDIO_EXTENSION)
                 else:
                     # The file is more than 0 bytes and will be played now!
-                    try:
-                        print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + text_to_speech + '"[/]')
-                        playsound("robot_package/talk_module/tts_cache_files/" + file_name + ".mp3", block = True)
-                    except FileNotFoundError as e:
-                        print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + self.xml_node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
-                        exit(1) 
-                    audio_file_is_ok = True  
+                    # try:
+                    #     print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + text_to_speech + '"[/]')
+                    #     playsound("robot_package/talk_module/tts_cache_files/" + file_name + ".mp3", block = True)
+                    # except FileNotFoundError as e:
+                    #     print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + self.xml_node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
+                    #     exit(1) 
+                    audio_file_is_ok = True
+                    return file_name

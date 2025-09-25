@@ -8,6 +8,8 @@ import config # Module with network device configurations.
 
 from tts_ibm import TtsIBM
 
+import play_speech
+
 import robot_profile  # Module with network device configurations.
 
 
@@ -105,11 +107,15 @@ class CommandHandler(BaseCommandHandler):
 
 
         elif memory.running_mode == "terminal-plus":
-            tts_service = TtsIBM(xml_node)
+            tts_service = TtsIBM(xml_node) # Create the Text-To-Speech service obj.
+            play_speech_audio = play_speech.create_audio_player()
             if xml_node.get("voiceType") == None:
-                tts_service.make_tts_and_play(text_to_speech, voice_type)
+                tts_file_name = tts_service.make_tts_and_play(text_to_speech, voice_type) # This method return file_name if TTS file generated is ok.
             else:
-                tts_service.make_tts_and_play(text_to_speech, xml_node.get("voiceType"))
+                tts_file_name = tts_service.make_tts_and_play(text_to_speech, xml_node.get("voiceType"))
+
+            if tts_file_name: # A file_name is None if the tts was wrong.
+                play_speech_audio.play(xml_node, text_to_speech, tts_file_name)
 
         else:
             # Controls the physical robot
