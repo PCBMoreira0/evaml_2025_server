@@ -1,7 +1,3 @@
-
-from play_audio import playsound # Adapter module for the audio library.
-# Depending on the OS it matters and defines a function called "playsound".
- 
 from rich import print
 
 import sys
@@ -16,6 +12,7 @@ sys.path.insert(0, "../")
 
 import robot_profile  # Module with network device configurations.
 
+import play_audio
 
 from base_command_handler import BaseCommandHandler
 
@@ -50,7 +47,8 @@ class CommandHandler(BaseCommandHandler):
                 self.block("Playing a sound", memory)
             else:
                 try:
-                    playsound(os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/audio_module/audio_files/" + xml_node.get("source") + ".wav", block = True)
+                    play_audio_obj = play_audio.create_audio_player() # Obtem a classe adequada ao SO
+                    play_audio_obj.play(xml_node, os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/audio_module/audio_files/" + xml_node.get("source") + ".wav", block = True)
                 except FileNotFoundError as e:
                     print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + xml_node.get("source") + '"[/]. Check if it [b white u]exists[/] or is in the [b white u]correct format[/] (wav).✋⛔️')
                     exit(1) 
@@ -61,7 +59,8 @@ class CommandHandler(BaseCommandHandler):
                 # client_mqtt.publish(topic_base + '/' + xml_node.tag, message)
             else:
                 try:
-                    playsound(os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/audio_module/audio_files/" + xml_node.get("source") + ".wav", block = False)
+                    play_audio_obj = play_audio.create_audio_player()
+                    play_audio_obj.play(xml_node, os.getcwd() + "/" + config.ROBOT_PACKAGE_FOLDER + "/audio_module/audio_files/" + xml_node.get("source") + ".wav", block = False)
                 except FileNotFoundError as e:
                     print('[b white on red blink] FATAL ERROR [/]: [b yellow reverse] There was a problem playing the audio file [/]: [b white]"' + xml_node.get("source") + '"[/]. Check if it [b u white]exists[/] or is in the [b u white]correct format[/] (wav)[/].✋⛔️')
                     exit(1) 

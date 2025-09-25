@@ -5,25 +5,6 @@
     <audioEffects mode="ON" commMode="NULL" vol="100%" />
   </settings>
   <script>
-    <light state="ON" commMode="MQTT_PUB" pubTopic="LIGHT" color="WHITE" />
-    <mqtt pubTopic="MQTT" commMode="MQTT_PUB">
-      Olá MQTT novo
-    </mqtt>
     <audio source="efx-blin" block="TRUE" commMode="MQTT_PUB_SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
-    <log name="LOG1" commMode="MQTT_PUB" pubTopic="LOG">
-      Teste de LOG1
-    </log>
-    <log name="LOG2" commMode="MQTT_PUB" pubTopic="LOG">
-      Teste de LOG2
-    </log>
-    <log name="LOG1" commMode="MQTT_PUB" pubTopic="LOG">
-      Teste de LOG1
-    </log>
-    <http url="http://127.0.0.1:5000" commMode="HTTP">
-      {"command": "move_to", "destination": "home"}
-    </http>
-    <log name="LOG2" commMode="MQTT_PUB" pubTopic="LOG">
-      Teste de LOG2
-    </log>
   </script>
 </evaml>
