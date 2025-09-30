@@ -12,9 +12,16 @@
 
 ✔ A utilização da classe robot memory no padrão singleton foi cancelada... @done (15/09/2025, 13:48:35)
 
+☐ Preciso verificar porque, algumas vezes, a mensagem mqtt do <log> não vai. @high
+    Parece que é preciso um tempo depois do comando para que a mensagem chegue...
+    Se a mensagem for a última de um script, por exemplo, parece que o script finaliza antes da mensagem chegar, não tenho certeza...
+    Coloquei um timer de 1s (no scriptEngine) antes do script finilizar. Parece que resolve o problema. 
+
 ☐ Corrigir o nome da dolar por dollar (que meeerda) @low (Talvez eu deixe assim mesmo...)
 
-☐ Preciso verificar as classes, suas interações e formas de representação no diagrama UML do Draw.io.
+☐ Preciso verificar as classes, suas interações e formas de representação no diagrama UML do Draw.io. @low 
+
+☐ Terminar os módulos para o EVA e copiar para o FRED. @low
 
 ✔ Implementar no PARSER a função que processa o XML após a validação e insere os valores default e fixed no script XML. @low @done (23/09/2025, 20:09:10)
 
@@ -45,5 +52,5 @@
     * Em resumo, o valor default é um contrato entre o designer do schema e o desenvolvedor da aplicação.
     É responsabilidade do desenvolvedor implementar a lógica que honra esse contrato, adicionando o valor quando ele está ausente.
 
-☐ Terminar os módulos para o EVA e copiar para o FRED. @low
+
 

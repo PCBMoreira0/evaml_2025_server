@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 
 from rich import print
 from rich.console import Console
@@ -87,7 +88,7 @@ class ScriptEngine:
             print("O Player não se encontra no estado IDLE.")
             return False
 
-        console.rule("🤖 [yellow reverse b]  Starting the script - Reading the global <settings> from file: " + self.script_file + "  [/] 🤖\n")
+        console.rule("🤖 [yellow reverse b]  Starting the script in " + running_mode.upper() + " MODE - Reading the global <settings> from file: " + self.script_file + "  [/] 🤖\n")
         self.__robot_memory.reset_memory()
         self.__robot_memory.set_running_mode(running_mode)
 
@@ -119,6 +120,7 @@ class ScriptEngine:
                     # End of script
                     print('[b white]State:[/] [b white]End of script![/] 🎈🥳🥳🎈\n')
                     console.rule("🤖 [green reverse b]  Script finished: " + self.script_file + "  [/] 🤖")
+                    time.sleep(1) # Tempo necessário para envio de mensagem MQTT.
                     print("\n\n")
                 self.__state  = "IDLE"
                 return True# Break

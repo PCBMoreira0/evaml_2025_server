@@ -25,7 +25,7 @@ Revision: 2025/04/16
 			<xs:attribute name="var" type="switchVarAll"/>
 			<!-- The language attribute was not defined as mandatory to maintain compatibility with old scripts -->
 			<!-- The default value will be defined in EvaML code function -->
-			<xs:attribute name="language" type="listenLanguageType"/> 
+			<xs:attribute name="language" type="listenLanguageType" default="pt-BR" /> 
 		</xs:complexType>
 	</xs:element>
 

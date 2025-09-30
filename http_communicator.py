@@ -11,7 +11,7 @@ class HttpCommunicator(CommunicatorInterface):
         self.base_url = self.xml_node.get("url")
         print(f"[HTTP]: Conectado à URL base '{self.base_url}'.")
     
-    def send(self, data: dict):
+    def send(self, **kwargs):
         """
         Envia dados usando um POST e lida com possíveis erros.
         """

@@ -11,10 +11,10 @@ class BaseCommandHandler(ABC):
         self.xml_node = xml_node
         self.comms = communicator_obj
 
-    def send(self, data: dict):
-        self.comms.send(data)
+    def send(self, **kwargs):
+        self.comms.send(**kwargs)
 
-    def receive(self) -> dict:
+    def receive(self):
         return self.comms.receive()
     
     @abstractmethod

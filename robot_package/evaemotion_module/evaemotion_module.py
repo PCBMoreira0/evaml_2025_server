@@ -2,8 +2,6 @@ from rich import print
 
 import robot_profile  # Module with network device configurations.
 
-robot_topic_base = robot_profile.ROBOT_TOPIC_BASE
-
 import config
 
 from base_command_handler import BaseCommandHandler
@@ -17,12 +15,15 @@ class CommandHandler(BaseCommandHandler):
     def node_process(self, xml_node, memory):
         """ Node handling function """
 
-        if memory.running_mode == "simulator":
+        if memory.get_running_mode() == "simulator":
             topic_base = config.SIMULATOR_TOPIC_BASE
-        elif memory.running_mode == "robot":
+
+        elif memory.get_running_mode() == "robot":
             topic_base = robot_profile.ROBOT_TOPIC_BASE
+
         else:
             topic_base = config.TERMINAL_TOPIC_BASE
+
 
         if xml_node.get("emotion") == "NEUTRAL":
             emoji = " 😐"
@@ -43,10 +44,11 @@ class CommandHandler(BaseCommandHandler):
 
         print("[b white]State:[/] Setting the robot [b white]expression[/] to [b white]" + xml_node.get("emotion") + emoji + "[/].")
 
-        # if topic_base != "TERMINAL":
-        #     message = xml_node.get("emotion")
-        #     topic = "evaEmotion" # Para o FRED o tópico é "expression"
-        #     client_mqtt.publish(topic_base + '/' + topic, message)
+        message = xml_node.get("emotion")
+
+        if topic_base == config.SIMULATOR_TOPIC_BASE or topic_base == robot_profile.ROBOT_TOPIC_BASE:
+            self.send(topic_base=topic_base, mqtt_message=message)
+
 
         return xml_node # It returns the same node
 

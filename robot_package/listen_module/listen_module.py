@@ -34,18 +34,19 @@ class CommandHandler(BaseCommandHandler):
         else:
             topic_base = config.TERMINAL_TOPIC_BASE
 
-        if xml_node.get("language") == None: # Maintains compatibility with the use of <listen> in old scripts
-            # It will be used the default value defined in config.py file
-            language_for_listen = config.LANG_DEFAULT_GOOGLE_TRANSLATING
-        else:
-            language_for_listen =  xml_node.get("language")
+        # if xml_node.get("language") == None: # Maintains compatibility with the use of <listen> in old scripts
+        #     # It will be used the default value defined in config.py file
+        #     language_for_listen = config.LANG_DEFAULT_GOOGLE_TRANSLATING
+        # else:
+        #     language_for_listen =  xml_node.get("language")
         
         
         # Whether in terminal mode or terminal-plus mode, entries are made via the keyboard via the terminal.
         # client_mqtt.publish(topic_base + "/leds", "LISTEN")
-        print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + language_for_listen + '[/]. ', end="")
+        print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + xml_node.get("language") + '[/]. ', end="")
 
-        user_answer = console.input("[b white on green blink] > [/] ")
+        if topic_base == config.TERMINAL_TOPIC_BASE:
+            user_answer = console.input("[b white on green blink] > [/] ")
         
         # client_mqtt.publish(topic_base + "/leds", "STOP")
         if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable

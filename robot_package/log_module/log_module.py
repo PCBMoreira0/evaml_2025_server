@@ -2,14 +2,9 @@ from rich import print
 
 import re
 
-# import sys
-
-# import config  # Module with network device configurations.
-
-
 import robot_profile  # Module with network device configurations.
 
-robot_topic_base = robot_profile.ROBOT_TOPIC_BASE
+import config
 
 from base_command_handler import BaseCommandHandler
 
@@ -21,6 +16,16 @@ class CommandHandler(BaseCommandHandler):
 
     def node_process(self, xml_node, memory):
         """ Node handling function """
+
+        if memory.get_running_mode() == "simulator":
+            topic_base = config.SIMULATOR_TOPIC_BASE
+
+        elif memory.get_running_mode() == "robot":
+            topic_base = robot_profile.ROBOT_TOPIC_BASE
+
+        else:
+            topic_base = config.TERMINAL_TOPIC_BASE
+
 
         if (len(xml_node.get("name"))) == 0: # erro
             print('[b white on red blink] FATAL ERROR [/]: The [bold white]"log name" [/]attribute is [b reverse yellow] EMPTY [/].✋⛔️')
@@ -80,7 +85,9 @@ class CommandHandler(BaseCommandHandler):
         print('[b white ]State[/]:[b white] Sending [/]to the log ([b white]' + xml_node.get("name") + '[/]), with sequence number ' + str(log_seq_number) + ', the text [b white]"' + texto.strip() + '"[/].')
 
         # Strip is used to remove \n from texts that may come from xml.
-        # client_mqtt.publish(robot_topic_base + "/log", xml_node.get("name") + "_" + str(log_seq_number) + '_' + texto.strip())
-        self.send(xml_node.get("name") + "_" + str(log_seq_number) + '_' + texto.strip())    
+        log_text = xml_node.get("name") + "_" + str(log_seq_number) + '_' + texto.strip()
+
+        self.send(topic_base=topic_base, mqtt_message=log_text)
+
         
         return xml_node # It returns the same node

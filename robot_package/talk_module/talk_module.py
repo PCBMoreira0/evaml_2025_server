@@ -14,10 +14,6 @@ import robot_profile  # Module with network device configurations.
 
 
 robot_topic_base = robot_profile.ROBOT_TOPIC_BASE
-broker = config.MQTT_BROKER_ADRESS # Broker address.
-port = config.MQTT_PORT # Broker Port.
-voice_type = config.VOICE_TYPE
-
 
 from base_command_handler import BaseCommandHandler
 
@@ -109,7 +105,7 @@ class CommandHandler(BaseCommandHandler):
             tts_service = TtsIBM(xml_node) # Create the Text-To-Speech service obj.
             play_speech_audio = play_speech.create_audio_player()
             if xml_node.get("voiceType") == None:
-                tts_file_name = tts_service.make_tts_and_play(text_to_speech[ind_random], voice_type) # This method return file_name if TTS file generated is ok.
+                tts_file_name = tts_service.make_tts_and_play(text_to_speech[ind_random], memory.get_default_voice()) # This method return file_name if TTS file generated is ok.
             else:
                 tts_file_name = tts_service.make_tts_and_play(text_to_speech[ind_random], xml_node.get("voiceType"))
 
@@ -120,10 +116,10 @@ class CommandHandler(BaseCommandHandler):
             # Controls the physical robot
             print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + text_to_speech[ind_random] + '"[/]')
 
-            if xml_node.get("voiceType") == None:
-                message = memory.default_voice + "|" + memory.default_voice_pitch_shift + "|" + text_to_speech[ind_random]
-            else:
-                message = xml_node.get("voiceType") + "|" + xml_node.get("pitchShift") + "|" + text_to_speech[ind_random]
+            # if xml_node.get("voiceType") == None:
+            #     message = memory.default_voice + "|" + memory.default_voice_pitch_shift + "|" + text_to_speech[ind_random]
+            # else:
+            #     message = xml_node.get("voiceType") + "|" + xml_node.get("pitchShift") + "|" + text_to_speech[ind_random]
             
             # client_mqtt.publish(topic_base + '/' + xml_node.tag, message)
             

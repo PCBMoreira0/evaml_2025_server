@@ -9,11 +9,18 @@
     <audioEffects mode="ON" />
   </settings>
   <script>
-    <listen />
-    <switch var="$">
-      <case op="exact" value="HAPPY">
-        <talk>OK, $</talk>
-      </case>
-    </switch>
+    <light state="ON" color="PINK"/>
+    <!-- <wait duration="2" />
+    <light state="ON" color="GREEN"/>
+    <wait duration="2" /> -->
+    <!-- <led animation="HAPPY" /> -->
+    <wait duration="1" />
+    <!-- <evaEmotion emotion="INLOVE" /> -->
+    <log name="LOG1">Olá LOG1</log>
+    <!-- <wait duration="2" /> -->
+
+    <!-- Os comandos acima já foram testados -->
+
+    <!-- Faltam os comandos de PUB/SUB -->
   </script>
 </evaml>

@@ -18,10 +18,13 @@ class CommandHandler(BaseCommandHandler):
 
     def node_process(self, xml_node, memory):
         """ Função de tratamento do nó """
-        if memory.running_mode == "simulator":
+
+        if memory.get_running_mode() == "simulator":
             topic_base = config.SIMULATOR_TOPIC_BASE
-        elif memory.running_mode == "robot":
+
+        elif memory.get_running_mode() == "robot":
             topic_base = robot_profile.ROBOT_TOPIC_BASE
+
         else:
             topic_base = config.TERMINAL_TOPIC_BASE
             
@@ -29,10 +32,9 @@ class CommandHandler(BaseCommandHandler):
 
         message = xml_node.get("animation")
         
+        
+        if topic_base == config.SIMULATOR_TOPIC_BASE or topic_base == robot_profile.ROBOT_TOPIC_BASE:
+            self.send(topic_base=topic_base, mqtt_message=message)
 
-        if topic_base != "TERMINAL":
-            # client_mqtt.publish(topic_base + '/' + "leds", "STOP") # Although xml_node.tag is "led" the defined topic was "leds".
-            time.sleep(0.1)
-            # client_mqtt.publish(topic_base + '/' + "leds", message) # Although xml_node.tag is "led" the defined topic was "leds".
 
         return xml_node # It returns the same node

@@ -35,7 +35,7 @@ class RobotMemory(): #
         
         # Default voice type
         self.default_voice = None
-        self.default_voice_pitch_shift = None
+
 
     # Setters and Getters 
     def setDollar(self, value):

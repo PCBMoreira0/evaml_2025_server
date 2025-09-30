@@ -2,9 +2,9 @@ from abc import ABC, abstractmethod
 
 class CommunicatorInterface(ABC):
     @abstractmethod
-    def send(self, data: dict):
+    def send(self, **kwargs):
         pass
 
     @abstractmethod
-    def receive(self) -> dict:
+    def receive(self):
         pass

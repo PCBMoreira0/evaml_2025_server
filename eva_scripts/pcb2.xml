@@ -56,7 +56,6 @@
                         </case>
                         <case op="contain" value="quero">
                             <goto target="volt" />
-
                         </case>
                         <case op="contain" value="não">
                             <talk>Tudo bem! Sem problemas.</talk>

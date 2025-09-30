@@ -9,7 +9,7 @@
     <useMacro macro="Apresenta" commMode="NULL" />
     <useMacro macro="Fixa_dolar" commMode="NULL" />
     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">$1, vamos jogar o jogo da tabuada. Mas, antes de começar o jogo, você gostaria de saber nossas regras?</talk>
-    <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+    <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
     <switch var="$" commMode="NULL">
       <case op="exact" value="sim" commMode="NULL">
         <useMacro macro="Regras" commMode="NULL" />
@@ -34,7 +34,7 @@
           <counter var="ponto" op="=" value="0" commMode="NULL" />
           <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
           <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="sim" commMode="NULL">
               <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
@@ -45,7 +45,7 @@
                   <counter var="ponto" op="=" value="0" commMode="NULL" />
                   <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
                   <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-                  <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                  <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
                   <switch var="$" commMode="NULL">
                     <case op="exact" value="sim" commMode="NULL">
                       <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
@@ -78,7 +78,7 @@
             <counter var="pontos" op="=" value="3" commMode="NULL" />
             <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
             <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-            <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+            <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
             <switch var="$" commMode="NULL">
               <case op="exact" value="sim" commMode="NULL">
                 <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
@@ -89,7 +89,7 @@
                     <counter var="ponto" op="=" value="0" commMode="NULL" />
                     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
                     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-                    <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                    <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
                     <switch var="$" commMode="NULL">
                       <case op="exact" value="sim" commMode="NULL">
                         <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
@@ -118,7 +118,7 @@
                 <counter var="ponto" op="=" value="0" commMode="NULL" />
                 <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
                 <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-                <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
                 <switch var="$" commMode="NULL">
                   <case op="exact" value="sim" commMode="NULL">
                     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
@@ -136,7 +136,7 @@
             <counter var="pontos" op="=" value="3" commMode="NULL" />
             <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
             <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-            <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+            <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
             <switch var="$" commMode="NULL">
               <case op="exact" value="sim" commMode="NULL">
                 <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
@@ -147,7 +147,7 @@
                     <counter var="ponto" op="=" value="0" commMode="NULL" />
                     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
                     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-                    <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                    <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
                     <switch var="$" commMode="NULL">
                       <case op="exact" value="sim" commMode="NULL">
                         <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
@@ -196,7 +196,7 @@
           <counter var="ponto" op="=" value="0" commMode="NULL" />
           <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
           <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="sim" commMode="NULL">
               <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
@@ -207,7 +207,7 @@
                   <counter var="ponto" op="=" value="0" commMode="NULL" />
                   <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
                   <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-                  <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                  <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
                   <switch var="$" commMode="NULL">
                     <case op="exact" value="sim" commMode="NULL">
                       <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
@@ -240,7 +240,7 @@
             <counter var="pontos" op="=" value="3" commMode="NULL" />
             <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
             <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-            <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+            <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
             <switch var="$" commMode="NULL">
               <case op="exact" value="sim" commMode="NULL">
                 <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
@@ -251,7 +251,7 @@
                     <counter var="ponto" op="=" value="0" commMode="NULL" />
                     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
                     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-                    <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                    <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
                     <switch var="$" commMode="NULL">
                       <case op="exact" value="sim" commMode="NULL">
                         <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
@@ -280,7 +280,7 @@
                 <counter var="ponto" op="=" value="0" commMode="NULL" />
                 <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
                 <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-                <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
                 <switch var="$" commMode="NULL">
                   <case op="exact" value="sim" commMode="NULL">
                     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
@@ -298,7 +298,7 @@
             <counter var="pontos" op="=" value="3" commMode="NULL" />
             <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível dois!</talk>
             <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-            <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+            <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
             <switch var="$" commMode="NULL">
               <case op="exact" value="sim" commMode="NULL">
                 <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então nós iremos começar agora.</talk>
@@ -309,7 +309,7 @@
                     <counter var="ponto" op="=" value="0" commMode="NULL" />
                     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Que bom que voce chegou aqui no nível três!</talk>
                     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Podemos começar?</talk>
-                    <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+                    <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
                     <switch var="$" commMode="NULL">
                       <case op="exact" value="sim" commMode="NULL">
                         <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Então vamos começar.</talk>
@@ -342,7 +342,7 @@
       <counter var="pontos" op="+" value="1" commMode="NULL" />
     </macro>
     <macro id="Fixa_tabuada" commMode="NULL">
-      <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+      <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
       <switch var="$" commMode="NULL">
         <case op="exact" value="1" commMode="NULL">
           <counter var="multiplicando" op="=" value="1" commMode="NULL" />
@@ -486,7 +486,7 @@
                 <counter var="multiplicando" op="*" value="10" commMode="NULL" />
             </case>
         </switch>
-        <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+        <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
         <switch var="$" commMode="NULL">
           <case op="exact" value="parar" commMode="NULL">
             <useMacro macro="final" commMode="NULL" />
@@ -562,7 +562,7 @@
         <case op="exact" value="2" commMode="NULL">
           <useMacro macro="materiais" commMode="NULL" />
           <counter var="multiplicando" op="*" value="2" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -581,7 +581,7 @@
         <case op="exact" value="3" commMode="NULL">
           <useMacro macro="materiais" commMode="NULL" />
           <counter var="multiplicando" op="*" value="3" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -600,7 +600,7 @@
         <case op="exact" value="4" commMode="NULL">
           <useMacro macro="materiais" commMode="NULL" />
           <counter var="multiplicando" op="*" value="4" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -619,7 +619,7 @@
         <case op="exact" value="5" commMode="NULL">
           <useMacro macro="materiais" commMode="NULL" />
           <counter var="multiplicando" op="*" value="5" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -638,7 +638,7 @@
         <case op="exact" value="6" commMode="NULL">
           <useMacro macro="materiais" commMode="NULL" />
           <counter var="multiplicando" op="*" value="6" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -657,7 +657,7 @@
         <case op="exact" value="7" commMode="NULL">
           <useMacro macro="materiais" commMode="NULL" />
           <counter var="multiplicando" op="*" value="7" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -676,7 +676,7 @@
         <case op="exact" value="8" commMode="NULL">
           <useMacro macro="materiais" commMode="NULL" />
           <counter var="multiplicando" op="*" value="8" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -695,7 +695,7 @@
         <case op="exact" value="9" commMode="NULL">
           <useMacro macro="materiais" commMode="NULL" />
           <counter var="multiplicando" op="*" value="9" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -714,7 +714,7 @@
         <case op="exact" value="10" commMode="NULL">
           <useMacro macro="materiais" commMode="NULL" />
           <counter var="multiplicando" op="*" value="10" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -749,7 +749,7 @@
         <case op="exact" value="1" commMode="NULL">
           <useMacro macro="problemas" commMode="NULL" />
           <counter var="multiplicando" op="*" value="1" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -768,7 +768,7 @@
         <case op="exact" value="2" commMode="NULL">
           <useMacro macro="problemas" commMode="NULL" />
           <counter var="multiplicando" op="*" value="2" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -787,7 +787,7 @@
         <case op="exact" value="3" commMode="NULL">
           <useMacro macro="problemas" commMode="NULL" />
           <counter var="multiplicando" op="*" value="3" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -806,7 +806,7 @@
         <case op="exact" value="4" commMode="NULL">
           <useMacro macro="problemas" commMode="NULL" />
           <counter var="multiplicando" op="*" value="4" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -825,7 +825,7 @@
         <case op="exact" value="5" commMode="NULL">
           <useMacro macro="problemas" commMode="NULL" />
           <counter var="multiplicando" op="*" value="5" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -844,7 +844,7 @@
         <case op="exact" value="6" commMode="NULL">
           <useMacro macro="problemas" commMode="NULL" />
           <counter var="multiplicando" op="*" value="6" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -863,7 +863,7 @@
         <case op="exact" value="7" commMode="NULL">
           <useMacro macro="problemas" commMode="NULL" />
           <counter var="multiplicando" op="*" value="7" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -882,7 +882,7 @@
         <case op="exact" value="8" commMode="NULL">
           <useMacro macro="problemas" commMode="NULL" />
           <counter var="multiplicando" op="*" value="8" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -901,7 +901,7 @@
         <case op="exact" value="9" commMode="NULL">
           <useMacro macro="problemas" commMode="NULL" />
           <counter var="multiplicando" op="*" value="9" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -920,7 +920,7 @@
         <case op="exact" value="10" commMode="NULL">
           <useMacro macro="problemas" commMode="NULL" />
           <counter var="multiplicando" op="*" value="10" commMode="NULL" />
-          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+          <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
           <switch var="$" commMode="NULL">
             <case op="exact" value="parar" commMode="NULL">
               <useMacro macro="final" commMode="NULL" />
@@ -983,7 +983,7 @@
       <light state="ON" color="YELLOW" commMode="MQTT_PUB" pubTopic="LIGHT" />
       <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Olá, eu sou robô Eva. E você? Qual é o seu nome?</talk>
       <evaEmotion emotion="NEUTRAL" commMode="MQTT_PUB" pubTopic="EVAEMOTION" />
-      <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+      <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
       <light state="ON" color="GREEN" commMode="MQTT_PUB" pubTopic="LIGHT" />
     </macro>
     <macro id="final" commMode="NULL">
@@ -1031,7 +1031,7 @@
                     <counter var="multiplicando" op="*" value="10" commMode="NULL" />
                 </case>
             </switch>
-            <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+            <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
             <switch var="$" commMode="NULL">
                 <case op="eq" value="#multiplicando" commMode="NULL">
                   <counter var="pont_min" op="+" value="15" commMode="NULL" />
@@ -1081,7 +1081,7 @@
                 <counter var="multiplicando" op="*" value="10" commMode="NULL" />
             </case>
         </switch>
-        <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+        <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
         <switch var="$" commMode="NULL">
             <case op="eq" value="#multiplicando" commMode="NULL">
                 <counter var="pont_min" op="+" value="3" commMode="NULL" />
@@ -1129,7 +1129,7 @@
                 <counter var="multiplicando" op="*" value="10" commMode="NULL" />
             </case>
         </switch>
-        <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" />
+        <listen commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
         <switch var="$" commMode="NULL">
             <case op="eq" value="#multiplicando" commMode="NULL">
                 <counter var="pont_min" op="+" value="1" commMode="NULL" />
