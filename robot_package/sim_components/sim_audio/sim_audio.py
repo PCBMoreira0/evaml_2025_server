@@ -10,7 +10,12 @@ import sys
 import os
 
 # Adiciona o diretório pai ao path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Caminho do diretório atual (onde está este script)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Sobe três níveis
+parent_dir = os.path.abspath(os.path.join(current_dir, "../../.."))
+sys.path.append(parent_dir)
+
 
 import platform
 
@@ -18,7 +23,7 @@ import config # Module with network device configurations.
 
 broker = config.MQTT_BROKER_ADRESS # Broker address.
 port = config.MQTT_PORT # Broker Port.
-topic_base = config.SIMULATOR_TOPIC_BASE
+base_topic = config.SIMULATOR_BASE_TOPIC
 
 x_pos = 90
 y_pos = 80
@@ -52,11 +57,11 @@ gui = gui_sim_audio.Gui(window) # Instance of the Gui class within the graphical
 # Play a Sound or a Speech
 def playsound(file_path, audio_file, type, block = True):
         if type == "audio":
-            # client.publish(topic_base + "/log", "Playing the sound: " + audio_file)
+            # client.publish(base_topic + "/log", "Playing the sound: " + audio_file)
             audio_format = ".wav" # config.AUDIO_EXTENSION
         elif type == "speech":
             audio_format = config.WATSON_AUDIO_EXTENSION
-            # client.publish(topic_base + "/log", "EVA spoke the text and is free now.")
+            # client.publish(base_topic + "/log", "EVA spoke the text and is free now.")
         
         if block == True:
             print('Playing audio in BLOCKING mode.')
@@ -68,7 +73,7 @@ def playsound(file_path, audio_file, type, block = True):
             play.communicate()[0]
             # End of animation
             event_anim_state.clear()
-            client.publish(topic_base + "/robot_response", "state|free", qos=2) # Libera o robô.
+            client.publish(base_topic + "/robot_response", "state|free", qos=2) # Libera o robô.
         else:
             print('Playing audio in NON-BLOCKING mode.')
 
@@ -90,7 +95,7 @@ def speech(audio_file, block = True):
     # Start the thread animation
     event_anim_state.set()
     # Criação de uma instância de Thread
-    threading.Thread(target=anim).start()
+    threading.Thread(target=anim, args=(event_anim_state,)).start()
     playsound(file_path, audio_file, "speech", block)
     event_anim_state.clear()
 
@@ -100,29 +105,29 @@ def speech(audio_file, block = True):
 def on_connect(client, userdata, flags, rc):
     # Subscribing in on_connect() means that if we lose the connection and
     # Reconnect then subscriptions will be renewed.
-    client.subscribe(topic=[(topic_base + '/audio', 1), ])
-    client.subscribe(topic=[(topic_base + '/speech', 1), ])
+    client.subscribe(topic=[(base_topic + '/AUDIO', 1), ])
+    client.subscribe(topic=[(base_topic + '/SPEECH', 1), ])
     print("Audio Module - Connected.")
 
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    if msg.topic == topic_base + '/audio':
+    if msg.topic == base_topic + '/AUDIO':
         file_name = msg.payload.decode().split("|")[0]
         block = msg.payload.decode().split("|")[1]
         if block == "TRUE":
             # Start the thread animation
             event_anim_state.set()
             # Criação de uma instância de Thread
-            threading.Thread(target=anim).start()
-            playsound("sim_audio/audio_files/", file_name, "audio", True)
-            # client.publish(topic_base + "/robot_response", "state|free", qos=2) # Libera o robô.
+            threading.Thread(target=anim, args=(event_anim_state,)).start()
+            playsound("robot_package/sim_components/sim_audio/audio_files/", file_name, "audio", True)
+            # client.publish(base_topic + "/robot_response", "state|free", qos=2) # Libera o robô.
             # Draw the sound speaker
             event_anim_state.clear()
         else:
-            playsound("sim_audio/audio_files/", file_name, "audio", False) 
+            playsound("robot_package/sim_components/sim_audio/audio_files/", file_name, "audio", False) 
 
-    if msg.topic == topic_base + '/speech':
+    if msg.topic == base_topic + '/SPEECH':
         file_name = msg.payload.decode()
         speech(file_name, True) # Speech always runs in "Blocking" mode.
 

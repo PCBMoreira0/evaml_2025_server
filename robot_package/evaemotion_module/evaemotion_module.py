@@ -15,15 +15,6 @@ class CommandHandler(BaseCommandHandler):
     def node_process(self, xml_node, memory):
         """ Node handling function """
 
-        if memory.get_running_mode() == "simulator":
-            topic_base = config.SIMULATOR_TOPIC_BASE
-
-        elif memory.get_running_mode() == "robot":
-            topic_base = robot_profile.ROBOT_TOPIC_BASE
-
-        else:
-            topic_base = config.TERMINAL_TOPIC_BASE
-
 
         if xml_node.get("emotion") == "NEUTRAL":
             emoji = " 😐"
@@ -46,8 +37,10 @@ class CommandHandler(BaseCommandHandler):
 
         message = xml_node.get("emotion")
 
-        if topic_base == config.SIMULATOR_TOPIC_BASE or topic_base == robot_profile.ROBOT_TOPIC_BASE:
-            self.send(topic_base=topic_base, mqtt_message=message)
+        base_topic = memory.get_base_topic()
+
+        if base_topic == config.SIMULATOR_BASE_TOPIC or base_topic == robot_profile.ROBOT_BASE_TOPIC:
+            self.send(topic_base=base_topic, mqtt_message=message)
 
 
         return xml_node # It returns the same node

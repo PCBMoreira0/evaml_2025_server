@@ -2,7 +2,7 @@ class RobotMemory(): #
     def __init__(self):
         # Is equivalent to the $ of the original Eva VPL software.
         # Is a list of results.
-        self.var_dolar = []
+        self.var_dollar = [] # It is a list of list, for example [user_answer, "<qrRead>"].
 
         # Eva ram (a key/value dictionary)
         self.vars = {}
@@ -36,19 +36,28 @@ class RobotMemory(): #
         # Default voice type
         self.default_voice = None
 
+        # Default voice pitch
+        self.default_voice_pitch_shift = 0
+
+        # Base topic for MQTT messages
+        self.base_topic = None
+
 
     # Setters and Getters 
     def setDollar(self, value):
-        self.var_dolar.append(value)
+        self.var_dollar.append(value)
 
     def getDollar(self):
-        return self.var_dolar
+        return self.var_dollar
     
     def setVar(self, var_name, value):
         self.vars[var_name] = value
 
     def getVar(self, var_name):
         return self.vars[var_name]
+    
+    def getVars(self):
+        return self.vars
     
     def get_node_stack(self):
         return self.node_stack
@@ -80,8 +89,23 @@ class RobotMemory(): #
     def get_op_switch(self):
         return self.op_switch
 
-    def set_running_mode(self, mode):
-        self.running_mode = mode
+    def set_base_topic(self, topic_name):
+        self.base_topic = topic_name
+
+    def get_base_topic(self):
+        return self.base_topic
+    
+    def set_running_mode(self, config_file_ref, robot_profile_ref, mode):
+        # When setting the execution mode, it sets the base topic based on informations in config and robot profile files.
+        self.running_mode = mode # Setting mode
+
+        # Setting MQTT base topic
+        if mode == "terminal" or mode == "terminal-plus":
+            self.set_base_topic(config_file_ref.TERMINAL_BASE_TOPIC)
+        elif mode == "simulator":
+            self.set_base_topic(config_file_ref.SIMULATOR_BASE_TOPIC)
+        elif mode == "robot":
+            self.set_base_topic(robot_profile_ref.ROBOT_BASE_TOPIC)
 
     def get_running_mode(self):
         return self.running_mode
@@ -130,7 +154,7 @@ class RobotMemory(): #
     
     def reset_memory(self): # 
         # 
-        self.var_dolar = []
+        self.var_dollar = []
         self.node_stack = []
         self.flag_case = None
         self.op_switch = None

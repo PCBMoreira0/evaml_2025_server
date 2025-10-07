@@ -11,6 +11,7 @@ sys.path.append("./robot_package")
 
 import robot_profile
 
+
 # Estratégia 2: Envio unidirecional via MQTT
 class PubMqttCommunicator(CommunicatorInterface):
     def __init__(self, xml_node):
@@ -41,8 +42,16 @@ class PubMqttCommunicator(CommunicatorInterface):
         if "topic_base" in kwargs:
             self.topic_base = kwargs["topic_base"] + "/"
 
-        message = kwargs["mqtt_message"]
+        if "mqtt_message" in kwargs:
+
+            message = kwargs["mqtt_message"]
+        else:
+            message = "EMPTY_MESSAGE"
         
+        if "pub_topic" in kwargs:
+            self.pub_topic = kwargs["pub_topic"] # Update the pubTopic to MQTT command
+
+        print(self.topic_base, self.pub_topic, message)
         self.client.publish(self.topic_base + self.pub_topic, message)
 
         print(f"OneWay MQTT: Enviando comando unidirecional -> {message}")

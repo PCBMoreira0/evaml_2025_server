@@ -11,25 +11,24 @@ class CommandHandler(BaseCommandHandler):
     def get_var_value(self, value, memory):
         # Values ​​in var (var_value) can only be numbers, $ (of all types) and variables without # at the beginning.
         if value[0] == "$": # Is of type $, $n, or $-n
-            if len(memory.var_dolar) == 0: # The memory for $ does not yet have any elements and needs to be reset
-                # memory.var_dolar.append(["", ""])
+            if len(memory.var_dollar) == 0: # The memory for $ does not yet have any elements and needs to be reset
                 print('[b white on red blink] FATAL ERROR [/]: The [b white]"' + value +'"[/] variable [b reverse yellow] was not initialized [/]. Please, check your code.✋⛔️')
                 exit(1)
 
             if len(value) == 1: # Is the dollar ($)
-                return memory.var_dolar[-1][0]
+                return memory.var_dollar[-1][0]
             else: # May be of type $n or $-n
                 if "-" in value: # $-n type
                     indice = int(value[2:]) # Var dollar is of type $-n. then just take n and convert it to int
                     try:
-                        return memory.var_dolar[-(indice + 1)][0] 
+                        return memory.var_dollar[-(indice + 1)][0] 
                     except IndexError:
                         print("[b white on red blink] FATAL ERROR [/]: [b yellow reverse] Unable to access the variable [/][b white] " + value + "[/] with the [b yellow reverse] index [/] used. Please, check your code.✋⛔️")
                         exit(1)
                 else: # tipo $n
                     indice = int(value[1:]) # Var dollar is of type $n. then just take n and convert it to int
                     try:
-                        return memory.var_dolar[(indice - 1)][0]
+                        return memory.var_dollar[(indice - 1)][0]
                     except IndexError:
                         print("[b white on red blink] FATAL ERROR [/]: [b yellow reverse] Unable to access the variable [/][b white] " + value + "[/] with the [b yellow reverse] index [/] used. Please, check your code.✋⛔️")
                         exit(1)

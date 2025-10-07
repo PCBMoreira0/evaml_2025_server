@@ -5,16 +5,18 @@
     <audioEffects mode="ON" commMode="NULL" vol="100%" />
   </settings>
   <script>
-    <light state="ON" color="PINK" commMode="MQTT_PUB" pubTopic="LIGHT" />
     
     
-    <wait duration="1" commMode="NULL" />
     
-    <log name="LOG1" commMode="MQTT_PUB" pubTopic="LOG">Olá LOG1</log>
     
-
     
-
     
+     
+    
+    
+    <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Olá querido!</talk>
+    <evaEmotion emotion="HAPPY" commMode="MQTT_PUB" pubTopic="EVAEMOTION" />
+    <audio source="efx-blin2" block="FALSE" commMode="MQTT_PUB_SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
+    <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Como vc está?</talk>
   </script>
 </evaml>

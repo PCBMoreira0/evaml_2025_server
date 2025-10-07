@@ -15,16 +15,6 @@ class CommandHandler(BaseCommandHandler):
     def node_process(self, xml_node, memory):
         """ Função de tratamento do nó """
 
-        if memory.get_running_mode() == "simulator":
-            topic_base = config.SIMULATOR_TOPIC_BASE
-
-        elif memory.get_running_mode() == "robot":
-            topic_base = robot_profile.ROBOT_TOPIC_BASE
-
-        else:
-            topic_base = config.TERMINAL_TOPIC_BASE
-
-        # It is necessary to handle cases where the node comes without the "color" defined
         if xml_node.get('state') == "OFF":
             light_color = 'BLACK'
             message = light_color + "|" + 'OFF'
@@ -46,9 +36,10 @@ class CommandHandler(BaseCommandHandler):
                     }
         print("[b white]State: Setting [/]the [b white]Smart Bulb[/]. 💡 " + tab_colors[light_color])
         
+        base_topic = memory.get_base_topic()
 
-        if topic_base == config.SIMULATOR_TOPIC_BASE or topic_base == robot_profile.ROBOT_TOPIC_BASE:
-            self.send(topic_base=topic_base, mqtt_message=message)
+        if base_topic == config.SIMULATOR_BASE_TOPIC or base_topic == robot_profile.ROBOT_BASE_TOPIC:
+            self.send(topic_base=base_topic, mqtt_message=message)
 
 
         return xml_node # It returns the same node

@@ -37,7 +37,7 @@ class Gui(ttk.Frame):
         self.frame_top.pack(side=tkinter.TOP)
 
         # Defining the image files
-        self.bulb_image = PhotoImage(file = "sim_light/images/bulb.png")
+        self.bulb_image = PhotoImage(file = "robot_package/sim_components/sim_light/images/bulb.png")
 
         # Define the frame that will accommodate the canvas with the EVA image
         self.frame_robot = tkinter.Frame(master=self.frame_top, width= 360) #self.h

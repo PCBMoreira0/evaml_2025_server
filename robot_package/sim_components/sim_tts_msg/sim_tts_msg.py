@@ -12,13 +12,22 @@ import sys
 import os
 
 # Adiciona o diretório pai ao path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Caminho do diretório atual (onde está este script)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Sobe três níveis
+parent_dir = os.path.abspath(os.path.join(current_dir, "../../.."))
+sys.path.append(parent_dir)
+parent_dir = os.path.abspath(os.path.join(current_dir, "../.."))
+sys.path.append(parent_dir)
 
 import config  # Module with network device configurations.
 
+import robot_profile
+
 broker = config.MQTT_BROKER_ADRESS # Broker address.
 port = config.MQTT_PORT # Broker Port.
-topic_base = config.SIMULATOR_TOPIC_BASE
+response_topic = robot_profile.ROBOT_BASE_TOPIC
+base_topic = config.SIMULATOR_BASE_TOPIC
 
 
 # Cria a janela do módulo
@@ -27,7 +36,7 @@ janela.title("TTS Msg")
 janela.geometry('193x65')
 #fotofundo
 back = Label(janela)
-back.la = PhotoImage(file = 'sim_tts_msg/images/tts_msgbox.png')
+back.la = PhotoImage(file = 'robot_package/sim_components/sim_tts_msg/images/tts_msgbox.png')
 back['image'] = back.la
 back.place(x=0,y=0)
 
@@ -37,18 +46,18 @@ back.place(x=0,y=0)
 def on_connect(client, userdata, flags, rc):
     # Subscribing in on_connect() means that if we lose the connection and
     # Reconnect then subscriptions will be renewed.
-    client.subscribe(topic=[(topic_base + '/talk', 1), ])
+    client.subscribe(topic=[(base_topic + '/TALK', 1), ])
     print("SIM - TTS - MsgBox - Connected.")
             
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
 
-    text = msg.payload.decode().split("|")[1]
+    text = msg.payload.decode().split("|")[2]
 
     
     messagebox.showinfo("The robot is speaking...", text)
-    client.publish(topic_base + "/robot_response", "state|free", qos=2) # Libera o robô.
+    client.publish(response_topic + "/TALK_RESPONSE", "state|free", qos=2) # Libera o robô.
 
 
 

@@ -40,9 +40,9 @@ class Gui(ttk.Frame):
         self.frame_top.pack(side=tkinter.TOP)
 
         # Defining the image files
-        self.alto_falante1 = PhotoImage(file = "sim_audio/images/alto_falante1.png")
-        self.alto_falante2 = PhotoImage(file = "sim_audio/images/alto_falante2.png")
-        self.alto_falante3 = PhotoImage(file = "sim_audio/images/alto_falante3.png")
+        self.alto_falante1 = PhotoImage(file = "robot_package/sim_components/sim_audio/images/alto_falante1.png")
+        self.alto_falante2 = PhotoImage(file = "robot_package/sim_components/sim_audio/images/alto_falante2.png")
+        self.alto_falante3 = PhotoImage(file = "robot_package/sim_components/sim_audio/images/alto_falante3.png")
 
         # Define the frame that will accommodate the canvas with the EVA image
         self.frame_robot = tkinter.Frame(master=self.frame_top, width= 360) #self.h

@@ -2,10 +2,6 @@ from rich import print
 
 import re
 
-import robot_profile  # Module with network device configurations.
-
-import config
-
 from base_command_handler import BaseCommandHandler
 
 class CommandHandler(BaseCommandHandler):
@@ -16,16 +12,6 @@ class CommandHandler(BaseCommandHandler):
 
     def node_process(self, xml_node, memory):
         """ Node handling function """
-
-        if memory.get_running_mode() == "simulator":
-            topic_base = config.SIMULATOR_TOPIC_BASE
-
-        elif memory.get_running_mode() == "robot":
-            topic_base = robot_profile.ROBOT_TOPIC_BASE
-
-        else:
-            topic_base = config.TERMINAL_TOPIC_BASE
-
 
         if (len(xml_node.get("name"))) == 0: # erro
             print('[b white on red blink] FATAL ERROR [/]: The [bold white]"log name" [/]attribute is [b reverse yellow] EMPTY [/].✋⛔️')
@@ -51,7 +37,7 @@ class CommandHandler(BaseCommandHandler):
         # This part replaces the $, or the $-1 or the $1 in the text
         if "$" in texto: # Check if there is $ in the text
             # Checks if var_dollar has any value in the robot's memory
-            if (len(memory.var_dolar)) == 0:
+            if (len(memory.var_dollar)) == 0:
                 print("[b white on red blink] FATAL ERROR [/]: There are [b yellow reverse] no values [/] for the [b white]$[/] used in the [b white]<log>[/]. Please, check your code.✋⛔️")
                 exit(1)
             else: # Find the patterns $ $n or $-n in the string and replace with the corresponding values
@@ -59,19 +45,19 @@ class CommandHandler(BaseCommandHandler):
                 dollars_list = sorted(dollars_list, key=len, reverse=True) # Sort the list in descending order of length (of the element)
                 for var_dollar in dollars_list:
                     if len(var_dollar) == 1: # Is the dollar ($)
-                        texto = texto.replace(var_dollar, memory.var_dolar[-1][0])
+                        texto = texto.replace(var_dollar, memory.var_dollar[-1][0])
                     else: # May be of type $n or $-n
                         if "-" in var_dollar: # $-n type
                             indice = int(var_dollar[2:]) # Var dollar is of type $-n. then just take n and convert it to int
                             try:
-                                texto = texto.replace(var_dollar, memory.var_dolar[-(indice + 1)][0]) 
+                                texto = texto.replace(var_dollar, memory.var_dollar[-(indice + 1)][0]) 
                             except IndexError:
                                 print('[b white on red blink] FATAL ERROR [/]: There was an [b yellow reverse] index error [/] for the variable [b white]"' + var_dollar + '"[/]. Please, check your code.✋⛔️')
                                 exit(1) 
                         else: # $n type
                             indice = int(var_dollar[1:]) # Var dollar is of type $n. then just take n and convert it to int
                             try:
-                                texto = texto.replace(var_dollar, memory.var_dolar[(indice - 1)][0])
+                                texto = texto.replace(var_dollar, memory.var_dollar[(indice - 1)][0])
                             except IndexError:
                                 print('[b white on red blink] FATAL ERROR [/]: There was an [b yellow reverse] index error [/] for the variable [b white]"' + var_dollar + '"[/]. Please, check your code.✋⛔️')
                                 exit(1)
@@ -87,7 +73,10 @@ class CommandHandler(BaseCommandHandler):
         # Strip is used to remove \n from texts that may come from xml.
         log_text = xml_node.get("name") + "_" + str(log_seq_number) + '_' + texto.strip()
 
-        self.send(topic_base=topic_base, mqtt_message=log_text)
+
+        base_topic = memory.get_base_topic()
+
+        self.send(topic_base=base_topic, mqtt_message=log_text)
 
         
         return xml_node # It returns the same node

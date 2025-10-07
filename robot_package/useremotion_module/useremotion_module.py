@@ -46,7 +46,7 @@ class CommandHandler(BaseCommandHandler):
             user_answer = console.input("[b white on green blink] > [/] ")
             
             if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
-                memory.var_dolar.append([user_answer, "<userEmotion>"])
+                memory.var_dollar.append([user_answer, "<userEmotion>"])
             else:
                 var_name = xml_node.get("var")
                 memory.vars[var_name] = user_answer

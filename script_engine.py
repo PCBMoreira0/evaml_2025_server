@@ -11,10 +11,14 @@ from lxml import etree as ET
 from module_loader import ModuleLoader
 from script_metadata import ScriptMetadata
 
+import config
+
 # Robot Memory Class
 from robot_memory import RobotMemory
 
 sys.path.append(os.getcwd() + "/" + "robot_package/")
+
+import robot_profile
 
 console = Console()
 
@@ -90,7 +94,8 @@ class ScriptEngine:
 
         console.rule("🤖 [yellow reverse b]  Starting the script in " + running_mode.upper() + " MODE - Reading the global <settings> from file: " + self.script_file + "  [/] 🤖\n")
         self.__robot_memory.reset_memory()
-        self.__robot_memory.set_running_mode(running_mode)
+        # Set the player execution mode.
+        self.__robot_memory.set_running_mode(config, robot_profile, running_mode)
 
         # Execute the <settings> section
         self.node = self.settings_node[0] # First node of the <settings> section

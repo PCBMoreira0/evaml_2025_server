@@ -27,12 +27,12 @@ class CommandHandler(BaseCommandHandler):
     def node_process(self, xml_node, memory):
         """ Node handling function """
 
-        if memory.running_mode == "simulator":
-            topic_base = config.SIMULATOR_TOPIC_BASE
-        elif memory.running_mode == "robot":
-            topic_base = robot_profile.ROBOT_TOPIC_BASE
-        else:
-            topic_base = config.TERMINAL_TOPIC_BASE
+        # if memory.running_mode == "simulator":
+        #     topic_base = config.SIMULATOR_BASE_TOPIC
+        # elif memory.running_mode == "robot":
+        #     topic_base = robot_profile.ROBOT_BASE_TOPIC
+        # else:
+        #     topic_base = config.TERMINAL_BASE_TOPIC
 
         # if xml_node.get("language") == None: # Maintains compatibility with the use of <listen> in old scripts
         #     # It will be used the default value defined in config.py file
@@ -43,17 +43,26 @@ class CommandHandler(BaseCommandHandler):
         
         # Whether in terminal mode or terminal-plus mode, entries are made via the keyboard via the terminal.
         # client_mqtt.publish(topic_base + "/leds", "LISTEN")
-        print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + xml_node.get("language") + '[/]. ', end="")
 
-        if topic_base == config.TERMINAL_TOPIC_BASE:
-            user_answer = console.input("[b white on green blink] > [/] ")
+        base_topic = memory.get_base_topic()
         
-        # client_mqtt.publish(topic_base + "/leds", "STOP")
-        if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
-            memory.var_dolar.append([user_answer, "<listen>"])
-        else:
-            var_name = xml_node.get("var")
-            memory.vars[var_name] = user_answer
+        if base_topic == config.TERMINAL_BASE_TOPIC:
+
+            # client_mqtt.publish(topic_base + "/leds", "STOP")
+            if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
+                print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + xml_node.get("language") + '[/]. It will be stored in [b white]$[/] ', end="")
+                # memory.var_dollar.append([user_answer, "<listen>"])
+                user_answer = console.input("[b white on green blink] > [/] ")
+                memory.setDollar([user_answer, "<listen>"])
+            else:
+                var_name = xml_node.get("var")
+                print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + xml_node.get("language") + '[/]. It will be stored in [b white]' + var_name + '[/] ', end="")
+                # memory.vars[var_name] = user_answer
+                user_answer = console.input("[b white on green blink] > [/] ")
+                memory.setVar(var_name, user_answer)
+        
+        
+  
             
         # Controls the physical robot.
         if memory.running_mode == "robot": 

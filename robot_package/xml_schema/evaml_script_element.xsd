@@ -38,6 +38,7 @@ Revision: 2025/04/16
 	<xs:include schemaLocation="./evaml_led_element.xsd"></xs:include>
 	<xs:include schemaLocation="./evaml_counter_element.xsd"></xs:include>
 	<xs:include schemaLocation="./evaml_switch_element.xsd"></xs:include>
+	<xs:include schemaLocation="./evaml_debug_element.xsd"></xs:include>
 
     <!-- ** Script Section Definition ** -->
 	<xs:element name="script">
@@ -65,6 +66,7 @@ Revision: 2025/04/16
 				<xs:element ref="led"/>
 				<xs:element ref="counter"/>
 				<xs:element ref="switch"/>
+				<xs:element ref="debug"/>
 			</xs:choice>
 		</xs:complexType>
 	</xs:element>

@@ -6,8 +6,11 @@ import sys
 import os
 
 # Adiciona o diretório pai ao path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+# Caminho do diretório atual (onde está este script)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Sobe três níveis
+parent_dir = os.path.abspath(os.path.join(current_dir, "../../.."))
+sys.path.append(parent_dir)
 
 import platform 
 
@@ -15,7 +18,7 @@ import config  # Module with network device configurations.
 
 broker = config.MQTT_BROKER_ADRESS # Broker address.
 port = config.MQTT_PORT # Broker Port.
-topic_base = config.SIMULATOR_TOPIC_BASE
+base_topic = config.SIMULATOR_BASE_TOPIC
 
 # Position for graphical elements
 smart_bulb_x_pos = 95
@@ -29,14 +32,14 @@ smart_bulb_y_light = 10
 def on_connect(client, userdata, flags, rc):
     # Subscribing in on_connect() means that if we lose the connection and
     # Reconnect then subscriptions will be renewed.
-    client.subscribe(topic=[(topic_base + '/light', 1), ])
+    client.subscribe(topic=[(base_topic + '/LIGHT', 1), ])
     print("SIM - Smart Bulb Module - Connected.")
             
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    # if msg.topic == topic_base + '/light':
-    # client.publish(topic_base + '/log', 'Controlling the Smart Bulb (color|state): ' + msg.payload.decode())
+    # if msg.topic == base_topic + '/light':
+    # client.publish(base_topic + '/log', 'Controlling the Smart Bulb (color|state): ' + msg.payload.decode())
     color = msg.payload.decode().split("|")[0]
     if color == "": color = "000000"
     state = msg.payload.decode().split("|")[1]

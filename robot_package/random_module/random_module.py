@@ -25,7 +25,7 @@ class CommandHandler(BaseCommandHandler):
 
         if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
             result = str(rnd.randint(int(min), int(max)))
-            memory.var_dolar.append([result, "<random>"])
+            memory.var_dollar.append([result, "<random>"])
             print('[b white]State:[/] [b white]Generating[/] a [b white]random[/] integer between [b white]min=' + str(min) + '[/] and [b white]max=' + str(max) + '[/]. Putting the [b white]result=' + result + ' [/]in the [b white]$[/] variable.')
         else:
             var_name = xml_node.attrib["var"]

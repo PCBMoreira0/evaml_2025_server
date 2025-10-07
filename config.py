@@ -3,8 +3,8 @@ MQTT_BROKER_ADRESS      = '127.0.0.1' # Acer Laptop IP address # Ip adress (Fred
 MQTT_PORT               = 1883
 
 ROBOT_PACKAGE_FOLDER    = 'robot_package' # Directory with robot modules
-SIMULATOR_TOPIC_BASE    = 'SIMULATOR'
-TERMINAL_TOPIC_BASE    = 'TERMINAL'
+SIMULATOR_BASE_TOPIC    = 'SIMULATOR'
+TERMINAL_BASE_TOPIC    = 'TERMINAL'
 
 # Default audio file extension.
 AUDIO_EXTENSION = ".wav"

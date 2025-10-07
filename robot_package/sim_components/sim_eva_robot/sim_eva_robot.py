@@ -7,7 +7,13 @@ import sys
 import os
 
 # Adiciona o diretório pai ao path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Caminho do diretório atual (onde está este script)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Sobe três níveis
+parent_dir = os.path.abspath(os.path.join(current_dir, "../../.."))
+sys.path.append(parent_dir)
+parent_dir = os.path.abspath(os.path.join(current_dir, "../.."))
+sys.path.append(parent_dir)
 
 import platform 
 
@@ -41,7 +47,7 @@ font1 = gui.font1 # Sse the same font defined in the GUI module
 
 broker = config.MQTT_BROKER_ADRESS # Broker address.
 port = config.MQTT_PORT # Broker Port.
-topic_base = config.SIMULATOR_TOPIC_BASE
+base_topic = config.SIMULATOR_BASE_TOPIC
 
 
 # Position for graphical elements
@@ -56,15 +62,15 @@ matrix_y_pos = 447
 def on_connect(client, userdata, flags, rc):
     # Subscribing in on_connect() means that if we lose the connection and
     # Reconnect then subscriptions will be renewed.
-    client.subscribe(topic=[(topic_base + '/evaEmotion', 1), ])
-    client.subscribe(topic=[(topic_base + '/leds', 1), ]) # no robô era leds
+    client.subscribe(topic=[(base_topic + '/EVAEMOTION', 1), ])
+    client.subscribe(topic=[(base_topic + '/LEDS', 1), ]) # no robô era leds
     print("SIM - Display Module - Connected.")
 
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    if msg.topic == topic_base + '/evaEmotion':
-        # client.publish(topic_base + '/log', "EVA's facial expression: " + msg.payload.decode()) 
+    if msg.topic == base_topic + '/EVAEMOTION':
+        # client.publish(base_topic + '/log', "EVA's facial expression: " + msg.payload.decode()) 
         if msg.payload.decode() == "NEUTRAL":
             gui.canvas.create_image(eye_x_pos, eye_y_pos, image = gui.im_eyes_neutral)
         elif msg.payload.decode() == "HAPPY":
@@ -82,8 +88,8 @@ def on_message(client, userdata, msg):
         elif msg.payload.decode() == "INLOVE":
             gui.canvas.create_image(eye_x_pos, eye_y_pos, image = gui.im_eyes_inlove)
 
-    elif msg.topic == topic_base + '/leds': # no robô é leds
-        # client.publish(topic_base + '/log', "EVA's facial expression: " + msg.payload.decode()) 
+    elif msg.topic == base_topic + '/LEDS': # no robô é leds
+        # client.publish(base_topic + '/log', "EVA's facial expression: " + msg.payload.decode()) 
         if msg.payload.decode() == "STOP":
             gui.canvas.create_image(matrix_x_pos, matrix_y_pos, image = gui.im_matrix_grey)
         elif msg.payload.decode() == "LISTEN":
