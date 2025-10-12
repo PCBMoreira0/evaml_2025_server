@@ -9,17 +9,6 @@
     <audioEffects mode="ON" />
   </settings>
   <script>
-    <led animation="STOP" />
-    <evaEmotion emotion="NEUTRAL" />
-    <wait duration="2" />
-    <evaEmotion emotion="HAPPY" />
     <led animation="HAPPY" />
-    <wait duration="5" />
-    <evaEmotion emotion="ANGRY" />
-    <led animation="ANGRY" />
-    <wait duration="5" />
-    <motion head="2RIGHT"/>
-    <wait duration="4" />
-    <led animation="STOP" />
   </script>
 </evaml>

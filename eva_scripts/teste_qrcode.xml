@@ -9,7 +9,6 @@
     <audioEffects mode="ON" />
   </settings>
   <script>
-    <qrRead var="nome"/>
-    <talk>#nome</talk>
+    <qrRead />
   </script>
 </evaml>
