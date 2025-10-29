@@ -1,5 +1,5 @@
 # pasta de audios temporarios recebidos do Watson
-venv
+venv/
 audio_cache_files/
 ibm_cred.txt
 
