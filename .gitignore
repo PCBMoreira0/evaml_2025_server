@@ -2,4 +2,5 @@
 venv/
 audio_cache_files/
 ibm_cred.txt
+__pycache__/
 

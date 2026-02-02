@@ -61,14 +61,21 @@ class CommandHandler(BaseCommandHandler):
                 user_answer = console.input("[b white on green blink] > [/] ")
                 memory.setVar(var_name, user_answer)
         
-        
-  
+
             
-        # Controls the physical robot.
-        if memory.running_mode == "robot": 
-            pass
-            # client = create_mqtt_client()
-            # client.publish(robot_topic_base + '/' + xml_node.tag, message)
+        elif base_topic == config.SIMULATOR_BASE_TOPIC or base_topic == robot_profile.ROBOT_BASE_TOPIC:
+            
+            self.send(topic_base=base_topic)
+
+            response = self.receive() # self.receive() returns a dict {RESPONSE: "response"}
+
+            if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
+                user_answer = response["RESPONSE"]
+                memory.setDollar([user_answer, "<listen>"])
+            else:
+                var_name = xml_node.get("var")
+                user_answer = response["RESPONSE"]
+                memory.setVar(var_name, user_answer)    
 
         return xml_node # It returns the same node
 

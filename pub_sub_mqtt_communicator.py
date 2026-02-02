@@ -32,7 +32,7 @@ class PubSubMqttComunicator(CommunicatorInterface):
             print("Sync MQTT: Conectado. Assinando tópicos de resposta...")
             # A assinatura é crucial para a reconexão
             print("Subscribed:", robot_profile.ROBOT_BASE_TOPIC + "/" + self.sub_topic)
-            client.subscribe(robot_profile.ROBOT_BASE_TOPIC + "/" + self.sub_topic)
+            client.subscribe("BROKER/" + robot_profile.ROBOT_BASE_TOPIC + "/default_user/" + self.sub_topic)
         else:
             print(f"Sync MQTT: Falha na conexão com código {rc}.")
     
@@ -57,7 +57,7 @@ class PubSubMqttComunicator(CommunicatorInterface):
             self.topic_base = kwargs["topic_base"] + "/"
 
         
-        self.client.publish(self.topic_base + self.pub_topic, message)
+        self.client.publish(self.topic_base + "BROKER/default_user/" + self.pub_topic, message)
         print(f"OneWay MQTT: Enviando comando unidirecional -> {message}")
 
     def receive(self) -> dict:
