@@ -26,6 +26,18 @@ class CommandHandler(BaseCommandHandler):
     def node_process(self, xml_node, memory):
         """ Node handling function """
 
+        '''
+            STOP : grey
+            LISTEN : green
+            SPEAK : blue
+            ANGRY : red
+            HAPPY : green
+            SAD : blue
+            SURPRISE : yellow
+            WHITE : white
+            RAINBOW : white
+        '''
+
         base_topic = memory.get_base_topic()
 
         # Node processing
@@ -107,36 +119,17 @@ class CommandHandler(BaseCommandHandler):
             if tts_file_name: # A file_name is None if the tts was wrong.
                 play_speech_audio.play(xml_node, text_to_speech[ind_random], tts_file_name)
 
+
         # Using the Simulator or the Robot
         elif base_topic == config.SIMULATOR_BASE_TOPIC or base_topic == robot_profile.ROBOT_BASE_TOPIC:
 
-            message = memory.default_voice + "|" + str(memory.get_default_voice_pitch_shift()) + "|" + text_to_speech[ind_random]
+            message = text_to_speech[ind_random]
 
-            self.send(topic_base=base_topic, mqtt_message=message)
+            self.send(topic_base=base_topic, pub_topic="LED", mqtt_message="SPEAK")
+            self.send(topic_base=base_topic, pub_topic=xml_node.get("pubTopic"), mqtt_message=message) # Turn on the speech led
         
-
-            # if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
-            #     print('[b white]State:[/] The Robot is [b green]reading[/] [b white]a QR Code[/]. It will be stored in [b white]$[/].')
-            # else:
-            #     print('[b white]State:[/] The Robot is [b green]reading[/] [b white]a QR Code[/]. It will be stored in [b white]' + xml_node.get("var") + '[/].')
-
             mqtt_response = self.receive() # self.receive() returns a dict {RESPONSE: "response"}
-            
-            
 
-
-
-            
-            # Controls the physical robot
-            # print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"' + text_to_speech[ind_random] + '"[/]')
-
-            # if xml_node.get("voiceType") == None:
-            #     message = memory.default_voice + "|" + memory.default_voice_pitch_shift + "|" + text_to_speech[ind_random]
-            # else:
-            #     message = xml_node.get("voiceType") + "|" + xml_node.get("pitchShift") + "|" + text_to_speech[ind_random]
-            
-            # client_mqtt.publish(topic_base + '/' + xml_node.tag, message)
-            
-            # block("Speaking", memory, client_mqtt)
+            self.send(topic_base=base_topic, pub_topic="LED", mqtt_message="STOP") # Turn off the speech led
 
         return xml_node # It returns the same node

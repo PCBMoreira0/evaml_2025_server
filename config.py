@@ -1,10 +1,12 @@
+import os
+
 # MQTT Broker configuration
-MQTT_BROKER_ADRESS      = '127.0.0.1' # Acer Laptop IP address # Ip adress (Fred router) 192.168.99.100
-MQTT_PORT               = 1883
+MQTT_BROKER_ADRESS      = os.getenv('MQTT_BROKER_ADRESS', '127.0.0.1')
+MQTT_PORT               = int(os.getenv('MQTT_BROKER_PORT', 1883))
 
 ROBOT_PACKAGE_FOLDER    = 'robot_package' # Directory with robot modules
-SIMULATOR_BASE_TOPIC    = 'SIMULATOR'
-TERMINAL_BASE_TOPIC    = 'TERMINAL'
+SIMULATOR_BASE_TOPIC    = os.getenv('USER_ID', 'default_user')
+TERMINAL_BASE_TOPIC     = 'TERMINAL'
 
 # Default audio file extension.
 AUDIO_EXTENSION = ".wav"

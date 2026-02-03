@@ -4,9 +4,6 @@ from communicator_interface import CommunicatorInterface # Supondo a interface e
 
 import config
 
-import robot_profile
-
-# 
 class PubSubMqttComunicator(CommunicatorInterface):
     def __init__(self, node_xml):
 
@@ -31,8 +28,8 @@ class PubSubMqttComunicator(CommunicatorInterface):
         if rc == 0:
             print("Sync MQTT: Conectado. Assinando tópicos de resposta...")
             # A assinatura é crucial para a reconexão
-            print("Subscribed:", robot_profile.ROBOT_BASE_TOPIC + "/" + self.sub_topic)
-            client.subscribe("BROKER/" + robot_profile.ROBOT_BASE_TOPIC + "/default_user/" + self.sub_topic)
+            print("Subscribed:", 'BROKER/EVA/' + config.SIMULATOR_BASE_TOPIC + '/' + self.sub_topic)
+            client.subscribe('BROKER/EVA/' + config.SIMULATOR_BASE_TOPIC + '/' + self.sub_topic)
         else:
             print(f"Sync MQTT: Falha na conexão com código {rc}.")
     
@@ -44,20 +41,16 @@ class PubSubMqttComunicator(CommunicatorInterface):
 
 
     def send(self, **kwargs):
-        # Lógica de envio
-        self.topic_base = ""
-
         if "mqtt_message" in kwargs:
 
             message = kwargs["mqtt_message"]
         else:
             message = "SERVICE_REQUEST"
 
-        if kwargs["topic_base"]:
-            self.topic_base = kwargs["topic_base"] + "/"
-
+        if "pub_topic" in kwargs:
+            self.pub_topic = kwargs["pub_topic"] # Update the pubTopic to MQTT command
         
-        self.client.publish(self.topic_base + "BROKER/default_user/" + self.pub_topic, message)
+        self.client.publish('EVA/BROKER/' + config.SIMULATOR_BASE_TOPIC + '/' + self.pub_topic, message)
         print(f"OneWay MQTT: Enviando comando unidirecional -> {message}")
 
     def receive(self) -> dict:

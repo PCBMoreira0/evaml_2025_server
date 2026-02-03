@@ -15,40 +15,24 @@ class CommandHandler(BaseCommandHandler):
         
         super().__init__(self, communicator_obj)
 
-# Função de bloqueio que é usada para sincronia entre os módulos e o Script Player
-# def block(state, memory, client_mqtt):
-#     memory.robot_state = state # Altera o estado do robô.
-#     client_mqtt.publish(topic_base + "/leds", "LISTEN")
-#     while memory.robot_state != "free": # Aguarda que o robô fique livre para seguir para o próximo comando.
-#         time.sleep(0.01)
-#     client_mqtt.publish(topic_base + "/leds", "STOP")
-
 
     def node_process(self, xml_node, memory):
         """ Node handling function """
-
-        # if memory.running_mode == "simulator":
-        #     topic_base = config.SIMULATOR_BASE_TOPIC
-        # elif memory.running_mode == "robot":
-        #     topic_base = robot_profile.ROBOT_BASE_TOPIC
-        # else:
-        #     topic_base = config.TERMINAL_BASE_TOPIC
-
-        # if xml_node.get("language") == None: # Maintains compatibility with the use of <listen> in old scripts
-        #     # It will be used the default value defined in config.py file
-        #     language_for_listen = config.LANG_DEFAULT_GOOGLE_TRANSLATING
-        # else:
-        #     language_for_listen =  xml_node.get("language")
-        
-        
-        # Whether in terminal mode or terminal-plus mode, entries are made via the keyboard via the terminal.
-        # client_mqtt.publish(topic_base + "/leds", "LISTEN")
+        '''
+            STOP : grey
+            LISTEN : green
+            SPEAK : blue
+            ANGRY : red
+            HAPPY : green
+            SAD : blue
+            SURPRISE : yellow
+            WHITE : white
+            RAINBOW : white
+        '''
 
         base_topic = memory.get_base_topic()
         
         if base_topic == config.TERMINAL_BASE_TOPIC:
-
-            # client_mqtt.publish(topic_base + "/leds", "STOP")
             if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
                 print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + xml_node.get("language") + '[/]. It will be stored in [b white]$[/] ', end="")
                 # memory.var_dollar.append([user_answer, "<listen>"])
@@ -64,10 +48,15 @@ class CommandHandler(BaseCommandHandler):
 
             
         elif base_topic == config.SIMULATOR_BASE_TOPIC or base_topic == robot_profile.ROBOT_BASE_TOPIC:
-            
-            self.send(topic_base=base_topic)
+            # Turn on listening LED
+            self.send(topic_base=base_topic, pub_topic="LED", mqtt_message="LISTEN")
+            self.send(topic_base=base_topic, pub_topic=xml_node.get("pubTopic")) 
 
             response = self.receive() # self.receive() returns a dict {RESPONSE: "response"}
+
+            # Turn off listening LED
+            self.send(topic_base=base_topic, pub_topic="LED", mqtt_message="STOP")
+
 
             if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
                 user_answer = response["RESPONSE"]
@@ -75,7 +64,8 @@ class CommandHandler(BaseCommandHandler):
             else:
                 var_name = xml_node.get("var")
                 user_answer = response["RESPONSE"]
-                memory.setVar(var_name, user_answer)    
+                memory.setVar(var_name, user_answer)   
+                 
 
         return xml_node # It returns the same node
 
