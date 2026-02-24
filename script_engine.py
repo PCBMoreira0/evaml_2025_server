@@ -18,7 +18,7 @@ from robot_memory import RobotMemory
 
 sys.path.append(os.getcwd() + "/" + "robot_package/")
 
-import robot_profile
+import robot_package.robot_profile as robot_profile
 
 console = Console()
 

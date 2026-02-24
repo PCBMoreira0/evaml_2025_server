@@ -1,7 +1,7 @@
 import os
 
 # MQTT Broker configuration
-MQTT_BROKER_ADRESS      = os.getenv('MQTT_BROKER_ADRESS', '127.0.0.1')
+MQTT_BROKER_ADRESS      = os.getenv('MQTT_BROKER_ADRESS', 'host.docker.internal')
 MQTT_PORT               = int(os.getenv('MQTT_BROKER_PORT', 1883))
 
 ROBOT_PACKAGE_FOLDER    = 'robot_package' # Directory with robot modules
