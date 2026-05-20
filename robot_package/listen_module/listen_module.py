@@ -31,41 +31,26 @@ class CommandHandler(BaseCommandHandler):
         '''
 
         base_topic = memory.get_base_topic()
+
+        # print on terminal
+        print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + xml_node.get("language") + '[/]. It will be stored in [b white]$[/] ',end="")
         
-        if base_topic == config.TERMINAL_BASE_TOPIC:
-            if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
-                print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + xml_node.get("language") + '[/]. It will be stored in [b white]$[/] ', end="")
-                # memory.var_dollar.append([user_answer, "<listen>"])
-                user_answer = console.input("[b white on green blink] > [/] ")
-                memory.setDollar([user_answer, "<listen>"])
-            else:
-                var_name = xml_node.get("var")
-                print('[b white]State:[/] The Robot is [b green]listening[/] in [b white]' + xml_node.get("language") + '[/]. It will be stored in [b white]' + var_name + '[/] ', end="")
-                # memory.vars[var_name] = user_answer
-                user_answer = console.input("[b white on green blink] > [/] ")
-                memory.setVar(var_name, user_answer)
-        
+        # Turn on listening LED
+        self.send(topic_base=base_topic, pub_topic="LEDS", mqtt_message="LISTEN")
+        self.send(topic_base=base_topic, pub_topic=xml_node.get("pubTopic")) 
+        response = self.receive() # self.receive() returns a dict {RESPONSE: "response"}
+        # Turn off listening LED
+        self.send(topic_base=base_topic, pub_topic="LEDS", mqtt_message="STOP")
 
-            
-        elif base_topic == config.SIMULATOR_BASE_TOPIC or base_topic == robot_profile.ROBOT_BASE_TOPIC:
-            # Turn on listening LED
-            self.send(topic_base=base_topic, pub_topic="LED", mqtt_message="LISTEN")
-            self.send(topic_base=base_topic, pub_topic=xml_node.get("pubTopic")) 
+        if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
+            user_answer = response["RESPONSE"]
+            memory.setDollar([user_answer, "<listen>"])
+        else:
+            var_name = xml_node.get("var")
+            user_answer = response["RESPONSE"]
+            memory.setVar(var_name, user_answer)   
 
-            response = self.receive() # self.receive() returns a dict {RESPONSE: "response"}
-
-            # Turn off listening LED
-            self.send(topic_base=base_topic, pub_topic="LED", mqtt_message="STOP")
-
-
-            if xml_node.get("var") == None: # Maintains compatibility with the use of the $ variable
-                user_answer = response["RESPONSE"]
-                memory.setDollar([user_answer, "<listen>"])
-            else:
-                var_name = xml_node.get("var")
-                user_answer = response["RESPONSE"]
-                memory.setVar(var_name, user_answer)   
-                 
+        print(f"[b white on green blink] > [/]{user_answer} ")
 
         return xml_node # It returns the same node
 

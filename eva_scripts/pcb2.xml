@@ -15,6 +15,7 @@
     <talk>Antes de começarmos, eu gostaria de saber o seu nome. Por favor, responda apenas seu nome.</talk>
     <listen var="nome"/>
     <evaEmotion emotion="HAPPY" />
+    <wait duration="1000" />
     <motion head="YES"/>
     <talk>Muito prazer, #nome!</talk>
     <talk>Vamos começar!</talk>

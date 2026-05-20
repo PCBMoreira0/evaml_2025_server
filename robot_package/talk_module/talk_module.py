@@ -98,38 +98,15 @@ class CommandHandler(BaseCommandHandler):
         text_to_speech = text_to_speech.split(sep="/") # Text becomes a list with the number of sentences divided by character. /
         ind_random = rnd.randint(0, len(text_to_speech)-1)
 
-        if memory.get_running_mode() == "terminal":
-            # Running in terminal mode....
-            print('[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"[/]', end="")
-            for c in text_to_speech[ind_random]:
-                print('[b white]' + c + '[/]', end="")
-                time.sleep(0.08)
-            print('[b white]"')
 
+        message = text_to_speech[ind_random]
 
-        elif memory.get_running_mode() == "terminal-plus":
-            # Running in a special terminal mode. In this mode, TTS uses IBM Watson API.
-            tts_service = TtsIBM(xml_node) # Create the Text-To-Speech service obj.
-            play_speech_audio = play_speech.create_audio_player()
-            if xml_node.get("voiceType") == None:
-                tts_file_name = tts_service.make_tts_and_play(text_to_speech[ind_random], memory.get_default_voice()) # This method return file_name if TTS file generated is ok.
-            else:
-                tts_file_name = tts_service.make_tts_and_play(text_to_speech[ind_random], xml_node.get("voiceType"))
-
-            if tts_file_name: # A file_name is None if the tts was wrong.
-                play_speech_audio.play(xml_node, text_to_speech[ind_random], tts_file_name)
-
-
-        # Using the Simulator or the Robot
-        elif base_topic == config.SIMULATOR_BASE_TOPIC or base_topic == robot_profile.ROBOT_BASE_TOPIC:
-
-            message = text_to_speech[ind_random]
-
-            self.send(topic_base=base_topic, pub_topic="LED", mqtt_message="SPEAK")
-            self.send(topic_base=base_topic, pub_topic=xml_node.get("pubTopic"), mqtt_message=message) # Turn on the speech led
+        print(f'[b white]State:[/] The Robot is [b blue]speaking[/] the sentence: [b white]"[/]{message}', end="")
         
-            mqtt_response = self.receive() # self.receive() returns a dict {RESPONSE: "response"}
-
-            self.send(topic_base=base_topic, pub_topic="LED", mqtt_message="STOP") # Turn off the speech led
+        self.send(topic_base=base_topic, pub_topic="LEDS", mqtt_message="SPEAK")
+        self.send(topic_base=base_topic, pub_topic=xml_node.get("pubTopic"), mqtt_message=message) # Turn on the speech led
+    
+        mqtt_response = self.receive() # self.receive() returns a dict {RESPONSE: "response"}
+        self.send(topic_base=base_topic, pub_topic="LEDS", mqtt_message="STOP") # Turn off the speech led
 
         return xml_node # It returns the same node

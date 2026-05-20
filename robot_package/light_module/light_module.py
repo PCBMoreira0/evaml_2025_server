@@ -38,8 +38,7 @@ class CommandHandler(BaseCommandHandler):
         
         base_topic = memory.get_base_topic()
 
-        if base_topic == config.SIMULATOR_BASE_TOPIC:
-            self.send(topic_base=base_topic, mqtt_message=message)
+        self.send(topic_base=base_topic, mqtt_message=message)
 
 
         return xml_node # It returns the same node

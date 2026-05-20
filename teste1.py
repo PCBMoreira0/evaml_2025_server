@@ -4,7 +4,7 @@ import os
 sp1 = ScriptEngine() # Empty state.
 start_var = True
 
-if not (sp1.load_script("eva_scripts/tabuada_nova_evaml.xml")): # If file was loaded, it is in a Not_Init state.
+if not (sp1.load_script("eva_scripts/pcb2_evaml.xml")): # If file was loaded, it is in a Not_Init state.
     # We have a problem with the file.
     exit(1)
 

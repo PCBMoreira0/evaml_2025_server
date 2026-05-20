@@ -10,7 +10,7 @@ Developed by Marcelo Marques da Rocha
 MidiaCom Laboratory - Universidade Federal Fluminense
 This work was funded by CAPES and Google Research
 
-Revision: 2025/04/16
+Revision: 2026/05/19
 -->
 	<!-- Including the EVAML basic type definitions -->
     <xs:include schemaLocation="./evaml_basic_types.xsd"></xs:include>
@@ -18,7 +18,8 @@ Revision: 2025/04/16
     <!-- ** EVAML wait command definition ** -->
 	<xs:element name="wait">
 	  <xs:complexType>
-		<xs:attribute name="commMode" type="xs:string" fixed="NULL"/>
+		<xs:attribute name="commMode" type="xs:string" fixed="MQTT_PUB"/>
+		<xs:attribute name="pubTopic" type="xs:string" fixed="WAIT"/>
 		<xs:attribute name="id" type="idType"/>
 	    <xs:attribute name="duration" type="xs:nonNegativeInteger" use="required"/>
 	  </xs:complexType>

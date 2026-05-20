@@ -11,6 +11,7 @@
     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Antes de começarmos, eu gostaria de saber o seu nome. Por favor, responda apenas seu nome.</talk>
     <listen var="nome" commMode="MQTT_PUB_SUB" pubTopic="LISTEN" subTopic="LISTEN_RESPONSE" language="pt-BR" />
     <evaEmotion emotion="HAPPY" commMode="MQTT_PUB" pubTopic="EVAEMOTION" />
+    <wait duration="1000" commMode="MQTT_PUB" pubTopic="WAIT" />
     <motion head="YES" commMode="MQTT_PUB" pubTopic="MOTION" />
     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Muito prazer, #nome!</talk>
     <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Vamos começar!</talk>
@@ -96,7 +97,7 @@
             <talk commMode="MQTT_PUB_SUB" pubTopic="TALK" subTopic="TALK_RESPONSE">Vou tocar uma música suave para deixar o ambiente mais confortável.</talk>
              <audio source="efx-wand1" block="TRUE" commMode="MQTT_PUB_SUB" pubTopic="AUDIO" subTopic="AUDIO_RESPONSE" />
             <evaEmotion emotion="NEUTRAL" commMode="MQTT_PUB" pubTopic="EVAEMOTION" />
-            <wait duration="1000" commMode="NULL" />
+            <wait duration="1000" commMode="MQTT_PUB" pubTopic="WAIT" />
         </case>
         <case op="exact" value="nojo" commMode="NULL">
             <evaEmotion emotion="DISGUST" commMode="MQTT_PUB" pubTopic="EVAEMOTION" />
