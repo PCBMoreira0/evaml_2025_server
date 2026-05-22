@@ -20,6 +20,7 @@ class PubSubMqttComunicator(CommunicatorInterface):
         self.pub_topic = node_xml.get("pubTopic")
         self.sub_topic = node_xml.get("subTopic")
         self.response_queue = queue.Queue()
+
         self.client.loop_start()
         print(f"Sync MQTT: Configurado. Tópicos req:'{self.pub_topic}', resp:'{self.sub_topic }'")
 
@@ -30,6 +31,7 @@ class PubSubMqttComunicator(CommunicatorInterface):
             # A assinatura é crucial para a reconexão
             print("Subscribed:", 'BROKER/EVA/' + config.SIMULATOR_BASE_TOPIC + '/' + self.sub_topic)
             client.subscribe('BROKER/EVA/' + config.SIMULATOR_BASE_TOPIC + '/' + self.sub_topic)
+            client.subscribe('EVA/' + config.SIMULATOR_BASE_TOPIC + '/' + 'UNBLOCK')
         else:
             print(f"Sync MQTT: Falha na conexão com código {rc}.")
     
@@ -54,8 +56,13 @@ class PubSubMqttComunicator(CommunicatorInterface):
         print(f"OneWay MQTT: Enviando comando unidirecional -> {message}")
 
     def receive(self) -> dict:
-        # Lógica de recebimento síncrono (bloqueia)
+        self.response_queue = queue.Queue()
         print("Sync MQTT: Bloqueando e aguardando resposta...")
-        response = self.response_queue.get()
-        print(f"Sync MQTT: Resposta recebida -> {response}")
-        return {"RESPONSE": response}
+        while True:
+            try:
+                # Lógica de recebimento síncrono (bloqueia)
+                response = self.response_queue.get(timeout=0.5)
+                print(f"Sync MQTT: Resposta recebida -> {response}")
+                return {"RESPONSE": response}
+            except queue.Empty:
+                continue

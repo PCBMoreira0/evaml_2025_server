@@ -108,6 +108,7 @@ class ScriptEngine:
         self.node = self.script_node[0] # First node of the <script> section
         self.__state = "PLAY"
         console.rule("🤖 [red reverse b]  Executing the script: " + self.script_file + "  [/] 🤖\n")
+        return True
 
 
 
